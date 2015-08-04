@@ -330,7 +330,7 @@
 				<version>2.9.1</version>
 				<configuration>
 					<aggregate>true</aggregate>
-					<configLocation>checkstyle.xml</configLocation>
+					<configLocation>src/main/resources/checkstyle.xml</configLocation>
 				</configuration>
 			</plugin>
 			
