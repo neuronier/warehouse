@@ -9,6 +9,7 @@
 		<version>0.0.1</version>
 	</parent>
 	<artifactId>whCore</artifactId>
+	<packaging>ejb</packaging>
 	<name>whCore</name>
 
 	<properties>
@@ -16,6 +17,13 @@
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+			<groupId>javax</groupId>
+			<artifactId>javaee-api</artifactId>
+			<scope>provided</scope>
+		</dependency>
+	
 		<!-- TEST -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -103,4 +111,19 @@
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
 	</dependencies>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-ejb-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<filterDeploymentDescriptor>true</filterDeploymentDescriptor>
+					<ejbVersion>3.1</ejbVersion>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
 </project>
