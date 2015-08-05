@@ -1,6 +1,5 @@
 package hu.neuron.java.warehouse.whCore.Impl;
 
-import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -11,10 +10,10 @@ import javax.ejb.TransactionAttribute;
 public class SomeClass {
 //	private static final Logger logger = Logger.getLogger(SomeClass.class);
 
-	@EJB
+//	@EJB
 //	public SomeDaoLocal someDAO;
-
-	public void someMethod() {
-	}
+//
+//	public void someMethod() {
+//	}
 
 }
