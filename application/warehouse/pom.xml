@@ -34,7 +34,9 @@
 		<module>whBusiness</module>
 		<module>whCore</module>
 		<module>whBusinessAPI</module>
-		<module>whEar</module>
+		<module>whEar-All</module>
+		<module>whEar-Business</module>
+		<module>whEar-Web</module>
 	</modules>
 
 	<distributionManagement>

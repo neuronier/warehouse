@@ -8,9 +8,9 @@
 		<artifactId>warehouse</artifactId>
 		<version>0.0.1</version>
 	</parent>
-	<artifactId>whEar</artifactId>
+	<artifactId>whEar-all</artifactId>
 	<packaging>ear</packaging>
-	<name>whEar</name>
+	<name>whEar-all</name>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
