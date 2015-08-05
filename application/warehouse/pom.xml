@@ -34,6 +34,7 @@
 		<module>whBusiness</module>
 		<module>whCore</module>
 		<module>whBusinessAPI</module>
+		<module>whEar</module>
 	</modules>
 
 	<distributionManagement>
@@ -81,7 +82,7 @@
 
 			<dependency>
 				<groupId>org.primefaces.themes</groupId>
-				<artifactId>ui-darkness</artifactId>
+				<artifactId>humanity</artifactId>
 				<version>1.0.10</version>
 			</dependency>
 
