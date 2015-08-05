@@ -82,7 +82,7 @@
 
 			<dependency>
 				<groupId>org.primefaces.themes</groupId>
-				<artifactId>humanity</artifactId>
+				<artifactId>ui-darkness</artifactId>
 				<version>1.0.10</version>
 			</dependency>
 
