@@ -8,7 +8,7 @@
 		transaction-type="JTA">
 
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
-		<jta-data-source>hu.neuron.JpaDataSource</jta-data-source>
+		<jta-data-source>hu.neuron.warehouse.JpaDataSource</jta-data-source>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 
