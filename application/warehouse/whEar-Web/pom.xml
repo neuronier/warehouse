@@ -10,8 +10,9 @@
 	</parent>
 	<artifactId>whEar-Web</artifactId>
 	<packaging>ear</packaging>
-	<name>whEar-Web</name>
-	<url>http://maven.apache.org</url>
+	<name>Ear-Web</name>
+	<description>A web modul telepítéséhez szükséges ear fájl előállítását megvalósító modul.</description>
+	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

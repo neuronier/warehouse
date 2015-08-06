@@ -10,7 +10,8 @@
 	</parent>
 	<artifactId>whBusiness</artifactId>
 	<packaging>ejb</packaging>
-	<name>whBusiness</name>
+	<name>Business</name>
+	<description>A felhasználói folyamatok kezelésére szolgáló modul.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

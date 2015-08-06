@@ -10,7 +10,8 @@
 	</parent>
 	<artifactId>whEar-Business</artifactId>
 	<packaging>ear</packaging>
-	<name>whEar-Business</name>
+	<name>Ear-Business</name>
+	<description>A business modul telepítéséhez szükséges ear fájl előállítását megvalósító modul.</description>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>

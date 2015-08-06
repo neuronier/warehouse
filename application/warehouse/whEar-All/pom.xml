@@ -10,7 +10,8 @@
 	</parent>
 	<artifactId>whEar-all</artifactId>
 	<packaging>ear</packaging>
-	<name>whEar-all</name>
+	<name>Ear-All</name>
+	<description>A projekt telepítéséhez szükséges ear fájl előállítását megvalósító modul.</description>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

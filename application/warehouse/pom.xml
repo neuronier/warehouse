@@ -6,7 +6,33 @@
 	<artifactId>warehouse</artifactId>
 	<version>0.0.1</version>
 	<packaging>pom</packaging>
-	<name>warehouse</name>
+	<name>Raktározási és készletkezelő modul</name>
+	<developers>
+		<developer>
+			<name>Veress Balázs</name>
+			<email>veress.balazs1993@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Tóth Dávid</name>
+			<email>skot9212@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Fodor Árpád</name>
+			<email>hent1989@gmail.com</email>
+		</developer>
+		<developer>
+			<name>Abai Richárd</name>
+			<email>richarddinozzo@gmail.com</email>
+		</developer>
+	</developers>
+	<description>
+	 	A Raktározási és készletkezelő modul termékeket kezel, azokhoz tulajdonságokat rendel.
+	 	A termékeket képes raktárakban elhelyezni valamint mozgatni egyes raktárak között.
+	 	Ezekről a beszerzésesekről valamint mozgatásokról kinyomtatható dokumentumot képes készíteni.
+	 	Képes más moduloknak információt nyújtani egyes raktárak készletmennyiségéről.
+	 	Más modulokban felvett megrendeléseket megjeleníti.
+	 	Riportokat tud készíteni a raktárak készleteiről, valamint azok változásáról.   
+	 </description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

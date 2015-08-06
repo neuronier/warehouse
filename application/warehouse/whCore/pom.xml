@@ -10,7 +10,8 @@
 	</parent>
 	<artifactId>whCore</artifactId>
 	<packaging>ejb</packaging>
-	<name>whCore</name>
+	<name>Core</name>
+	<description>Az adatbázis műveletek megvalósítását támogató modul.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

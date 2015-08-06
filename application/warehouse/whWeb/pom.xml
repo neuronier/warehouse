@@ -10,7 +10,8 @@
 	</parent>
 	<artifactId>whWeb</artifactId>
 	<packaging>war</packaging>
-	<name>whWeb</name>
+	<name>Web</name>
+	<description>A webes felületet kezelő modul.</description>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
