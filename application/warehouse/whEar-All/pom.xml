@@ -43,6 +43,13 @@
 				<configuration>
 					<version>6</version>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
+						<modules>
++						<webModule>
++							<groupId>hu.neuron.java.warehouse</groupId>
++							<artifactId>whWeb</artifactId>
++							<contextRoot>/warehauseApp</contextRoot>
++						</webModule>
++					</modules>
 				</configuration>
 			</plugin>
 		</plugins>
