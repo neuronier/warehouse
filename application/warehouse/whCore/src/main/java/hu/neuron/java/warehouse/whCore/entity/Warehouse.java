@@ -39,6 +39,10 @@ public class Warehouse extends BaseEntity  {
 	 */
 	private Long managerId;
 	
+//	@ManyToMany(fetch = FetchType.LAZY)
+//	@JoinTable(name = "user_warehouse_sw")
+//	private Collection<User> users;
+	
 	
 	public Long getManagerId() {
 		return managerId;
