@@ -290,10 +290,11 @@
 				<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 			</properties>
 			<build>
-				<defaultGoal>clean site:site site:stage </defaultGoal>
+				<defaultGoal>clean site:site site:stage</defaultGoal>
 			</build>
 		</profile>
 	</profiles>
+
 
 
 

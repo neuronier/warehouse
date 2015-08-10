@@ -6,6 +6,9 @@
     <persistence-unit name="hsqldb" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.User</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.UserRoleMap</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
  

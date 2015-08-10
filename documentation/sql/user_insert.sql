@@ -1,0 +1,2 @@
+INSERT INTO `user`(`email`, `enabled`, `fullName`, `password`, `phoneNumber`, `userName`) VALUES ('admin@admin.admin',1,'Adminus Maximus','admin','06205558957','admin');
+INSERT INTO `user`(`email`, `enabled`, `fullName`, `password`, `phoneNumber`, `userName`) VALUES ('user@user.user',1,'Userus Senkitus','user','06859985655','user');
