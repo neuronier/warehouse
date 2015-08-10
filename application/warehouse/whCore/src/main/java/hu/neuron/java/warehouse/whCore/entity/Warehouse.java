@@ -1,6 +1,12 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
+import java.util.Collection;
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -17,6 +23,7 @@ public class Warehouse extends BaseEntity  {
 	/**
 	 * Raktár azonosítója.
 	 */
+	@Column(unique = true, nullable = false)
 	private Long warehouseId;
 	/**
 	 * Raktár irányitószáma.
@@ -34,22 +41,20 @@ public class Warehouse extends BaseEntity  {
 	 *  Házszám.
 	 */
 	private int addressNumber;
-	/**
-	 * Raktáros(egy már beregisztrált felhasználó).
-	 */
-	private Long managerId;
-	
-//	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "user_warehouse_sw")
-//	private Collection<User> users;
+
+
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "user_warehouse_sw")
+	private Collection<User> users;
 	
 	
-	public Long getManagerId() {
-		return managerId;
+	public Collection<User> getUsers() {
+		return users;
 	}
-	public void setManagerId(Long managerId) {
-		this.managerId = managerId;
+	public void setUsers(Collection<User> users) {
+		this.users = users;
 	}
+	
 	public String getName() {
 		return name;
 	}
@@ -90,8 +95,8 @@ public class Warehouse extends BaseEntity  {
 	public String toString() {
 		return "Warehouse [name=" + name + ", warehouseId=" + warehouseId
 				+ ", zipCode=" + zipCode + ", city=" + city + ", address="
-				+ address + ", addressNumber=" + addressNumber + ", manager="
-				+ managerId + "]";
+				+ address + ", addressNumber=" + addressNumber + ", users="
+				+ users + "]";
 	}
 	
 }

@@ -1,5 +1,10 @@
 package hu.neuron.java.warehouse.whCore.dao;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import hu.neuron.java.warehouse.whCore.entity.User;
 import hu.neuron.java.warehouse.whCore.entity.Warehouse;
 
 import org.apache.log4j.Logger;
@@ -24,9 +29,14 @@ public class WarehouseDaoTest {
 			.getLogger(WarehouseDaoTest.class);
 
 	private static Warehouse warehouse;
+	
+	private static User user;
 
 	@Autowired
 	WarehouseDao warehouseDao;
+	
+	@Autowired
+	UserDao userDao;
 
 	@Test
 	public void test1Save() {
@@ -37,7 +47,6 @@ public class WarehouseDaoTest {
 			warehouse.setAddress("sd");
 			warehouse.setAddressNumber(12);
 			warehouse.setCity("vbcvbcv");
-			warehouse.setManagerId(2l);
 			warehouse.setName("naeyxc");
 			warehouse.setWarehouseId(1l);
 			warehouse.setZipCode(1234);
@@ -53,12 +62,14 @@ public class WarehouseDaoTest {
 	@Test
 	public void test2Update() {
 		try {
+			
+			Collection<User> users = new ArrayList<User>();
+
 			warehouse = warehouseDao.findOne(warehouse.getId());
 
 			warehouse.setAddress("Böszörményi út");
 			warehouse.setAddressNumber(35);
 			warehouse.setCity("Debrecen");
-			warehouse.setManagerId(2l);
 			warehouse.setName("Központ");
 			warehouse.setWarehouseId(1l);
 			warehouse.setZipCode(4321);
@@ -74,6 +85,36 @@ public class WarehouseDaoTest {
 	public void test3Delete() {
 		try {
 			warehouseDao.delete(warehouse.getId());
+		} catch (Exception e) {
+			logger.error(e.getMessage(), e);
+			throw new RuntimeException(e);
+		}
+	}
+	
+
+	@Test
+	public void test4addUserToWarehouse() {
+		try {
+			user=new User();
+			user.setUserName("asd");
+			user.setPassword("asd");
+			user.setEnabled(1);
+			user.setEmail("asd@asd.asd");
+			user.setFullName("asd asd");
+			user.setPhoneNumber("543654754754");
+			user = userDao.save(user);
+			
+			warehouse.setAddress("sd");
+			warehouse.setAddressNumber(12);
+			warehouse.setCity("vbcvbcv");
+			warehouse.setName("naeyxc");
+			warehouse.setWarehouseId(1l);
+			warehouse.setZipCode(1234);
+
+			warehouse = warehouseDao.save(warehouse);
+			
+			warehouseDao.addUserToWarehouse(user.getId(), warehouse.getId());
+			
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 			throw new RuntimeException(e);
