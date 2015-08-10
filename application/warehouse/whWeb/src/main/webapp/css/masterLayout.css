@@ -1,0 +1,32 @@
+body {
+	background-image: url(/warehauseApp/images/background.jpg);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+.warehouseManagementBubble .ui-menu-child {
+	white-space: nowrap;
+	width: 225px !important;
+}
+
+.warehouseManagementItem {
+	width: 215px !important;
+}
+
+.wareManagementBubble .ui-menu-child {
+	white-space: nowrap;
+	width: 340px !important;
+}
+
+.wareManagementItem .ui-menu-child {
+	width: 330px !important;
+}
+
+.orderedWaresBubble .ui-menu-child {
+	white-space: nowrap;
+	width: 190px !important;
+}
+
+.orderedWaresItem .ui-menu-child {
+	width: 180px !important;
+}

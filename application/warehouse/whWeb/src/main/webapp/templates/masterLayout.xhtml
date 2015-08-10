@@ -18,66 +18,55 @@
 			content="width=device-width, initial-scale=1.0, user-scalable=no" />
 		<title><ui:insert name="pageTitle"></ui:insert></title>
 		<ui:insert name="head-extra" />
-		<style type="text/css">
-.warehouseManagement .ui-menu-child {
-	white-space: nowrap;
-	width: 225px !important;
-}
-
-.wareManagement .ui-menu-child {
-	white-space: nowrap;
-	width: 340px !important;
-}
-
-.orderedWares .ui-menu-child {
-	white-space: nowrap;
-	width: 190px !important;
-}
-</style>
+		<link rel="stylesheet" type="text/css"
+			href="/warehauseApp/css/masterLayout.css" />
 	</h:head>
 
-	<h:body
-		style="background-image:url(/warehauseApp/images/background.jpg); background-size: cover; background-repeat:no-repeat; ">
-		
+	<h:body>
+
 		<p:growl id="growl" showDetail="true" autoUpdate="true" />
 
 		<h:form>
 			<p:menubar>
 
 				<!-- vedelmet beallitani security bekotese utan -->
-				<p:menuitem value="Admin area" url="/admin/admin.xhtml" icon="ui-icon-person" />
+				<p:menuitem value="Admin area" url="/admin/admin.xhtml"
+					icon="ui-icon-person" />
 
 				<!-- vedelmet beallitani security bekotese utan -->
-				<p:submenu styleClass="warehouseManagement"
+				<p:submenu styleClass="warehouseManagementBubble"
 					label="Warehouse management" icon="ui-icon-home">
-					<p:menuitem value="Add/Remove warehouse" url="#"
-						icon="ui-icon-transferthick-e-w" style=" width: 215px !important;" />
+					<p:menuitem styleClass="warehouseManagementItem"
+						value="Add/Remove warehouse" url="#"
+						icon="ui-icon-transferthick-e-w" />
 					<p:separator />
-					<p:menuitem value="Warehouse stock report" url="#"
-						icon="ui-icon-note" style=" width: 215px !important;" />
+					<p:menuitem styleClass="warehouseManagementItem"
+						value="Warehouse stock report" url="#" icon="ui-icon-note" />
 				</p:submenu>
 
 				<!-- vedelmet beallitani security bekotese utan -->
-				<p:submenu styleClass="wareManagement" label="Ware management"
+				<p:submenu styleClass="wareManagementBubble" label="Ware management"
 					icon="ui-icon-pencil">
-					<p:menuitem value="Create/Delete ware type" url="#"
-						icon="ui-icon-transferthick-e-w" style=" width: 330px !important;" />
+					<p:menuitem styleClass="wareManagementItem"
+						value="Create/Delete ware type" url="#"
+						icon="ui-icon-transferthick-e-w" />
 					<p:separator />
-					<p:menuitem value="Add/Remove ware To/From warehouse" url="#"
-						icon="ui-icon-transferthick-e-w" style="width: 330px !important;" />
+					<p:menuitem styleClass="wareManagementItem"
+						value="Add/Remove ware To/From warehouse" url="#"
+						icon="ui-icon-transferthick-e-w" />
 					<p:separator />
-					<p:menuitem value="Move wares" url="#"
-						icon="ui-icon-triangle-2-e-w" style="width: 330px !important;" />
+					<p:menuitem styleClass="wareManagementItem" value="Move wares"
+						url="#" icon="ui-icon-triangle-2-e-w" />
 				</p:submenu>
 
 				<!-- vedelmet beallitani security bekotese utan -->
-				<p:submenu styleClass="orderedWares" label="Ordered wares"
+				<p:submenu styleClass="orderedWaresBubble" label="Ordered wares"
 					icon="ui-icon-calendar">
-					<p:menuitem value="Webshop orders" url="#" icon="ui-icon-cart"
-						style=" width: 180px !important;" />
+					<p:menuitem styleClass="orderedWaresItem" value="Webshop orders"
+						url="#" icon="ui-icon-cart" />
 					<p:separator />
-					<p:menuitem value="Salesmanship orders" url="#"
-						icon="ui-icon-suitcase" style=" width: 180px !important;" />
+					<p:menuitem styleClass="orderedWaresItem"
+						value="Salesmanship orders" url="#" icon="ui-icon-suitcase" />
 				</p:submenu>
 
 				<f:facet name="options">
