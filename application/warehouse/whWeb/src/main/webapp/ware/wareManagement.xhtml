@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/masterLayout.xhtml">
+
+	<ui:define name="pageTitle">Add/Remove Ware</ui:define>
+	<ui:define name="content">
+
+		<p:dialog id="showWareDialog" width="50%" widgetVar="dlg_show"
+			modal="true" resizable="false">
+
+
+			<h:form id="dialogForm1">
+				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
+					
+<!-- 					<p:outputLabel value="#{wareController.message}" /> -->
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+		
+		
+		
+		<p:dialog id="WareDialog" width="50%" widgetVar="dlg_edit"
+			modal="true" resizable="false">
+			<h:form id="dialogForm">
+				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
+					<h:outputText value="New Item" style="font-weight:bold" />
+					<h:outputText id="name" value=" " />
+
+					<p:outputLabel value="Item Name" />
+<!-- 					<p:inputText id="addName" value="#{wareController.message}"></p:inputText> -->
+					<p:outputLabel value="Item Number" />
+					<p:inputText id="addNum"></p:inputText>
+					<p:outputLabel value="Item Descreption" />
+					<p:inputText id="addDesc"></p:inputText>
+					<p:growl id="growl" showDetail="true" sticky="true" />
+					<p:commandButton value="Add"
+						 update="dialogForm" />
+
+<!-- 					<p:outputLabel value="#{wareController.message}" /> -->
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+		<h:form id="wareForm">
+
+<!-- 			<p:growl id="msgs" showDetail="true" /> -->
+			<p:dataTable id="wareTable" var="ware" value="#{wareController.lazyWareModel}"
+			
+				emptyMessage="#{out.empty_message}"
+				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+				rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" rows="10">
+
+				<p:column headerText="Item Name">
+
+				<h:outputText value="#{ware.wareName}" />
+				</p:column>
+				<p:column headerText="Item Number">
+
+				<h:outputText value="#{ware.itemNumber}" />
+				
+				</p:column>
+				<p:column headerText="Desciption">
+
+				<h:outputText value="#{ware.description}" />
+				
+				</p:column>
+			</p:dataTable>
+		</h:form>
+
+		<h:form id="wareCommandsForm">
+			<h:panelGrid columns="4" cellpadding="5">
+				<p:commandButton icon="ui-icon-arrowrefresh-1-n" value="Add New"
+					title="Save" type="button" onclick="PF('dlg_edit').show()">
+				</p:commandButton>
+			</h:panelGrid>
+		</h:form>
+	</ui:define>
+</ui:composition>
