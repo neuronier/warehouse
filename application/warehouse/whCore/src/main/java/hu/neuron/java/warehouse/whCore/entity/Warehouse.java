@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
 import java.util.Collection;
+import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
