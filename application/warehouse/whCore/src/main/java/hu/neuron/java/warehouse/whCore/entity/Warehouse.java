@@ -16,36 +16,27 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Warehouse")
-public class Warehouse implements Serializable  {
+public class Warehouse extends BaseEntity  {
 
 	
 	private static final long serialVersionUID = 1L;
-	/**
-	 * Raktár neve.
-	 */
-	private String name;
-	/**
-	 * Raktár azonosítója.
-	 */
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+
 	@Column(unique = true, nullable = false)
-	private Long warehouseId;
-	/**
-	 * Raktár irányitószáma.
-	 */
+	private String name;
+
+	@Column(unique = true, nullable = false)
+	private String warehouseId;
+
+	@Column(nullable = false)
 	private int zipCode;
-	/**
-	 * Raktár települése.
-	 */
+
+	@Column(nullable = false)
 	private String city;
-	/**
-	 * Utca.
-	 */
+
+	@Column(nullable = false)
 	private String address;
-	/**
-	 *  Házszám.
-	 */
+
+	@Column(nullable = false)
 	private int addressNumber;
 
 
@@ -67,10 +58,10 @@ public class Warehouse implements Serializable  {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Long getWarehouseId() {
+	public String getWarehouseId() {
 		return warehouseId;
 	}
-	public void setWarehouseId(Long warehouseId) {
+	public void setWarehouseId(String warehouseId) {
 		this.warehouseId = warehouseId;
 	}
 	public int getZipCode() {

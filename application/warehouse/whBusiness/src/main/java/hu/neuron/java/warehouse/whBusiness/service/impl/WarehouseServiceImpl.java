@@ -45,7 +45,7 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,WarehouseServ
 
 	@Override
 	public void dalete(WarehouseVO warehouseVo) {
-		warehouseDao.delete(warehouseVo.getWarehouseId());
+		warehouseDao.delete(warehouseVo.getId());
 
 	}
 

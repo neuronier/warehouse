@@ -9,8 +9,10 @@ public class WarehouseVO implements Serializable{
 	
 	
 	private String name;
+	
+	private Long id;
 
-	private Long warehouseId;
+	private String warehouseId;
 
 	private int zipCode;
 
@@ -34,10 +36,10 @@ public class WarehouseVO implements Serializable{
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Long getWarehouseId() {
+	public String getWarehouseId() {
 		return warehouseId;
 	}
-	public void setWarehouseId(Long warehouseId) {
+	public void setWarehouseId(String warehouseId) {
 		this.warehouseId = warehouseId;
 	}
 	public int getZipCode() {
@@ -63,10 +65,18 @@ public class WarehouseVO implements Serializable{
 	}
 	public void setAddressNumber(int addressNumber) {
 		this.addressNumber = addressNumber;
+		
+		
+	}
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
 	}
 	@Override
 	public String toString() {
-		return "WarehouseVO [" + name + ", warehouseId="
+		return "WarehouseVO [name=" + name + ", id=" + id + ", warehouseId="
 				+ warehouseId + ", zipCode=" + zipCode + ", city=" + city
 				+ ", address=" + address + ", addressNumber=" + addressNumber
 				+ ", users=" + users + "]";

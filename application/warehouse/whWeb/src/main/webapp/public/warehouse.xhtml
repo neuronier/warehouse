@@ -25,6 +25,10 @@
 					<h:outputText value="#{warehouse.name}" />
 				</p:column>
 
+				<p:column headerText="Id">
+					<h:outputText value="#{warehouse.warehouseId}" />
+				</p:column>
+
 				<p:column headerText="Zip Code">
 					<h:outputText value="#{warehouse.zipCode}" />
 				</p:column>
@@ -62,8 +66,13 @@
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
 					<h:outputText style="color: white;" value="Name: " />
-					<p:inputText id="NameInput" required="true"
+					<p:inputText id="nameInput" required="true"
 						value="#{warehouseController.newWarehouseName}" />
+
+					<h:outputText style="color: white;" value="Id " />
+					<p:inputText id="idInput" required="true"
+						value="#{warehouseController.newWarehouseId}" />
+
 
 
 					<h:outputText style="color: white;" value="Zip Code " />

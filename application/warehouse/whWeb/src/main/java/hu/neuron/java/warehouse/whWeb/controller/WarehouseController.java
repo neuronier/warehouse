@@ -31,6 +31,9 @@ public class WarehouseController implements Serializable{
 	private String newWarehouseName;
 	private String updateWarehouseName;
 	
+	private String newWarehouseId;
+	private String updateWarehouseId;
+	
 	private String newWarehouseAddress;
 	private String updateWarehouseAddress;
 	
@@ -66,6 +69,7 @@ public class WarehouseController implements Serializable{
 		warehouseVO.setAddressNumber(newWarehouseAddressNumber);
 		warehouseVO.setCity(newWarehouseCity);
 		warehouseVO.setZipCode(newWarehouseAddressZipCode);
+		warehouseVO.setWarehouseId(newWarehouseId);
 		warehouseService.save(warehouseVO);
 		
 	}
@@ -103,7 +107,9 @@ public class WarehouseController implements Serializable{
 			selectedWarehouse.setAddressNumber(updateWarehouseAddressNumber);
 			selectedWarehouse.setCity(updateWarehouseCity);
 			selectedWarehouse.setZipCode(updateWarehouseAddressZipCode);
+			selectedWarehouse.setWarehouseId(newWarehouseId);
 			warehouseService.save(selectedWarehouse);
+			
 
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -285,6 +291,30 @@ public class WarehouseController implements Serializable{
 	public void setUpdateWarehouseAddressZipusres(
 			Collection<UserVO> updateWarehouseAddressZipusres) {
 		this.updateWarehouseAddressZipusres = updateWarehouseAddressZipusres;
+	}
+
+
+
+	public String getNewWarehouseId() {
+		return newWarehouseId;
+	}
+
+
+
+	public void setNewWarehouseId(String newWarehouseId) {
+		this.newWarehouseId = newWarehouseId;
+	}
+
+
+
+	public String getUpdateWarehouseId() {
+		return updateWarehouseId;
+	}
+
+
+
+	public void setUpdateWarehouseId(String updateWarehouseId) {
+		this.updateWarehouseId = updateWarehouseId;
 	}
 
 
