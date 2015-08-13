@@ -1,54 +1,28 @@
-package hu.neuron.java.warehouse.whCore.entity;
+package hu.neuron.java.warehouse.whBusiness.vo;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-/**
- * The Class of User.
- */
-
-@Entity
-@Table(name = "User")
-public class User implements Serializable {
+public class UserVO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
-
-	@Column(unique = true, nullable = false)
+	
 	private String userName;
 
 	private String password;
 
 	private String fullName;
 
-	@Column(unique = true, nullable = false)
 	private String email;
 
 	private String phoneNumber;
 
-	@Column(nullable = false)
 	private int enabled;
 
-	@ManyToMany
-	  @JoinTable(
-	      name="userrolemap",
-	      joinColumns={@JoinColumn(name="userName", referencedColumnName="userName")},
-	      inverseJoinColumns={@JoinColumn(name="roleName", referencedColumnName="roleName")})
-	  private List<Role> roles=new ArrayList<Role>();
-	
+	private List<RoleVO> roles = new ArrayList<>();
+
 	@Override
 	public String toString() {
 		return "User [userName=" + userName + ", password=" + password + ", fullName=" + fullName
@@ -112,11 +86,11 @@ public class User implements Serializable {
 		this.enabled = enabled;
 	}
 
-	public List<Role> getRoles() {
+	public List<RoleVO> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<RoleVO> roles) {
 		this.roles = roles;
 	}
 

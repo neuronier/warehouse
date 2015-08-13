@@ -14,5 +14,5 @@ public interface RoleDao extends JpaRepository<Role, Long> {
 
 	@Query("select r from Role r where r.roleName=?1")
 	Role findRoleByName(String name) throws Exception;
-	
+
 }

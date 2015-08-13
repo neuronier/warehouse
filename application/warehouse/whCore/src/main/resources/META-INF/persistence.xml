@@ -12,7 +12,6 @@
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.User</class>
-		<class>hu.neuron.java.warehouse.whCore.entity.UserRoleMap</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
@@ -22,7 +21,7 @@
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.transaction.jta.platform"
 				value="org.hibernate.service.jta.platform.internal.WeblogicJtaPlatform" />
-			<property name="hibernate.hbm2ddl.auto" value="validate" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 
 			<property name="hibernate.session_factory_name" value="SessionFactoryJNDI" />
 			<property name="hibernate.ejb.entitymanager_factory_name"

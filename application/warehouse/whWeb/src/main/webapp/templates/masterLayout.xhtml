@@ -17,9 +17,9 @@
 		<meta name="viewport"
 			content="width=device-width, initial-scale=1.0, user-scalable=no" />
 		<title><ui:insert name="pageTitle"></ui:insert></title>
-		<ui:insert name="head-extra" />
 		<link rel="stylesheet" type="text/css"
 			href="/warehauseApp/css/masterLayout.css" />
+		<ui:insert name="head-extra" />
 	</h:head>
 
 	<h:body>
@@ -30,7 +30,7 @@
 			<p:menubar>
 
 				<!-- vedelmet beallitani security bekotese utan -->
-				<p:menuitem value="Admin area" url="/admin/admin.xhtml"
+				<p:menuitem rendered="#{userBean.role =='ADMIN'}" value="Admin area" url="/admin/admin.xhtml"
 					icon="ui-icon-person" />
 
 				<!-- vedelmet beallitani security bekotese utan -->
@@ -70,13 +70,15 @@
 				</p:submenu>
 
 				<f:facet name="options">
+					<p:button value="Registration" href="/public/registration.xhtml" />
 					<c:choose>
 						<c:when
 							test="#{!request.requestURL.toString().contains('login.xhtml') and request.userPrincipal.name == null }">
-							<p:button href="#" value="Login" icon="ui-icon-key" />
+							<p:button href="/public/login.xhtml" value="Login"
+								icon="ui-icon-key" />
 						</c:when>
 						<c:otherwise>
-							<p:button href="#" value="Logout" icon="ui-icon-circle-close" />
+							<p:button href="/logout" value="Logout" icon="ui-icon-circle-close" />
 						</c:otherwise>
 					</c:choose>
 				</f:facet>

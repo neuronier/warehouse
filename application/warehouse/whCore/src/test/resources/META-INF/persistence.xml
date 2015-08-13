@@ -8,7 +8,6 @@
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.User</class>
-		<class>hu.neuron.java.warehouse.whCore.entity.UserRoleMap</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
  
@@ -21,7 +20,7 @@
             <property name="hibernate.format_sql" value="true" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.HSQLDialect"/>
             <property name="hibernate.connection.shutdown" value="true"/>
-            <property name="hibernate.hbm2ddl.auto" value="create-drop"/>
+            <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
 
 
