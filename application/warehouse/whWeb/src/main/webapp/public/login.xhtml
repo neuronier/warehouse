@@ -15,7 +15,7 @@
 
 			<br /> <br /> <br />
 
-			<h:panelGroup layout="block" class="error"
+			<h:panelGroup style="color: white;" layout="block" class="error"
 				rendered="#{param['error'] == 1}">Wrong password</h:panelGroup>
 
 			<form name="loginForm" action="#{request.contextPath}/login"
@@ -23,21 +23,15 @@
 
 				<table>
 					<tr>
-						<td>User:</td>
+						<td style="color: white;">User:</td>
 						<td><input type="text" name="username" /></td>
 					</tr>
 					<tr>
-						<td>Password:</td>
+						<td style="color: white;">Password:</td>
 						<td><input type="password" name="password" /></td>
 					</tr>
 					<tr>
-						<td>Remember Me:</td>
-						<td><input type="checkbox" name="remember-me" /></td>
-					</tr>
-					<tr>
 						<td><input name="submit" type="submit" value="Login" /></td>
-						<td><a
-							href="#{request.contextPath}/public/registration.xhtml">Registration</a></td>
 					</tr>
 				</table>
 			</form>

@@ -17,11 +17,11 @@
 		<meta name="viewport"
 			content="width=device-width, initial-scale=1.0, user-scalable=no" />
 		<title><ui:insert name="pageTitle"></ui:insert></title>
-		
-		<h:outputStylesheet library="default" name="css/masterLayout.css" />
-			
-		<ui:insert name="head-extra" />
 
+		<h:outputStylesheet library="default" name="css/masterLayout.css" />
+
+		<ui:insert name="head-extra" />
+	</h:head>
 
 	<h:body>
 
@@ -71,18 +71,14 @@
 				</p:submenu>
 
 				<f:facet name="options">
-					<p:button value="Registration" href="/public/registration.xhtml" />
-					<c:choose>
-						<c:when
-							test="#{!request.requestURL.toString().contains('login.xhtml') and request.userPrincipal.name == null }">
-							<p:button href="/public/login.xhtml" value="Login"
-								icon="ui-icon-key" />
-						</c:when>
-						<c:otherwise>
-							<p:button href="/logout" value="Logout"
-								icon="ui-icon-circle-close" />
-						</c:otherwise>
-					</c:choose>
+					<p:button
+						rendered="#{empty request.remoteUser and !request.requestURL.toString().contains('registration.xhtml')}"
+						value="Registration" href="/public/registration.xhtml" />
+					<p:button
+						rendered="#{empty request.remoteUser and !request.requestURL.toString().contains('login.xhtml')}"
+						href="/public/login.xhtml" value="Login" icon="ui-icon-key" />
+					<p:button rendered="#{not empty request.remoteUser}" href="/logout"
+						value="Logout" icon="ui-icon-circle-close" />
 				</f:facet>
 			</p:menubar>
 		</h:form>
