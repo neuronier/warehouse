@@ -5,6 +5,9 @@ import java.util.Collection;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
@@ -12,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Warehouse")
-public class Warehouse extends BaseEntity  {
+public class Warehouse   {
 
 	
 	private static final long serialVersionUID = 1L;
@@ -23,6 +26,8 @@ public class Warehouse extends BaseEntity  {
 	/**
 	 * Raktár azonosítója.
 	 */
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(unique = true, nullable = false)
 	private Long warehouseId;
 	/**
