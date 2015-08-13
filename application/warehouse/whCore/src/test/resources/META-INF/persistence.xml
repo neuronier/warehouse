@@ -8,6 +8,7 @@
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.User</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.Ware</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
  
