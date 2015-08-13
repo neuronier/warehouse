@@ -29,10 +29,10 @@
 		<h:form>
 			<p:menubar>
 
-				<!-- vedelmet beallitani security bekotese utan -->
-				<p:menuitem rendered="#{userBean.role =='ADMIN'}" value="Admin area" url="/admin/admin.xhtml"
-					icon="ui-icon-person" />
-
+				<sec:authorize ifAllGranted="ROLE_ADMIN">
+					<p:menuitem value="Admin area" url="/admin/admin.xhtml"
+						icon="ui-icon-person" />
+				</sec:authorize>
 				<!-- vedelmet beallitani security bekotese utan -->
 				<p:submenu styleClass="warehouseManagementBubble"
 					label="Warehouse management" icon="ui-icon-home">
@@ -78,7 +78,8 @@
 								icon="ui-icon-key" />
 						</c:when>
 						<c:otherwise>
-							<p:button href="/logout" value="Logout" icon="ui-icon-circle-close" />
+							<p:button href="/logout" value="Logout"
+								icon="ui-icon-circle-close" />
 						</c:otherwise>
 					</c:choose>
 				</f:facet>

@@ -1,1 +1,0 @@
-create table User (id bigint not null auto_increment, email varchar(255) not null unique, enabled integer not null, fullName varchar(255), password varchar(255), phoneNumber varchar(255), userName varchar(255) not null unique, primary key (id), unique (userName, email));
