@@ -42,9 +42,10 @@ public class Warehouse extends BaseEntity  {
 
 
 //	@ManyToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "user_warehouse_sw")
+//	@JoinTable(name = "warehouse_user")
 	@ManyToMany(fetch = FetchType.LAZY)
 	 @JoinTable(
+			name = "warehouse_user",
 	        joinColumns = {@JoinColumn(name = "warehouseId")},
 	        inverseJoinColumns = {@JoinColumn(name = "userId")}
 	)

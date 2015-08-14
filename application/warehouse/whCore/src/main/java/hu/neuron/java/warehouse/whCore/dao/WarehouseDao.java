@@ -17,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface WarehouseDao extends JpaRepository<Warehouse, Long>{
 		
 	@Modifying
-	@Query(value = "insert into user_warehouse_sw (users_id, warehouse_id) VALUES (?1, ?2)", nativeQuery = true)
+	@Query(value = "insert into warehouse_user (warehouseId, userId) VALUES (?1, ?2)", nativeQuery = true)
 	void addUserToWarehouse(Long userId, Long warehouseId) throws Exception;
 	
 //	@Query("select w from Warehouse w where w.name=?1")	

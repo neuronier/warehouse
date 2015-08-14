@@ -62,10 +62,9 @@ public class WarehouseController implements Serializable{
 		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService));
 	}
 	
-	public void addUserToWarehouse(Long id, Long name) {
+	public void addUserToWarehouse(WarehouseVO warehouse, UserVO user ) {
 		try {
-//			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get( "myParam" ).toString();
-//			warehouseService.addUserToWarehouse(id,name );
+			warehouseService.addUserToWarehouse(user.getId(), warehouse.getId() );
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
