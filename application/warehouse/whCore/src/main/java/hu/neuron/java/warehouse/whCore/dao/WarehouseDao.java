@@ -21,7 +21,10 @@ public interface WarehouseDao extends JpaRepository<Warehouse, Long>{
 	void addUserToWarehouse(Long userId, Long warehouseId) throws Exception;
 	
 //	@Query("select w from Warehouse w where w.name=?1")	
-	Warehouse findWarehouseByName(@Param("warehouseName") String name) throws Exception;
+	Warehouse findWarehouseByName(@Param("warehouseName") String warehouseName) throws Exception;
+	
+//	@Query("select w from Warehouse w where w.warehouseId=?1")
+	Warehouse findWarehouseByWarehouseId(@Param("warehouseId") String warehouseId) throws Exception;
 	
 	Page<Warehouse> findByNameStartsWith(String filter,Pageable pageable);
 	
