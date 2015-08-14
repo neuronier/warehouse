@@ -13,53 +13,176 @@
 	<ui:define name="content">
 
 
-		<h:form id="wareForm">
+		<h:form id="form">
 			<!-- Ez itt a tabla -->
-			<p:dataTable id="wareTable" var="warehouse"
+			<p:dataTable id="warehouseTable" var="warehouse"
 				value="#{warehouseController.lazyWarehouseModel}"
 				emptyMessage="#{out.empty_message}"
 				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-				rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" rows="10">
+				rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" rows="10"
+				selectionMode="single"
+				selection="#{warehouseController.selectedWarehouse}">
 
-				<p:column headerText="Name">
+
+
+				<p:ajax event="rowSelect"
+					listener="#{warehouseController.onRowSelect}" />
+
+				<p:column headerText="Name" sortBy="#{warehouse.name}"
+					filterBy="#{warehouse.name}">
 					<h:outputText value="#{warehouse.name}" />
 				</p:column>
 
-				<p:column headerText="Id">
+
+				<p:column headerText="Id" sortBy="#{warehouse.warehouseId}"
+					filterBy="#{warehouse.warehouseId}">
 					<h:outputText value="#{warehouse.warehouseId}" />
 				</p:column>
 
-				<p:column headerText="Zip Code">
+				<p:column headerText="Zip Code" sortBy="#{warehouse.zipCode}"
+					filterBy="#{warehouse.zipCode}">
 					<h:outputText value="#{warehouse.zipCode}" />
 				</p:column>
 
-				<p:column headerText="City">
+				<p:column headerText="City" sortBy="#{warehouse.city}"
+					filterBy="#{warehouse.city}">
 					<h:outputText value="#{warehouse.city}" />
 				</p:column>
 
-				<p:column headerText="Address">
+				<p:column headerText="Address" sortBy="#{warehouse.address}"
+					filterBy="#{warehouse.address}">
 					<h:outputText value="#{warehouse.address}" />
 				</p:column>
 
-				<p:column headerText="Address Number">
+				<p:column headerText="Address Number" sortBy="#{warehouse.addressNumber}"
+					filterBy="#{warehouse.addressNumber}">
 					<h:outputText value="#{warehouse.addressNumber}" />
 				</p:column>
 			</p:dataTable>
 		</h:form>
 
 
-		<!-- new warehouse button -->
+		<!-- new warehouse,delete and update button -->
 		<h:form id="warehouseCommandsForm">
 			<h:panelGrid columns="4" cellpadding="5">
-				<p:commandButton icon="ui-icon-arrowrefresh-1-n"
+				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="new"
 					value="Add New Warehouse" title="Save" type="button"
 					onclick="PF('new').show()">
+				</p:commandButton>
+
+				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="update"
+					value="Update Warehouse" title="Update" type="button"
+					onclick="PF('update').show()">
+				</p:commandButton>
+
+				<p:commandButton value="Delete" id="removeButton"
+					actionListener="#{warehouseController.removeWarehouse}"
+					update=":form:warehouseTable" />
+
+				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="addUser"
+					value="Add User" title="Add" type="button"
+					onclick="PF('addUser').show()">
 				</p:commandButton>
 			</h:panelGrid>
 		</h:form>
 
 
-		<!-- uj raktar a gombrol -->
+		<!-- userek hozzaadasa -->
+		<p:dialog id="WarehouseDialogAddUser" width="50%" widgetVar="addUser"
+			modal="true" resizable="false">
+			<h:form id="dialogFormAddUser">
+				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
+
+					<p:dataTable id="adminTable" var="admin"
+						value="#{adminController.lazyAdminModel}"
+						emptyMessage="#{out.empty_message}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+						rows="10" selectionMode="single"
+						selection="#{adminController.selectedUser}">
+
+						<p:ajax event="rowSelect"
+							listener="#{adminController.onRowSelect}" />
+
+						<p:column headerText="Username">
+							<h:outputText value="#{admin.userName}" />
+						</p:column>
+
+						<p:column headerText="Fullname">
+							<h:outputText value="#{admin.fullName}" />
+						</p:column>
+
+						<p:column headerText="Email">
+							<h:outputText value="#{admin.email}" />
+						</p:column>
+
+						<p:column headerText="Phone number">
+							<h:outputText value="#{admin.phoneNumber}" />
+						</p:column>
+
+						<p:column headerText="Roles">
+							<h:outputText value="#{admin.roles}" />
+						</p:column>
+
+						<p:column headerText="Enabled">
+							<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
+						</p:column>
+					</p:dataTable>
+				</h:panelGrid>
+			</h:form>
+
+
+			<p:commandButton id="addUserToWarehouse" value="Add"
+				action="#{warehouseController.addUserToWarehouse(warehouse.warehouseId,admin.userName)}"
+				update=":form:warehouseTable">
+			</p:commandButton>
+		</p:dialog>
+
+
+
+		<!--update warehouse dialog -->
+		<p:dialog id="WarehouseDialogUpdate" width="50%" widgetVar="update"
+			modal="true" resizable="false">
+			<h:form id="dialogFormUpdate">
+				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
+
+					<h:outputText style="color: white;" value="Name: " />
+					<p:inputText id="nameInput" required="true"
+						value="#{warehouseController.updateWarehouseName}" />
+
+
+					<h:outputText style="color: white;" value="Zip Code " />
+					<p:inputText id="zipCode" required="true"
+						value="#{warehouseController.updateWarehouseAddressZipCode}" />
+
+
+					<h:outputText style="color: white;" value="City " />
+					<p:inputText id="addressCity" required="true"
+						value="#{warehouseController.updateWarehouseCity}" />
+
+
+					<h:outputText style="color: white;" value="Address " />
+					<p:inputText id="address" required="true"
+						value="#{warehouseController.updateWarehouseAddress}" />
+
+
+					<h:outputText style="color: white;" value="Address number " />
+					<p:inputText id="addressNumber" required="true"
+						value="#{warehouseController.updateWarehouseAddressNumber}" />
+
+					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
+						action="#{warehouseController.updateWarehouse()}"
+						icon="ui-icon-check" oncomplete="PF('update').hide();"
+						update=":form:warehouseTable" />/>
+
+				</h:panelGrid>
+			</h:form>
+		</p:dialog>
+
+
+
+
+		<!-- uj raktar, dialog -->
 		<p:dialog id="WarehouseDialog" width="50%" widgetVar="new"
 			modal="true" resizable="false">
 			<h:form id="dialogForm">
@@ -96,12 +219,63 @@
 
 					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
 						action="#{warehouseController.saveNewWarehouse()}"
-						icon="ui-icon-check" />
+						icon="ui-icon-check" oncomplete="PF('new').hide();"
+						update=":form:warehouseTable" />
 
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 
 
+		<h:form id="adminForm">
+			<p:dialog header="User Detail" widgetVar="userDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="userDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty adminController.selectedUser}"
+						columnClasses="label,value">
+
+						<h:outputText value="Username" />
+						<h:outputText value="#{adminController.selectedUser.userName}" />
+
+						<h:outputText value="Fullname" />
+						<h:outputText value="#{adminController.selectedUser.fullName}" />
+
+						<h:outputText value="Email" />
+						<h:outputText value="#{adminController.selectedUser.email}" />
+
+						<h:outputText value="Phone number" />
+						<h:outputText value="#{adminController.selectedUser.phoneNumber}" />
+
+						<h:outputText value="Roles" />
+						<p:dataTable id="checkboxRoles" var="roles"
+							value="#{adminController.roles}"
+							selection="#{adminController.selectedRoles}"
+							rowKey="#{roles.roleName}"
+							style="width:250px !important;margin-bottom:0">
+							<p:column selectionMode="multiple" style="width:16px" />
+							<p:column>
+								<h:outputText value="#{roles.roleName}" />
+							</p:column>
+						</p:dataTable>
+
+						<h:outputText value="Enabled" />
+						<p:selectBooleanButton value="#{adminController.enabled}"
+							onLabel="Yes" offLabel="No" style="width:60px" />
+
+						<p:commandButton value="Update" id="update"
+							actionListener="#{adminController.updateUser}"
+							update=":adminForm:adminTable"
+							oncomplete="PF('userDialog').hide();" />
+
+						<p:commandButton value="Cancel" id="cancel"
+							actionListener="#{adminController.cancelSelect}"
+							update=":adminForm:adminTable"
+							oncomplete="PF('userDialog').hide();" />
+
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+		</h:form>
 	</ui:define>
 </ui:composition>

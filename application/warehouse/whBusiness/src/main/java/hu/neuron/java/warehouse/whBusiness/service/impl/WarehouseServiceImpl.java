@@ -29,7 +29,8 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Remote(WarehouseServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class WarehouseServiceImpl implements WarehouseServiceLocal,WarehouseServiceRemote {
+public class WarehouseServiceImpl implements WarehouseServiceLocal,
+		WarehouseServiceRemote {
 
 	@Autowired
 	WarehouseDao warehouseDao;
@@ -38,9 +39,9 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,WarehouseServ
 	WarehouseConverter warehouseConverter;
 
 	@Override
-	public void save(WarehouseVO warehouseVo) {	
+	public void save(WarehouseVO warehouseVo) {
 		warehouseDao.save(warehouseConverter.toEntity(warehouseVo));
-		
+
 	}
 
 	@Override
@@ -79,7 +80,22 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,WarehouseServ
 
 		if (filter.length() != 0 && filterColumnName.equals("name")) {
 			entities = warehouseDao.findByNameStartsWith(filter, pageRequest);
-		} else {
+		}
+		else if (filter.length() != 0 && filterColumnName.equals("warehouseId")) {
+			entities = warehouseDao.findByWarehouseIdStartsWith(filter, pageRequest);
+		}
+		else if (filter.length() != 0 && filterColumnName.equals("zipCode")) {
+			entities = warehouseDao.findByZipCodeStartsWith(filter, pageRequest);
+		}
+		else if (filter.length() != 0 && filterColumnName.equals("city")) {
+			entities = warehouseDao.findByCityStartsWith(filter, pageRequest);
+		}
+		else if (filter.length() != 0 && filterColumnName.equals("address")) {
+			entities = warehouseDao.findByAddressStartsWith(filter, pageRequest);
+		}
+		else if (filter.length() != 0 && filterColumnName.equals("addressNumber")) {
+			entities = warehouseDao.findByAddressNumberStartsWith(filter, pageRequest);
+		}else {
 			entities = warehouseDao.findAll(pageRequest);
 		}
 
@@ -88,7 +104,6 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,WarehouseServ
 		return ret;
 
 	}
-
 
 	@Override
 	public int getRowNumber() {

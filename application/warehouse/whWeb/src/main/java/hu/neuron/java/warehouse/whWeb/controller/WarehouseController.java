@@ -4,6 +4,7 @@ import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
+import hu.neuron.java.warehouse.whWeb.model.LazyWarehouseModel;
 
 import java.io.Serializable;
 import java.util.Collection;
@@ -27,6 +28,7 @@ public class WarehouseController implements Serializable{
 	
 	
 	private WarehouseVO selectedWarehouse;
+	private UserVO selectedUser;
 
 	private String newWarehouseName;
 	private String updateWarehouseName;
@@ -60,6 +62,16 @@ public class WarehouseController implements Serializable{
 		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService));
 	}
 	
+	public void addUserToWarehouse(Long id, Long name) {
+		try {
+//			FacesContext.getCurrentInstance().getExternalContext().getRequestMap().get( "myParam" ).toString();
+//			warehouseService.addUserToWarehouse(id,name );
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	
 	
 	public void saveNewWarehouse() {
@@ -77,6 +89,13 @@ public class WarehouseController implements Serializable{
 	public void onRowSelect(SelectEvent event) {
 		selectedWarehouse = (WarehouseVO) event.getObject();
 		updateWarehouseName = selectedWarehouse.getName();
+		updateWarehouseAddress = selectedWarehouse.getAddress();
+		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
+		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
+		updateWarehouseAddressZipusres = selectedWarehouse.getUsers();
+		updateWarehouseCity = selectedWarehouse.getCity();
+		
+		
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -107,8 +126,7 @@ public class WarehouseController implements Serializable{
 			selectedWarehouse.setAddressNumber(updateWarehouseAddressNumber);
 			selectedWarehouse.setCity(updateWarehouseCity);
 			selectedWarehouse.setZipCode(updateWarehouseAddressZipCode);
-			selectedWarehouse.setWarehouseId(newWarehouseId);
-			warehouseService.save(selectedWarehouse);
+			warehouseService.update(selectedWarehouse);
 			
 
 			FacesContext.getCurrentInstance().addMessage(
@@ -123,6 +141,8 @@ public class WarehouseController implements Serializable{
 							"Update: "));
 		}
 	}
+	
+	
 	
 	
 	
@@ -315,6 +335,14 @@ public class WarehouseController implements Serializable{
 
 	public void setUpdateWarehouseId(String updateWarehouseId) {
 		this.updateWarehouseId = updateWarehouseId;
+	}
+
+	public UserVO getSelectedUser() {
+		return selectedUser;
+	}
+
+	public void setSelectedUser(UserVO selectedUser) {
+		this.selectedUser = selectedUser;
 	}
 
 

@@ -20,8 +20,20 @@ public interface WarehouseDao extends JpaRepository<Warehouse, Long>{
 	@Query(value = "insert into user_warehouse_sw (users_id, warehouse_id) VALUES (?1, ?2)", nativeQuery = true)
 	void addUserToWarehouse(Long userId, Long warehouseId) throws Exception;
 	
-		
+//	@Query("select w from Warehouse w where w.name=?1")	
 	Warehouse findWarehouseByName(@Param("warehouseName") String name) throws Exception;
-
+	
 	Page<Warehouse> findByNameStartsWith(String filter,Pageable pageable);
+	
+	Page<Warehouse> findByWarehouseIdStartsWith(String filter,Pageable pageable);
+	
+	Page<Warehouse> findByZipCodeStartsWith(String filter,Pageable pageable);
+	
+	Page<Warehouse> findByAddressStartsWith(String filter,Pageable pageable);
+	
+	Page<Warehouse> findByAddressNumberStartsWith(String filter,Pageable pageable);
+	
+	Page<Warehouse> findByCityStartsWith(String filter,Pageable pageable);
+
+	
 }

@@ -1,4 +1,4 @@
-package hu.neuron.java.warehouse.whWeb.controller;
+package hu.neuron.java.warehouse.whWeb.model;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
