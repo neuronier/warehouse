@@ -27,7 +27,7 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role [roleName=" + roleName + ", id=" + id + "]";
+		return roleName;
 	}
 
 	public Long getId() {

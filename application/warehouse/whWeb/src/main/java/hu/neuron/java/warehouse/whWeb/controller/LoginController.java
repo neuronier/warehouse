@@ -48,8 +48,8 @@ public class LoginController implements UserDetailsService {
 	}
 
 	private User buildUserForAuthentication(UserVO user, List<GrantedAuthority> authorities) {
-		
-		return new User(user.getUserName(), user.getPassword(), true, true, true, true, authorities);
+		return new User(user.getUserName(), user.getPassword(), user.getEnabled() == 1 ? true
+				: false, true, true, true, authorities);
 	}
 
 	private List<GrantedAuthority> buildUserAuthority(List<RoleVO> userRoles) {
