@@ -22,67 +22,77 @@ import org.springframework.stereotype.Service;
 
 @ViewScoped
 @ManagedBean(name = "warehouseController")
-public class WarehouseController implements Serializable{
+public class WarehouseController implements Serializable {
 
 	private static final long serialVersionUID = -5827519834457627715L;
-	
-	
+
 	private WarehouseVO selectedWarehouse;
 	private UserVO selectedUser;
 
 	private String newWarehouseName;
 	private String updateWarehouseName;
-	
+
 	private String newWarehouseId;
 	private String updateWarehouseId;
-	
+
 	private String newWarehouseAddress;
 	private String updateWarehouseAddress;
-	
+
 	private int newWarehouseAddressNumber;
 	private int updateWarehouseAddressNumber;
-	
+
 	private String newWarehouseCity;
 	private String updateWarehouseCity;
-	
+
 	private int newWarehouseAddressZipCode;
 	private int updateWarehouseAddressZipCode;
-	
+
 	private Collection<UserVO> newWarehouseAddressZipUsers;
 	private Collection<UserVO> updateWarehouseAddressZipusres;
-	
+
 	LazyWarehouseModel lazyWarehouseModel;
-	
+
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
-	
+
 	@PostConstruct
 	public void init() {
-	
+
 		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService));
 	}
-	
-	public void addUserToWarehouse(WarehouseVO warehouse, UserVO user ) {
+
+	public void addUserToWarehouse(WarehouseVO warehouse, UserVO user) {
 		try {
-			warehouseService.addUserToWarehouse(user.getId(), warehouse.getId() );
+			warehouseService
+					.addUserToWarehouse(user.getId(), warehouse.getId());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
+
 	public void saveNewWarehouse() {
-		WarehouseVO warehouseVO = new WarehouseVO();
-		warehouseVO.setName(newWarehouseName);
-		warehouseVO.setAddress(newWarehouseAddress);
-		warehouseVO.setAddressNumber(newWarehouseAddressNumber);
-		warehouseVO.setCity(newWarehouseCity);
-		warehouseVO.setZipCode(newWarehouseAddressZipCode);
-		warehouseVO.setWarehouseId(newWarehouseId);
-		warehouseService.save(warehouseVO);
-		
+
+		try {
+			WarehouseVO warehouseVO = new WarehouseVO();
+			warehouseVO.setName(newWarehouseName);
+			warehouseVO.setAddress(newWarehouseAddress);
+			warehouseVO.setAddressNumber(newWarehouseAddressNumber);
+			warehouseVO.setCity(newWarehouseCity);
+			warehouseVO.setZipCode(newWarehouseAddressZipCode);
+			warehouseVO.setWarehouseId(newWarehouseId);
+			warehouseService.save(warehouseVO);
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
+							"Save: " + selectedWarehouse.getName()));
+		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+							"Save"));
+		}
+
 	}
 
 	public void onRowSelect(SelectEvent event) {
@@ -93,8 +103,7 @@ public class WarehouseController implements Serializable{
 		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
 		updateWarehouseAddressZipusres = selectedWarehouse.getUsers();
 		updateWarehouseCity = selectedWarehouse.getCity();
-		
-		
+
 		FacesContext.getCurrentInstance().addMessage(
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
@@ -126,11 +135,10 @@ public class WarehouseController implements Serializable{
 			selectedWarehouse.setCity(updateWarehouseCity);
 			selectedWarehouse.setZipCode(updateWarehouseAddressZipCode);
 			warehouseService.update(selectedWarehouse);
-			
 
 			FacesContext.getCurrentInstance().addMessage(
 					null,
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
 							"Update: " + selectedWarehouse.getName()));
 			selectedWarehouse = null;
 		} catch (Exception e) {
@@ -140,12 +148,6 @@ public class WarehouseController implements Serializable{
 							"Update: "));
 		}
 	}
-	
-	
-	
-	
-	
-	
 
 	public WarehouseVO getSelectedWarehouse() {
 		return selectedWarehouse;
@@ -187,150 +189,100 @@ public class WarehouseController implements Serializable{
 		this.warehouseService = warehouseService;
 	}
 
-
-
 	public String getNewWarehouseAddress() {
 		return newWarehouseAddress;
 	}
-
-
 
 	public void setNewWarehouseAddress(String newWarehouseAddress) {
 		this.newWarehouseAddress = newWarehouseAddress;
 	}
 
-
-
 	public String getUpdateWarehouseAddress() {
 		return updateWarehouseAddress;
 	}
-
-
 
 	public void setUpdateWarehouseAddress(String updateWarehouseAddress) {
 		this.updateWarehouseAddress = updateWarehouseAddress;
 	}
 
-
-
 	public int getNewWarehouseAddressNumber() {
 		return newWarehouseAddressNumber;
 	}
-
-
 
 	public void setNewWarehouseAddressNumber(int newWarehouseAddressNumber) {
 		this.newWarehouseAddressNumber = newWarehouseAddressNumber;
 	}
 
-
-
 	public int getUpdateWarehouseAddressNumber() {
 		return updateWarehouseAddressNumber;
 	}
-
-
-
-
-
 
 	public void setUpdateWarehouseAddressNumber(int updateWarehouseAddressNumber) {
 		this.updateWarehouseAddressNumber = updateWarehouseAddressNumber;
 	}
 
-
-
 	public String getNewWarehouseCity() {
 		return newWarehouseCity;
 	}
-
-
 
 	public void setNewWarehouseCity(String newWarehouseCity) {
 		this.newWarehouseCity = newWarehouseCity;
 	}
 
-
-
 	public String getUpdateWarehouseCity() {
 		return updateWarehouseCity;
 	}
-
-
 
 	public void setUpdateWarehouseCity(String updateWarehouseCity) {
 		this.updateWarehouseCity = updateWarehouseCity;
 	}
 
-
-
 	public int getNewWarehouseAddressZipCode() {
 		return newWarehouseAddressZipCode;
 	}
-
-
 
 	public void setNewWarehouseAddressZipCode(int newWarehouseAddressZipCode) {
 		this.newWarehouseAddressZipCode = newWarehouseAddressZipCode;
 	}
 
-
-
 	public int getUpdateWarehouseAddressZipCode() {
 		return updateWarehouseAddressZipCode;
 	}
 
-
-
-	public void setUpdateWarehouseAddressZipCode(int updateWarehouseAddressZipCode) {
+	public void setUpdateWarehouseAddressZipCode(
+			int updateWarehouseAddressZipCode) {
 		this.updateWarehouseAddressZipCode = updateWarehouseAddressZipCode;
 	}
-
-
 
 	public Collection<UserVO> getNewWarehouseAddressZipUsers() {
 		return newWarehouseAddressZipUsers;
 	}
-
-
 
 	public void setNewWarehouseAddressZipUsers(
 			Collection<UserVO> newWarehouseAddressZipUsers) {
 		this.newWarehouseAddressZipUsers = newWarehouseAddressZipUsers;
 	}
 
-
-
 	public Collection<UserVO> getUpdateWarehouseAddressZipusres() {
 		return updateWarehouseAddressZipusres;
 	}
-
-
 
 	public void setUpdateWarehouseAddressZipusres(
 			Collection<UserVO> updateWarehouseAddressZipusres) {
 		this.updateWarehouseAddressZipusres = updateWarehouseAddressZipusres;
 	}
 
-
-
 	public String getNewWarehouseId() {
 		return newWarehouseId;
 	}
-
-
 
 	public void setNewWarehouseId(String newWarehouseId) {
 		this.newWarehouseId = newWarehouseId;
 	}
 
-
-
 	public String getUpdateWarehouseId() {
 		return updateWarehouseId;
 	}
-
-
 
 	public void setUpdateWarehouseId(String updateWarehouseId) {
 		this.updateWarehouseId = updateWarehouseId;
@@ -343,15 +295,5 @@ public class WarehouseController implements Serializable{
 	public void setSelectedUser(UserVO selectedUser) {
 		this.selectedUser = selectedUser;
 	}
-
-
-
-
-	
-	
-	
-	
-	
-	
 
 }

@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Registration</ui:define>
+	<ui:define name="pageTitle">Warehouse Managment</ui:define>
 	<ui:define name="content">
 
 
@@ -26,7 +26,8 @@
 
 
 				<p:ajax event="rowSelect"
-					listener="#{warehouseController.onRowSelect}" />
+					listener="#{warehouseController.onRowSelect}"
+					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton" />
 
 				<p:column headerText="Name" sortBy="#{warehouse.name}"
 					filterBy="#{warehouse.name}">
@@ -67,21 +68,24 @@
 			<h:panelGrid columns="4" cellpadding="5">
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="new"
 					value="Add New Warehouse" title="Save" type="button"
-					onclick="PF('new').show()">
+					onclick="PF('new').show()"> 
 				</p:commandButton>
 
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="update"
 					value="Update Warehouse" title="Update" type="button"
-					onclick="PF('update').show()">
+					onclick="PF('update').show()"
+					disabled="#{warehouseController.selectedWarehouse == null}" >
 				</p:commandButton>
 
 				<p:commandButton value="Delete" id="removeButton"
 					actionListener="#{warehouseController.removeWarehouse}"
-					update=":form:warehouseTable" />
+					update=":form:warehouseTable,warehouseCommandsForm"
+					disabled="#{warehouseController.selectedWarehouse == null}" />
 
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="addUser"
 					value="Add User" title="Add" type="button"
-					onclick="PF('addUser').show()">
+					onclick="PF('addUser').show()"
+					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 			</h:panelGrid>
 		</h:form>
@@ -173,7 +177,7 @@
 					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
 						action="#{warehouseController.updateWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('update').hide();"
-						update=":form:warehouseTable" />/>
+						update=":form:warehouseTable" />
 
 				</h:panelGrid>
 			</h:form>
@@ -190,37 +194,44 @@
 
 					<h:outputText style="color: white;" value="Name: " />
 					<p:inputText id="nameInput" required="true"
-						value="#{warehouseController.newWarehouseName}" />
+						value="#{warehouseController.newWarehouseName}"
+						requiredMessage="Please enter warehouse name!" />
 
 					<h:outputText style="color: white;" value="Id " />
 					<p:inputText id="idInput" required="true"
-						value="#{warehouseController.newWarehouseId}" />
+						value="#{warehouseController.newWarehouseId}"
+						requiredMessage="Please enter warehouse id!" />
 
 
 
 					<h:outputText style="color: white;" value="Zip Code " />
 					<p:inputText id="zipCode" required="true"
-						value="#{warehouseController.newWarehouseAddressZipCode}" />
+						value="#{warehouseController.newWarehouseAddressZipCode}"
+						requiredMessage="Please enter warehouse zip code!" />
 
 
 					<h:outputText style="color: white;" value="City " />
 					<p:inputText id="addressCity" required="true"
-						value="#{warehouseController.newWarehouseCity}" />
+						value="#{warehouseController.newWarehouseCity}"
+						requiredMessage="Please enter warehouse city!" />
 
 
 					<h:outputText style="color: white;" value="Address " />
 					<p:inputText id="address" required="true"
-						value="#{warehouseController.newWarehouseAddress}" />
+						value="#{warehouseController.newWarehouseAddress}"
+						requiredMessage="Please enter warehouse addres!" />
 
 
 					<h:outputText style="color: white;" value="Address number " />
 					<p:inputText id="addressNumber" required="true"
-						value="#{warehouseController.newWarehouseAddressNumber}" />
+						value="#{warehouseController.newWarehouseAddressNumber}"
+						requiredMessage="Please enter warehouse address number!" />
 
 					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
 						action="#{warehouseController.saveNewWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('new').hide();"
-						update=":form:warehouseTable" />
+						update=":form:warehouseTable"
+						 />
 
 				</h:panelGrid>
 			</h:form>
