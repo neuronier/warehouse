@@ -23,19 +23,23 @@
 				<p:ajax event="rowSelect" listener="#{adminController.onRowSelect}"
 					update=":adminForm:userDetail" oncomplete="PF('userDialog').show()" />
 
-				<p:column headerText="Username">
+				<p:column headerText="Username" sortBy="#{admin.userName}"
+					filterBy="#{admin.userName}">
 					<h:outputText value="#{admin.userName}" />
 				</p:column>
 
-				<p:column headerText="Fullname">
+				<p:column headerText="Fullname" sortBy="#{admin.fullName}"
+					filterBy="#{admin.fullName}">
 					<h:outputText value="#{admin.fullName}" />
 				</p:column>
 
-				<p:column headerText="Email">
+				<p:column headerText="Email" sortBy="#{admin.email}"
+					filterBy="#{admin.email}">
 					<h:outputText value="#{admin.email}" />
 				</p:column>
 
-				<p:column headerText="Phone number">
+				<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
+					filterBy="#{admin.phoneNumber}">
 					<h:outputText value="#{admin.phoneNumber}" />
 				</p:column>
 
@@ -43,7 +47,7 @@
 					<h:outputText value="#{admin.roles}" />
 				</p:column>
 
-				<p:column headerText="Enabled">
+				<p:column headerText="Enabled" sortBy="#{admin.enabled}">
 					<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
 				</p:column>
 			</p:dataTable>

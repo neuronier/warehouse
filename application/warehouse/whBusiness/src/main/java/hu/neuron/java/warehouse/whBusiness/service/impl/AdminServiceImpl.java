@@ -35,24 +35,24 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 public class AdminServiceImpl implements AdminServiceRemote, Serializable {
 	private static final long serialVersionUID = 1L;
 
-//	private static final Logger logger = Logger
-//			.getLogger(AdminServiceImpl.class);
-		
+	// private static final Logger logger = Logger
+	// .getLogger(AdminServiceImpl.class);
+
 	@PersistenceContext
 	private EntityManager entityManager;
-		
+
 	@Autowired
 	UserDao userDao;
 
 	@EJB
-	UserConverter userConverter;	
-	
+	UserConverter userConverter;
+
 	@Autowired
 	RoleDao roleDao;
 
 	@EJB
 	RoleConverter roleConverter;
-	
+
 	@Override
 	public UserVO getUserByName(String userName) {
 		UserVO userVO = null;
@@ -77,28 +77,32 @@ public class AdminServiceImpl implements AdminServiceRemote, Serializable {
 	@Override
 	public List<UserVO> getUsers() {
 		return userConverter.toVO(userDao.findAll());
-		
-	}
-	
-	@Override
-	public List<RoleVO> getRoles() {
-		return roleConverter.toVO(roleDao.findAll());		
+
 	}
 
 	@Override
-	public List<UserVO> getUsers(int i, int pageSize, String sortField,
-			int sortOrder, String filter, String filterColumnName) {
-		Direction dir = sortOrder == 1 ? Sort.Direction.ASC
-				: Sort.Direction.DESC;
+	public List<RoleVO> getRoles() {
+		return roleConverter.toVO(roleDao.findAll());
+	}
+
+	@Override
+	public List<UserVO> getUsers(int i, int pageSize, String sortField, int sortOrder,
+			String filter, String filterColumnName) {
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<User> entities;
 
 		if (filter.length() != 0 && filterColumnName.equals("userName")) {
 			entities = userDao.findByUserNameStartsWith(filter, pageRequest);
+		} else if (filter.length() != 0 && filterColumnName.equals("fullName")) {
+			entities = userDao.findByFullNameStartsWith(filter, pageRequest);
+		} else if (filter.length() != 0 && filterColumnName.equals("email")) {
+			entities = userDao.findByEmailStartsWith(filter, pageRequest);
+		} else if (filter.length() != 0 && filterColumnName.equals("phoneNumber")) {
+			entities = userDao.findByPhoneNumberStartsWith(filter, pageRequest);
 		} else {
 			entities = userDao.findAll(pageRequest);
-			
 		}
 
 		List<UserVO> ret = userConverter.toVO(entities.getContent());

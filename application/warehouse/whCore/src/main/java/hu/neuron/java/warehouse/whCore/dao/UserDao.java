@@ -21,4 +21,10 @@ public interface UserDao extends JpaRepository<User, Long> {
 	User findUserByEmail(String email) throws Exception;
 	
 	Page<User> findByUserNameStartsWith(String filter,Pageable pageable);
+	
+	Page<User> findByFullNameStartsWith(String filter,Pageable pageable);
+	
+	Page<User> findByEmailStartsWith(String filter,Pageable pageable);
+	
+	Page<User> findByPhoneNumberStartsWith(String filter,Pageable pageable);
 }
