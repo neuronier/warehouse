@@ -66,7 +66,7 @@ public class RegistrationController implements Serializable {
 			if (registrationService.registrationUser(userVO)) {
 				context.getExternalContext().getFlash().setKeepMessages(true);
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-						"Registration sucessful you can log in now"));
+						"Registration successful you can log in now"));
 				return "/public/login.xhtml?faces-redirect=true";
 			}
 		} catch (Exception e) {

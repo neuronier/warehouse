@@ -72,6 +72,9 @@
 
 				<f:facet name="options">
 					<p:button
+						rendered="#{not empty request.remoteUser and !request.requestURL.toString().contains('userSelfCare.xhtml')}"
+						value="Selfcare" href="/public/userSelfCare.xhtml" />
+					<p:button
 						rendered="#{empty request.remoteUser and !request.requestURL.toString().contains('registration.xhtml')}"
 						value="Registration" href="/public/registration.xhtml" />
 					<p:button

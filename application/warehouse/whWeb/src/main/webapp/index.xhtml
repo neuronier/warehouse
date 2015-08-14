@@ -17,13 +17,12 @@
 		<br />
 		<h:panelGroup
 			rendered="#{empty request.remoteUser and param['logout'] != 1}"
-			style="color: white;" layout="block" class="error">
+			style="color: white;">
 			<h2 align="center" style="font-family: Broadway; color: white">Welcome
 				in the Warehouse project application's web area!</h2>
 		</h:panelGroup>
 
-		<h:panelGroup rendered="#{param['logout'] == 1}" style="color: white;"
-			layout="block" class="error">
+		<h:panelGroup rendered="#{param['logout'] == 1}" style="color: white;">
 			<h2 align="center" style="font-family: Broadway; color: white">Thank
 				you for using Warehouse project application.</h2>
 			<br />
@@ -31,7 +30,7 @@
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{not empty request.remoteUser}"
-			style="color: white;" layout="block" class="error">
+			style="color: white;">
 			<h2 align="center" style="font-family: Broadway; color: white">Succesfull
 				Login</h2>
 		</h:panelGroup>
