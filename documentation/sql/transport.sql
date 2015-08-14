@@ -1,0 +1,25 @@
+CREATE TABLE IF NOT EXISTS `Transport` (
+  `fromWarehouseId` BIGINT(20) NOT NULL,
+  `toWarehouseId` BIGINT(20) NOT NULL,
+  `fromWarehouseName` VARCHAR(255),
+  `fromWarehouseZipCode` INT(6),
+  `fromWarehouseCity` VARCHAR(255),
+  `fromWarehouseAddress` VARCHAR(255),
+  `fromWarehouseAddressNumber` int(6),
+  `fromWarehouseUserName` VARCHAR(255),
+  `fromWarehouseUserPhone` BIGINT(20),
+  `fromWarehouseUserEmail` VARCHAR(255),
+  `toWarehouseName` VARCHAR(255),
+  `toWarehouseZipCode` INT(6),
+  `toWarehouseCity` VARCHAR(255),
+  `toWarehouseAddress` VARCHAR(255),
+  `toWarehouseAddressNumber` int(6),
+  `toWarehouseUserName` VARCHAR(255),
+  `toWarehouseUserPhone` BIGINT(20),
+  `toWarehouseUserEmail` VARCHAR(255),
+  `itemName` VARCHAR(255),
+  `articleNumber` INT(6),
+  `piece` INT(6),
+  PRIMARY KEY (fromWarehouseId, toWarehouseId))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
