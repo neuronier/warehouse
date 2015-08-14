@@ -65,9 +65,15 @@ public class WarehouseController implements Serializable {
 		try {
 			warehouseService
 					.addUserToWarehouse(user.getId(), warehouse.getId());
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
+							"Add user!"));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
+							"Add user!"));
 		}
 	}
 
@@ -93,21 +99,6 @@ public class WarehouseController implements Serializable {
 							"Save"));
 		}
 
-	}
-
-	public void onRowSelect(SelectEvent event) {
-		selectedWarehouse = (WarehouseVO) event.getObject();
-		updateWarehouseName = selectedWarehouse.getName();
-		updateWarehouseAddress = selectedWarehouse.getAddress();
-		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
-		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
-		updateWarehouseAddressZipusres = selectedWarehouse.getUsers();
-		updateWarehouseCity = selectedWarehouse.getCity();
-
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-						selectedWarehouse.getName()));
 	}
 
 	public void removeWarehouse() {
@@ -147,6 +138,22 @@ public class WarehouseController implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 							"Update: "));
 		}
+	}
+	
+	
+	public void onRowSelect(SelectEvent event) {
+		selectedWarehouse = (WarehouseVO) event.getObject();
+		updateWarehouseName = selectedWarehouse.getName();
+		updateWarehouseAddress = selectedWarehouse.getAddress();
+		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
+		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
+		updateWarehouseAddressZipusres = selectedWarehouse.getUsers();
+		updateWarehouseCity = selectedWarehouse.getCity();
+
+		FacesContext.getCurrentInstance().addMessage(
+				null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
+						updateWarehouseName));
 	}
 
 	public WarehouseVO getSelectedWarehouse() {
