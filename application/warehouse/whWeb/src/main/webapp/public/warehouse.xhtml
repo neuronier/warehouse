@@ -27,7 +27,8 @@
 
 				<p:ajax event="rowSelect"
 					listener="#{warehouseController.onRowSelect}"
-					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton" />
+					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton,
+					:dialogFormUpdate,:dialogForm,:dialogFormAddUser	" />
 
 				<p:column headerText="Name" sortBy="#{warehouse.name}"
 					filterBy="#{warehouse.name}">

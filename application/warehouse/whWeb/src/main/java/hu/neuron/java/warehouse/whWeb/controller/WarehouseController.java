@@ -97,6 +97,13 @@ public class WarehouseController implements Serializable {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 							"Save"));
+		}finally {
+			newWarehouseName = "";
+			newWarehouseAddress = "";
+			newWarehouseAddressNumber = 0;
+			newWarehouseCity = "";
+			newWarehouseAddressZipCode = 0;
+			newWarehouseId = "";
 		}
 
 	}
