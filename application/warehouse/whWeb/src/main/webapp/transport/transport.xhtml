@@ -1,0 +1,54 @@
+<ui:composition template="/templates/masterLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="head-extra">
+		<!-- custom css -->
+	</ui:define>
+	<ui:define name="pageTitle">Item transport</ui:define>
+	<ui:define name="content">
+
+		<h:form>
+			<p:growl id="growl" life="2000" />
+			<p:messages autoUpdate="true" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+				<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
+				<p:selectOneMenu id="fromWarehouse"
+					value="#{transportController.warehouses}">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{transportController.warehouses}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="toWarehouse" value="Cél raktár: " />
+				<p:selectOneMenu id="toWarehouse"
+					value="#{transportController.warehouses}">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{transportController.warehouses}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="items" value="Áru: " />
+				<p:selectOneMenu id="items"
+					value="#{transportController.warehouses}">
+					<f:selectItem itemLabel="Select One" itemValue="" />
+					<f:selectItems value="#{transportController.wares}" />
+				</p:selectOneMenu>
+
+
+				<h:outputLabel for="darab" value="Darabszám: " />
+				<p:spinner id="darab" value="#{transportController.db}" />
+
+				<p:commandButton value="Ajax Submit" id="ajax" update="growl"
+					iconPos="center"
+					actionListener="#{transportController.buttonAction}"
+					styleClass="ui-priority-primary" />
+
+			</h:panelGrid>
+		</h:form>
+
+	</ui:define>
+</ui:composition>
