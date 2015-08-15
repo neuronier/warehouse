@@ -70,6 +70,7 @@
 
 			<h:panelGrid columns="4" cellpadding="5">
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="new"
+					rendered="#{sec:areAllGranted('ROLE_ADMIN')}"
 					value="Add New Warehouse" title="Save" type="button"
 					onclick="PF('new').show()">
 				</p:commandButton>
@@ -81,6 +82,7 @@
 				</p:commandButton>
 
 				<p:commandButton value="Delete" id="removeButton"
+					rendered="#{sec:areAllGranted('ROLE_ADMIN')}"
 					actionListener="#{warehouseController.removeWarehouse}"
 					update=":form:warehouseTable,warehouseCommandsForm"
 					disabled="#{warehouseController.selectedWarehouse == null}" />
@@ -233,7 +235,7 @@
 					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
 						action="#{warehouseController.saveNewWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('new').hide();"
-						update=":form:warehouseTable" />
+						update=":form:warehouseTable,:dialogForm" />
 
 				</h:panelGrid>
 			</h:form>

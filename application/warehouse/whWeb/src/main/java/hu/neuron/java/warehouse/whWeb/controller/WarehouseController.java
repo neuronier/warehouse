@@ -1,5 +1,6 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
+import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
@@ -54,11 +55,14 @@ public class WarehouseController implements Serializable {
 
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
+	
+	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
+	private UserSelfCareServiceRemote userSelfCareService;
 
 	@PostConstruct
 	public void init() {
 
-		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService));
+		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService,userSelfCareService));
 	}
 
 	public void addUserToWarehouse(WarehouseVO warehouse, UserVO user) {

@@ -1,25 +1,38 @@
 package hu.neuron.java.warehouse.whWeb.model;
+
+import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
+import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
+import org.springframework.security.core.context.SecurityContextHolder;
 
-
+@ViewScoped
+@ManagedBean(name = "asd")
 public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
-	
+
 	private static final long serialVersionUID = 8284121252095007781L;
 
 	private List<WarehouseVO> visibleWarehouseList;
 
 	private WarehouseServiceLocal warehouseService;
+	private UserSelfCareServiceRemote userSelfCareService;
 
-	public LazyWarehouseModel(WarehouseServiceLocal warehouseService) {
+	public LazyWarehouseModel(WarehouseServiceLocal warehouseService,
+			UserSelfCareServiceRemote userSelfCareService) {
 		super();
 		this.warehouseService = warehouseService;
+		this.userSelfCareService = userSelfCareService;
 	}
 
 	@Override
@@ -57,16 +70,41 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleWarehouseList = warehouseService.getWarehouse(first / pageSize, pageSize,
-				sortField, dir, filter, filterColumnName);
 
-	
+		UserVO currentUser = userSelfCareService
+				.getUserByName(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+		
+		
+		List<WarehouseVO> res = new ArrayList<WarehouseVO>();
+		if (currentUser == null) {
+			return res;
+		}
+
+		List<RoleVO> roles = currentUser.getRoles();
+
+		visibleWarehouseList = warehouseService.getWarehouse(first / pageSize,
+				pageSize, sortField, dir, filter, filterColumnName);
+
 		int dataSize = warehouseService.getRowNumber();
 
 		this.setRowCount(dataSize);
 
-		return visibleWarehouseList;
+		for (RoleVO roleVO : roles) {
+			if (roleVO.getRoleName().equals("ROLE_ADMIN")) {
+				return visibleWarehouseList;
+			}
+		}
 
+
+		for (WarehouseVO warehouse : visibleWarehouseList) {
+			for (UserVO userVO : warehouse.getUsers()) {
+				if(userVO.getUserName().equals(currentUser.getUserName())) {
+					res.add(warehouse);
+				}
+			}
+		}
+		return res;
 	}
 
 	public WarehouseServiceLocal getWarehouseService() {
@@ -76,6 +114,26 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 	public void setUserService(WarehouseServiceLocal warehouseService) {
 		this.warehouseService = warehouseService;
 	}
-	
+
+	public List<WarehouseVO> getVisibleWarehouseList() {
+		return visibleWarehouseList;
+	}
+
+	public void setVisibleWarehouseList(List<WarehouseVO> visibleWarehouseList) {
+		this.visibleWarehouseList = visibleWarehouseList;
+	}
+
+	public UserSelfCareServiceRemote getUserSelfCareService() {
+		return userSelfCareService;
+	}
+
+	public void setUserSelfCareService(
+			UserSelfCareServiceRemote userSelfCareService) {
+		this.userSelfCareService = userSelfCareService;
+	}
+
+	public void setWarehouseService(WarehouseServiceLocal warehouseService) {
+		this.warehouseService = warehouseService;
+	}
 
 }
