@@ -104,6 +104,11 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 		return ret;
 
 	}
+	
+	@Override
+	public List<WarehouseVO> findAll() {
+		return warehouseConverter.toVO(warehouseDao.findAll());
+	}
 
 	@Override
 	public int getRowNumber() {

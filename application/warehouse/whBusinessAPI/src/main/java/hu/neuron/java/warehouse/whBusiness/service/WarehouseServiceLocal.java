@@ -20,6 +20,7 @@ public interface WarehouseServiceLocal {
 	public List<WarehouseVO> getWarehouse(int i, int pageSize, String sortField,
 			int dir, String filter, String filterColumnName);
 	
+	public List<WarehouseVO> findAll();
 
 	public int getRowNumber();
 }
