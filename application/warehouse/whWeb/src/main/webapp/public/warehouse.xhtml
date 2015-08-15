@@ -55,7 +55,8 @@
 					<h:outputText value="#{warehouse.address}" />
 				</p:column>
 
-				<p:column headerText="Address Number" sortBy="#{warehouse.addressNumber}"
+				<p:column headerText="Address Number"
+					sortBy="#{warehouse.addressNumber}"
 					filterBy="#{warehouse.addressNumber}">
 					<h:outputText value="#{warehouse.addressNumber}" />
 				</p:column>
@@ -65,16 +66,17 @@
 
 		<!-- new warehouse,delete and update button -->
 		<h:form id="warehouseCommandsForm">
+
 			<h:panelGrid columns="4" cellpadding="5">
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="new"
 					value="Add New Warehouse" title="Save" type="button"
-					onclick="PF('new').show()"> 
+					onclick="PF('new').show()">
 				</p:commandButton>
 
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="update"
 					value="Update Warehouse" title="Update" type="button"
 					onclick="PF('update').show()"
-					disabled="#{warehouseController.selectedWarehouse == null}" >
+					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 
 				<p:commandButton value="Delete" id="removeButton"
@@ -83,8 +85,8 @@
 					disabled="#{warehouseController.selectedWarehouse == null}" />
 
 				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="addUser"
-					value="Add User" title="Add" type="button"
-					onclick="PF('addUser').show()"
+					rendered="#{sec:areAllGranted('ROLE_ADMIN')}" value="Add User"
+					title="Add" type="button" onclick="PF('addUser').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 			</h:panelGrid>
@@ -153,7 +155,7 @@
 					<h:outputText style="color: white;" value="Name: " />
 					<p:inputText id="nameInput" required="true"
 						value="#{warehouseController.updateWarehouseName}" />
-						
+
 
 					<h:outputText style="color: white;" value="Zip Code " />
 					<p:inputText id="zipCode" required="true"
@@ -230,63 +232,13 @@
 					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
 						action="#{warehouseController.saveNewWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('new').hide();"
-						update=":form:warehouseTable"
-						 />
+						update=":form:warehouseTable" />
 
 				</h:panelGrid>
 			</h:form>
 		</p:dialog>
 
 
-		<h:form id="adminForm">
-			<p:dialog header="User Detail" widgetVar="userDialog" modal="true"
-				showEffect="fade" hideEffect="fade" resizable="false">
-				<p:outputPanel id="userDetail" style="text-align:center;">
-					<p:panelGrid columns="2"
-						rendered="#{not empty adminController.selectedUser}"
-						columnClasses="label,value">
-
-						<h:outputText value="Username" />
-						<h:outputText value="#{adminController.selectedUser.userName}" />
-
-						<h:outputText value="Fullname" />
-						<h:outputText value="#{adminController.selectedUser.fullName}" />
-
-						<h:outputText value="Email" />
-						<h:outputText value="#{adminController.selectedUser.email}" />
-
-						<h:outputText value="Phone number" />
-						<h:outputText value="#{adminController.selectedUser.phoneNumber}" />
-
-						<h:outputText value="Roles" />
-						<p:dataTable id="checkboxRoles" var="roles"
-							value="#{adminController.roles}"
-							selection="#{adminController.selectedRoles}"
-							rowKey="#{roles.roleName}"
-							style="width:250px !important;margin-bottom:0">
-							<p:column selectionMode="multiple" style="width:16px" />
-							<p:column>
-								<h:outputText value="#{roles.roleName}" />
-							</p:column>
-						</p:dataTable>
-
-						<h:outputText value="Enabled" />
-						<p:selectBooleanButton value="#{adminController.enabled}"
-							onLabel="Yes" offLabel="No" style="width:60px" />
-
-						<p:commandButton value="Update" id="update"
-							actionListener="#{adminController.updateUser}"
-							update=":adminForm:adminTable"
-							oncomplete="PF('userDialog').hide();" />
-
-						<p:commandButton value="Cancel" id="cancel"
-							actionListener="#{adminController.cancelSelect}"
-							update=":adminForm:adminTable"
-							oncomplete="PF('userDialog').hide();" />
-
-					</p:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
-		</h:form>
+	
 	</ui:define>
 </ui:composition>
