@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TransportDao extends JpaRepository<Transport, Long> {
 
 //	@Modifying
-//	@Query(value = "", nativeQuery = true)
+//	@Query(value = "insert into TransportDetails () VALUES ()", nativeQuery = true)
 //	void transportItemToWarehouse(Long fromWarehouseId, Long toWarehouseId)
 //			throws Exception;
 }

@@ -1,6 +1,11 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -117,10 +122,14 @@ public class Transport extends BaseEntity {
 	 */
 	private int piece;
 	
-
-//	@OneToMany(fetch = FetchType.LAZY)
-//	@JoinTable(name = "warehouse_warehouse_sw")
-//	private Collection<Warehouse> warehouses;
+	/**
+	 * A szállítás státusza
+	 */
+	private String transportStatus;
+	
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name = "TransportDetails")
+	private Collection<Ware> wares;
 
 	public long getFromWarehouseId() {
 		return fromWarehouseId;
@@ -290,5 +299,20 @@ public class Transport extends BaseEntity {
 		this.piece = piece;
 	}
 
+	public String getTransportStatus() {
+		return transportStatus;
+	}
+
+	public void setTransportStatus(String transportStatus) {
+		this.transportStatus = transportStatus;
+	}
+
+	public Collection<Ware> getWares() {
+		return wares;
+	}
+
+	public void setWares(Collection<Ware> wares) {
+		this.wares = wares;
+	}
 	
 }
