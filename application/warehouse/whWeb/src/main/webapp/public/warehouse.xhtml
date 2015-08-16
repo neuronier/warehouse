@@ -102,7 +102,7 @@
 			<h:form id="dialogFormAddUser">
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
-					<p:dataTable id="adminTable" var="admin"
+					<p:dataTable id="adminTablea" var="admin"
 						value="#{adminController.lazyAdminModel}"
 						emptyMessage="#{out.empty_message}"
 						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
@@ -113,30 +113,27 @@
 						<p:ajax event="rowSelect"
 							listener="#{adminController.onRowSelect}" />
 
-						<p:column headerText="Username">
+						<p:column headerText="Username" sortBy="#{admin.userName}"
+							filterBy="#{admin.userName}">
 							<h:outputText value="#{admin.userName}" />
 						</p:column>
 
-						<p:column headerText="Fullname">
+						<p:column headerText="Fullname" sortBy="#{admin.fullName}"
+							filterBy="#{admin.fullName}">
 							<h:outputText value="#{admin.fullName}" />
 						</p:column>
 
-						<p:column headerText="Email">
+						<p:column headerText="Email" sortBy="#{admin.email}"
+							filterBy="#{admin.email}">
 							<h:outputText value="#{admin.email}" />
 						</p:column>
 
-						<p:column headerText="Phone number">
+						<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
+							filterBy="#{admin.phoneNumber}">
 							<h:outputText value="#{admin.phoneNumber}" />
 						</p:column>
-
-						<p:column headerText="Roles">
-							<h:outputText value="#{admin.roles}" />
-						</p:column>
-
-						<p:column headerText="Enabled">
-							<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
-						</p:column>
 					</p:dataTable>
+
 				</h:panelGrid>
 			</h:form>
 
@@ -242,6 +239,6 @@
 		</p:dialog>
 
 
-	
+
 	</ui:define>
 </ui:composition>
