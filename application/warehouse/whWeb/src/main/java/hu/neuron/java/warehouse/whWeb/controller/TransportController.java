@@ -42,7 +42,7 @@ public class TransportController implements Serializable {
 	
 	private Collection<String> wareNames;
 	
-	@EJB(beanName = "WareService")
+	@EJB(name = "WareService")
 	WareServiceLocal wareService;
 
 	@PostConstruct
