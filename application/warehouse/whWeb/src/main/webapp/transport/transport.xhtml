@@ -18,22 +18,22 @@
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 				<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
-				<p:selectOneMenu id="fromWarehouse" value="#{warehouse.name}">
+				<p:selectOneMenu id="fromWarehouse" value="#{transportController.whNames}">
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{warehouse.name}" />
+					<f:selectItems value="#{transportController.whNames}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="toWarehouse" value="Cél raktár: " />
-				<p:selectOneMenu id="toWarehouse" value="#{warehouse.name}">
+				<p:selectOneMenu id="toWarehouse" value="#{transportController.whNames}">
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{warehouse.name}" />
+					<f:selectItems value="#{transportController.whNames}" />
 				</p:selectOneMenu>
 
 				<h:outputLabel for="items" value="Áru: " />
 				<p:selectCheckboxMenu id="items"
-					value="#{ware.wareName}" label="Wares" filter="true"
+					value="#{transportController.wareNames}" label="Wares" filter="true"
 					filterMatchMode="startsWith">
-					<f:selectItems value="#{ware.wareName}" />
+					<f:selectItems value="#{transportController.wareNames}" />
 				</p:selectCheckboxMenu>
 
 				<h:outputLabel for="darab" value="Darabszám: " />
