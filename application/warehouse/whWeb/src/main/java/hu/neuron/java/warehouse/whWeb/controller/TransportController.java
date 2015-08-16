@@ -47,13 +47,14 @@ public class TransportController implements Serializable {
 
 	@PostConstruct
 	void init() {
-		
+		whNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();
 		for (WarehouseVO warehouseVO : warehouses) {
 			whNames.add(warehouseVO.getName());
 		}
 		
+		wareNames = new ArrayList<String>();
 		wares = new ArrayList<WareVo>();
 		wares = wareService.getWares();
 		for (WareVo wareVo : wares) {
