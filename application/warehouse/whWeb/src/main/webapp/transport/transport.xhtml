@@ -18,32 +18,28 @@
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 				<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
-				<p:selectOneMenu id="fromWarehouse"
-					value="#{transportController.warehouses}">
+				<p:selectOneMenu id="fromWarehouse" value="#{warehouse.name}">
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{transportController.warehouses}" />
+					<f:selectItems value="#{warehouse.name}" />
 				</p:selectOneMenu>
 
 				<p:outputLabel for="toWarehouse" value="Cél raktár: " />
-				<p:selectOneMenu id="toWarehouse"
-					value="#{transportController.warehouses}">
+				<p:selectOneMenu id="toWarehouse" value="#{warehouse.name}">
 					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{transportController.warehouses}" />
+					<f:selectItems value="#{warehouse.name}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel for="items" value="Áru: " />
-				<p:selectOneMenu id="items"
-					value="#{transportController.warehouses}">
-					<f:selectItem itemLabel="Select One" itemValue="" />
-					<f:selectItems value="#{transportController.wares}" />
-				</p:selectOneMenu>
-
+				<h:outputLabel for="items" value="Áru: " />
+				<p:selectCheckboxMenu id="items"
+					value="#{ware.wareName}" label="Wares" filter="true"
+					filterMatchMode="startsWith">
+					<f:selectItems value="#{ware.wareName}" />
+				</p:selectCheckboxMenu>
 
 				<h:outputLabel for="darab" value="Darabszám: " />
 				<p:spinner id="darab" value="#{transportController.db}" />
 
 				<p:commandButton value="OK" id="ajax" update="growl"
-					iconPos="center"
 					actionListener="#{transportController.buttonAction}"
 					styleClass="ui-priority-primary" />
 
