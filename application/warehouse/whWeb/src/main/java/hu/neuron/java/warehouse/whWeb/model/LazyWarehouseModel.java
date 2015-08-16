@@ -17,8 +17,6 @@ import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 import org.springframework.security.core.context.SecurityContextHolder;
 
-@ViewScoped
-@ManagedBean(name = "asd")
 public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 
 	private static final long serialVersionUID = 8284121252095007781L;
