@@ -21,7 +21,7 @@
 			<groupId>hu.neuron.java.warehouse</groupId>
 			<artifactId>whWeb</artifactId>
 			<type>war</type>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -35,7 +35,6 @@
 				<configuration>
 					<version>6</version>
 					<defaultLibBundleDir>lib</defaultLibBundleDir>
-
 				</configuration>
 			</plugin>
 		</plugins>

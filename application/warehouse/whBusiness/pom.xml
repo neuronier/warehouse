@@ -21,12 +21,12 @@
 		<dependency>
 			<groupId>hu.neuron.java.warehouse</groupId>
 			<artifactId>whBusinessAPI</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>hu.neuron.java.warehouse</groupId>
 			<artifactId>whCore</artifactId>
-			<version>${version}</version>
+			<version>${project.version}</version>
 		</dependency>
 		
 		<dependency>
