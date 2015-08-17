@@ -15,6 +15,7 @@
 		<class>hu.neuron.java.warehouse.whCore.entity.Ware</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Transport</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.Stock</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 
