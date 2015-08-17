@@ -6,16 +6,16 @@ public class StockVO implements Serializable {
 
 	private static final long serialVersionUID = 5805718801339863878L;
 	
-	Long id;
+	private Long id;
 
 
-	WarehouseVO warehouse;
+	private WarehouseVO warehouse;
 	
 
-	WareVo ware;
+	private WareVo ware;
 	
 	
-	int piece;
+	private int piece;
 
 	public Long getId() {
 		return id;

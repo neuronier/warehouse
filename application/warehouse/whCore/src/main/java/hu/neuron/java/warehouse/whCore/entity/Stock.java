@@ -11,12 +11,12 @@ public class Stock extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	@ManyToOne(targetEntity = Warehouse.class)
-	Warehouse warehouse;
+	private Warehouse warehouse;
 
 	@ManyToOne(targetEntity = Ware.class)
-	Ware ware;
+	private Ware ware;
 
-	int piece;
+	private int piece;
 
 	public Warehouse getWarehouse() {
 		return warehouse;
