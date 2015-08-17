@@ -1,6 +1,8 @@
 package hu.neuron.java.warehouse.whCore.dao;
 
-import org.springframework.data.jpa.repository.Modifying;
+import hu.neuron.java.warehouse.whCore.entity.Transport;
+
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -8,11 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(propagation = Propagation.SUPPORTS)
-public interface StockDao {
+public interface TransportDetailsDao extends JpaRepository<Transport, Long> {
 
-	@Modifying
-	@Query(value = "insert into stock (warehouseId, wareId, piece) VALUES (?1, ?2, ?3)", nativeQuery = true)
-	void addWareToWarehouse(String warehouseId, int wareId, int piece)
-			throws Exception;
-
+	@Query(value = "select t from TransportDetails t")
+	void getTransportDetails() throws Exception;
 }
