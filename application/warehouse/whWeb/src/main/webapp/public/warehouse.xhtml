@@ -139,7 +139,7 @@
 
 
 			<p:commandButton id="addUserToWarehouse" value="Add"
-				action="#{warehouseController.addUserToWarehouse(warehouseController.selectedWarehouse,adminController.selectedUser)}"
+				action="#{warehouseController.addUserToWarehouse(adminController.selectedUser,warehouseController.selectedWarehouse)}"
 				update=":form:warehouseTable">
 			</p:commandButton>
 		</p:dialog>

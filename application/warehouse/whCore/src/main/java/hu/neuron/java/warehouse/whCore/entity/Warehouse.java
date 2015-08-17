@@ -47,7 +47,7 @@ public class Warehouse extends BaseEntity  {
 	 @JoinTable(
 			name = "warehouse_user",
 	        joinColumns = {@JoinColumn(name = "warehouseId")},
-	        inverseJoinColumns = {@JoinColumn(name = "userId")}
+	        inverseJoinColumns = {@JoinColumn(name = "userName")}
 	)
 	private Collection<User> users;
 

@@ -73,13 +73,13 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 				.getUserByName(SecurityContextHolder.getContext()
 						.getAuthentication().getName());
 		
-		
-		List<WarehouseVO> res = new ArrayList<WarehouseVO>();
-		if (currentUser == null) {
-			return res;
-		}
-
-		List<RoleVO> roles = currentUser.getRoles();
+//		
+//		List<WarehouseVO> res = new ArrayList<WarehouseVO>();
+//		if (currentUser == null) {
+//			return res;
+//		}
+//
+//		List<RoleVO> roles = currentUser.getRoles();
 
 		visibleWarehouseList = warehouseService.getWarehouse(first / pageSize,
 				pageSize, sortField, dir, filter, filterColumnName);
@@ -88,21 +88,23 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 
 		this.setRowCount(dataSize);
 
-		for (RoleVO roleVO : roles) {
-			if (roleVO.getRoleName().equals("ROLE_ADMIN")) {
-				return visibleWarehouseList;
-			}
-		}
-
-
-		for (WarehouseVO warehouse : visibleWarehouseList) {
-			for (UserVO userVO : warehouse.getUsers()) {
-				if(userVO.getUserName().equals(currentUser.getUserName())) {
-					res.add(warehouse);
-				}
-			}
-		}
-		return res;
+		return visibleWarehouseList;
+		
+//		for (RoleVO roleVO : roles) {
+//			if (roleVO.getRoleName().equals("ROLE_ADMIN")) {
+//				return visibleWarehouseList;
+//			}
+//		}
+//
+//
+//		for (WarehouseVO warehouse : visibleWarehouseList) {
+//			for (UserVO userVO : warehouse.getUsers()) {
+//				if(userVO.getUserName().equals(currentUser.getUserName())) {
+//					res.add(warehouse);
+//				}
+//			}
+//		}
+//		return res;
 	}
 
 	public WarehouseServiceLocal getWarehouseService() {

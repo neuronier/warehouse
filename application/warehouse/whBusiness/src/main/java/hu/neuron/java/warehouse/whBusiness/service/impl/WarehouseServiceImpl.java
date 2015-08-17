@@ -57,9 +57,9 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 	}
 
 	@Override
-	public void addUserToWarehouse(Long warehouseId, Long userId)
+	public void addUserToWarehouse(String userName, String warehouseId)
 			throws Exception {
-		warehouseDao.addUserToWarehouse(userId, warehouseId);
+		warehouseDao.addUserToWarehouse(userName, warehouseId);
 
 	}
 

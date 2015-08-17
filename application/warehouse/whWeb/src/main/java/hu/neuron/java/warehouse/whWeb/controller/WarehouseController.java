@@ -65,10 +65,10 @@ public class WarehouseController implements Serializable {
 		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService,userSelfCareService));
 	}
 
-	public void addUserToWarehouse(WarehouseVO warehouse, UserVO user) {
+	public void addUserToWarehouse(UserVO user, WarehouseVO warehouse ) {
 		try {
 			warehouseService
-					.addUserToWarehouse(user.getId(), warehouse.getId());
+					.addUserToWarehouse(user.getUserName(), warehouse.getWarehouseId());
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
