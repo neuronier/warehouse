@@ -24,6 +24,9 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 
 
+
+
+
 import hu.neuron.java.warehouse.whBusiness.converter.WareConverter;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceRemote;
@@ -62,7 +65,19 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 	@EJB
 	WareConverter wareConverter;
 
-	
+
+	@Override
+	public WareVo findWareByName(String wareName){
+		WareVo vo = null;
+		try {
+			vo =  wareConverter.toVO( wareDao.findWareByName(wareName));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return vo;
+	}
 	
 	@Override
 	public WareVo getWareByName(String ware) {
@@ -118,5 +133,6 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 	public int getRoleCount() {
 		return (int) wareDao.count();
 	}
+
 
 }

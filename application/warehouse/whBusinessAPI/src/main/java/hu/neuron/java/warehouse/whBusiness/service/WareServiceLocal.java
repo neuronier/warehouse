@@ -21,5 +21,8 @@ public WareVo getWareByName(String role);
 	
 	public int getRoleCount();
 	
+	
+	public WareVo findWareByName(String wareName);
+	
 
 }

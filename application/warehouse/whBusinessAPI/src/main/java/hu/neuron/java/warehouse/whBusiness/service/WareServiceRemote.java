@@ -23,4 +23,6 @@ public WareVo getWareByName(String role);
 			int sortOrder, String filter, String filterColumnName);
 	
 	public int getRoleCount();
+	
+	public WareVo findWareByName(String wareName);
 }
