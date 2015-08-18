@@ -24,7 +24,6 @@
 
 
 			<h:panelGrid columns="3" cellpadding="5">
-				<h:outputLabel for="menu" value="Location:" />
 				<p:selectCheckboxMenu id="menu"
 					value="#{wareOrderConttroller.selectedwareNames}" label="Wares"
 					filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
@@ -40,13 +39,14 @@
 					var="ware" emptyMessage="No wares selected">
 					 #{ware}
 					<p:spinner style="padding-left:250px;margin-top:1px" id="darab"
-						value="#{wareOrderConttroller.db}" />
+						value="#{wareOrderConttroller.db}" min="0" />
 				</p:dataList>
 
 			</p:outputPanel>
 
 			<p:commandButton value="OK" id="ajax"
 				actionListener="#{wareOrderConttroller.order}"
+				disabled="#{wareOrderConttroller.wares} == null}"
 				styleClass="ui-priority-primary" />
 		</h:form>
 

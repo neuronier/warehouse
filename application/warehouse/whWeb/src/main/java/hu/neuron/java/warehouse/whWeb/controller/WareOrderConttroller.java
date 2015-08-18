@@ -1,12 +1,5 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
-
 import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
@@ -14,13 +7,18 @@ import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 @ViewScoped
 @ManagedBean(name = "wareOrderConttroller")
@@ -97,6 +95,8 @@ public class WareOrderConttroller implements Serializable {
 				pieces.removeLast();
 				wareOrder.order(order);
 			}
+			FacesContext.getCurrentInstance().addMessage(
+					null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes ","Order"));
 		} catch (Exception e) {
 			
 			e.printStackTrace();
