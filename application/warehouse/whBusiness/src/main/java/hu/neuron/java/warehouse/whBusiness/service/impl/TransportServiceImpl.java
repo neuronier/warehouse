@@ -1,9 +1,13 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
 import hu.neuron.java.warehouse.whBusiness.converter.TransportConverter;
+import hu.neuron.java.warehouse.whBusiness.converter.TransportDetailsConverter;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
+import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
+import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -21,21 +25,26 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Remote(TransportServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class TransportServiceImpl implements TransportServiceLocal, TransportServiceRemote {
+public class TransportServiceImpl implements TransportServiceLocal,
+		TransportServiceRemote {
 
 	@Autowired
 	TransportDao transportDao;
-	
+
 	@EJB
-    TransportConverter transportConverter;
+	TransportConverter transportConverter;
+	
+	@Autowired
+	TransportDetailsDao transportDetailsDao;
+
+	@EJB
+	TransportDetailsConverter transportDetailsConverter;
 
 	@Override
-	public void transportItemToWarehouse(String fromWarehouseId,
-			String toWarehouseId, Long wareId, int piece) throws Exception {
-		// majd ide valami
-		
+	public void transportItemToWarehouse(TransportVO transportVO,
+			TransportDetailsVO detailsVO) {
+		// itt jön a harc
+
 	}
-	
-	
 
 }

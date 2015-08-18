@@ -5,8 +5,6 @@ import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
 import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
 import hu.neuron.java.warehouse.whBusiness.service.WareOrderRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
-import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
-import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
 

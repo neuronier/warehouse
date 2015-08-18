@@ -1,9 +1,11 @@
 package hu.neuron.java.warehouse.whBusiness.service;
 
+import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
+import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 
 public interface TransportServiceRemote {
 
-	void transportItemToWarehouse(String fromWarehouseId, String toWarehouseId,
-			Long wareId, int piece) throws Exception;
+	void transportItemToWarehouse(TransportVO transportVO,
+			TransportDetailsVO detailsVO);
 
 }
