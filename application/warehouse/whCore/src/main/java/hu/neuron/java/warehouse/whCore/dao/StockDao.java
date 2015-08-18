@@ -13,9 +13,4 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS)
 public interface StockDao extends JpaRepository<Stock, Long>{
 
-	@Modifying
-	@Query(value = "insert into stock (warehouseId, wareId, piece) VALUES (?1, ?2, ?3)", nativeQuery = true)
-	void addWareToWarehouse(String warehouseId, int wareId, int piece)
-			throws Exception;
-
 }
