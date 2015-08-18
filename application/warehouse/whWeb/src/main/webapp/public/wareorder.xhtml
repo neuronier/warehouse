@@ -34,15 +34,12 @@
 			</h:panelGrid>
 
 
-
-			<!-- 			<h:outputLabel for="darab" value="Darabszám: " /> -->
-			<!-- 			<p:spinner id="darab" value="#{wareOrderConttroller.db}" /> -->
-			
 			<p:outputPanel id="display"
-				style="width:250px;padding-left:5px;margin-top:10px">
+				style="width:250px;padding-left:5px;margin-top:1px">
 				<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
-					var="city" emptyMessage="No cities selected">
-					<p:spinner style="padding-left:300px;margin-top:10px" id="darab"
+					var="ware" emptyMessage="No wares selected">
+					 #{ware}
+					<p:spinner style="padding-left:250px;margin-top:1px" id="darab"
 						value="#{wareOrderConttroller.db}" />
 				</p:dataList>
 
@@ -54,7 +51,7 @@
 		</h:form>
 
 		<h:form id="db">
-			
+
 		</h:form>
 
 
