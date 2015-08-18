@@ -3,7 +3,9 @@ package hu.neuron.java.warehouse.whWeb.controller;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
@@ -36,6 +38,9 @@ public class WareOrderConttroller implements Serializable {
 	WareServiceLocal wareService;
 	
 	private int db;
+	
+	
+	private LinkedList<Integer> pieces;
 
 	
 	private Collection<WarehouseVO> warehouses;
@@ -48,6 +53,8 @@ public class WareOrderConttroller implements Serializable {
 	
 	private List<WareVo> wares;
 	
+	private Collection<WareVo> selectedware;
+	
 	private Collection<String> wareNames;
 	
 	private Collection<String> selectedwareNames;
@@ -55,6 +62,8 @@ public class WareOrderConttroller implements Serializable {
 
 	@PostConstruct
 	void init() {
+		pieces = new LinkedList<Integer>();
+		System.out.println(db);
 		whNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();
@@ -76,22 +85,36 @@ public class WareOrderConttroller implements Serializable {
 		StockVO order = new StockVO();
 		try {
 			wh = warehouseService.findWarehouseByName(selectedWhNames);
+			if(wh == null) {
+				wh = warehouseService.findWarehouseByName("Default Warehouse");
+			}
 			
 			order.setWarehouse(wh);
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
 				order.setWare(ware);
-				order.setPiece(db);
+				order.setPiece(pieces.getLast());
+				pieces.removeLast();
 				wareOrder.order(order);
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
+		} finally {
+			pieces.clear();
 		}
-		
 		
 	}
 
+
+
+	public Collection<WareVo> getSelectedware() {
+		return selectedware;
+	}
+
+	public void setSelectedware(Collection<WareVo> selectedware) {
+		this.selectedware = selectedware;
+	}
 
 	public void addMessage(String summary) {
 		FacesContext context = FacesContext.getCurrentInstance();
@@ -111,6 +134,7 @@ public class WareOrderConttroller implements Serializable {
 	}
 
 	public void setDb(int db) {
+		pieces.addFirst(db);
 		this.db = db;
 	}
 

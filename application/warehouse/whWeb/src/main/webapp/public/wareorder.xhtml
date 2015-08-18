@@ -1,3 +1,4 @@
+
 <ui:composition template="/templates/masterLayout.xhtml"
 	xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
@@ -12,12 +13,12 @@
 	<ui:define name="pageTitle">Warehouse Managment</ui:define>
 	<ui:define name="content">
 
-		<h:form>
+		<h:form id="select">
 			<p:outputLabel for="toWarehouse" value="Cél raktár: " />
 			<p:selectOneMenu id="toWarehouse"
 				value="#{wareOrderConttroller.selectedWhNames}">
 				<f:selectItem itemLabel="Select One" itemValue="" />
-				<f:selectItems value="#{transportController.whNames}" />
+				<f:selectItems value="#{wareOrderConttroller.whNames}" />
 			</p:selectOneMenu>
 
 
@@ -32,19 +33,28 @@
 				<p:commandLink value="Submit" update="display" />
 			</h:panelGrid>
 
+
+
+			<!-- 			<h:outputLabel for="darab" value="Darabszám: " /> -->
+			<!-- 			<p:spinner id="darab" value="#{wareOrderConttroller.db}" /> -->
+			
 			<p:outputPanel id="display"
-				style="width:250px;padding-left:5px;margin-top:10px;color:white">
+				style="width:250px;padding-left:5px;margin-top:10px">
 				<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
 					var="city" emptyMessage="No cities selected">
+					<p:spinner style="padding-left:300px;margin-top:10px" id="darab"
+						value="#{wareOrderConttroller.db}" />
 				</p:dataList>
-			</p:outputPanel>
 
-			<h:outputLabel for="darab" value="Darabszám: " />
-			<p:spinner id="darab" value="#{wareOrderConttroller.db}" />
+			</p:outputPanel>
 
 			<p:commandButton value="OK" id="ajax"
 				actionListener="#{wareOrderConttroller.order}"
 				styleClass="ui-priority-primary" />
+		</h:form>
+
+		<h:form id="db">
+			
 		</h:form>
 
 
