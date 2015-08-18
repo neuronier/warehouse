@@ -1,10 +1,9 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
-import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
-import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
+import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
@@ -20,101 +19,101 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 @ViewScoped
-@ManagedBean(name = "transportController")
-public class TransportController implements Serializable {
+@ManagedBean(name = "wareOrderConttroller")
+public class WareOrderConttroller implements Serializable {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
-	private int db;
+	@EJB(name = "WareOrderService")
+	WareOrderLOcal wareOrder;
 	
-	private LinkedList<Integer> pieces;
-	
-	@EJB(name = "TransportService")
-	TransportServiceLocal transportOrder;
-
-	// warehouseok
-	private Collection<WarehouseVO> warehouses;
-
-	private Collection<String> whNames;
-	
-	private String selectedWarehouseNames;
-
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
+	
+	@EJB(name = "WareService")
+	WareServiceLocal wareService;
+	
+	private int db;
+	
+	
+	private LinkedList<Integer> pieces;
 
-	// itemek
+	
+	private Collection<WarehouseVO> warehouses;
+	
+	private Collection<String> whNames;
+	
+	private String selectedWhNames;
+
+	
+	
 	private List<WareVo> wares;
-
+	
+	private Collection<WareVo> selectedware;
+	
 	private Collection<String> wareNames;
 	
 	private Collection<String> selectedwareNames;
-
-	@EJB(name = "WareService")
-	WareServiceLocal wareService;
+	
 
 	@PostConstruct
 	void init() {
+		pieces = new LinkedList<Integer>();
+		System.out.println(db);
 		whNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();
 		for (WarehouseVO warehouseVO : warehouses) {
 			whNames.add(warehouseVO.getName());
 		}
-
+		
 		wareNames = new ArrayList<String>();
 		wares = new ArrayList<WareVo>();
 		wares = wareService.getWares();
 		for (WareVo wareVo : wares) {
 			wareNames.add(wareVo.getWareName());
 		}
-		
-		setPieces(new LinkedList<Integer>());
 	}
-
-	public void transport() {
-		WarehouseVO fromWarehouse;
-		WarehouseVO toWarehouse;
+	
+	public void order() {
+		WarehouseVO wh;
 		WareVo ware;
-		TransportVO transportVO = new TransportVO();
-		TransportDetailsVO detailsVO = new TransportDetailsVO();
+		StockVO order = new StockVO();
 		try {
-			fromWarehouse = warehouseService.findWarehouseByName(selectedWarehouseNames);
-			if (fromWarehouse == null) {
-				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
+			wh = warehouseService.findWarehouseByName(selectedWhNames);
+			if(wh == null) {
+				wh = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setFromWarehouseId(fromWarehouse.getWarehouseId());
 			
-			toWarehouse = warehouseService.findWarehouseByName(selectedWarehouseNames);
-			if (toWarehouse == null) {
-				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
-			}
-			transportVO.setToWarehouseId(toWarehouse.getWarehouseId());
-			
-			transportVO.setTransportStatus("Szállítás alatt");
-			
+			order.setWarehouse(wh);
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
-				detailsVO.setWare(ware);
-				detailsVO.setPiece(pieces.getLast());
+				order.setWare(ware);
+				order.setPiece(pieces.getLast());
 				pieces.removeLast();
-				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
+				wareOrder.order(order);
 			}
-			
+			FacesContext.getCurrentInstance().addMessage(
+					null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes ","Order"));
 		} catch (Exception e) {
+			
 			e.printStackTrace();
+		} finally {
+			pieces.clear();
 		}
-
 		
 	}
 
-	public void buttonAction(ActionEvent actionEvent) {
-		addMessage("A szállítás hamarosan megkezdődik");
+
+
+	public Collection<WareVo> getSelectedware() {
+		return selectedware;
+	}
+
+	public void setSelectedware(Collection<WareVo> selectedware) {
+		this.selectedware = selectedware;
 	}
 
 	public void addMessage(String summary) {
@@ -135,6 +134,7 @@ public class TransportController implements Serializable {
 	}
 
 	public void setDb(int db) {
+		pieces.addFirst(db);
 		this.db = db;
 	}
 
@@ -162,20 +162,37 @@ public class TransportController implements Serializable {
 		this.wareNames = wareNames;
 	}
 
-	public LinkedList<Integer> getPieces() {
-		return pieces;
+	public WareOrderLOcal getWareOrder() {
+		return wareOrder;
 	}
 
-	public void setPieces(LinkedList<Integer> pieces) {
-		this.pieces = pieces;
+	public void setWareOrder(WareOrderLOcal wareOrder) {
+		this.wareOrder = wareOrder;
 	}
 
-	public String getSelectedWarehouseNames() {
-		return selectedWarehouseNames;
+
+	public String getSelectedWhNames() {
+		return selectedWhNames;
 	}
 
-	public void setSelectedWarehouseNames(String selectedWarehouseNames) {
-		this.selectedWarehouseNames = selectedWarehouseNames;
+	public void setSelectedWhNames(String selectedWhNames) {
+		this.selectedWhNames = selectedWhNames;
+	}
+
+	public WarehouseServiceLocal getWarehouseService() {
+		return warehouseService;
+	}
+
+	public void setWarehouseService(WarehouseServiceLocal warehouseService) {
+		this.warehouseService = warehouseService;
+	}
+
+	public WareServiceLocal getWareService() {
+		return wareService;
+	}
+
+	public void setWareService(WareServiceLocal wareService) {
+		this.wareService = wareService;
 	}
 
 	public Collection<String> getSelectedwareNames() {
@@ -186,4 +203,5 @@ public class TransportController implements Serializable {
 		this.selectedwareNames = selectedwareNames;
 	}
 
+	
 }

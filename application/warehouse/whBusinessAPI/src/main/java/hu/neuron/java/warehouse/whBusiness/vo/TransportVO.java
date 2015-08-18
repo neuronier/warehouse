@@ -9,31 +9,31 @@ public class TransportVO implements Serializable{
 	/**
 	 * A feladó raktár id-ja
 	 */
-	private long fromWarehouseId;
+	private String fromWarehouseId;
 
 	/**
 	 * Az átvevő raktár id-ja
 	 */
-	private long toWarehouseId;
+	private String toWarehouseId;
 	
 	/**
 	 * A szállítás státusza
 	 */
 	private String transportStatus;
 
-	public long getFromWarehouseId() {
+	public String getFromWarehouseId() {
 		return fromWarehouseId;
 	}
 
-	public void setFromWarehouseId(long fromWarehouseId) {
+	public void setFromWarehouseId(String fromWarehouseId) {
 		this.fromWarehouseId = fromWarehouseId;
 	}
 
-	public long getToWarehouseId() {
+	public String getToWarehouseId() {
 		return toWarehouseId;
 	}
 
-	public void setToWarehouseId(long toWarehouseId) {
+	public void setToWarehouseId(String toWarehouseId) {
 		this.toWarehouseId = toWarehouseId;
 	}
 

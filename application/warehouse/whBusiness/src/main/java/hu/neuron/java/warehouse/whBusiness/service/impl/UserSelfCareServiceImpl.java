@@ -2,16 +2,12 @@ package hu.neuron.java.warehouse.whBusiness.service.impl;
 
 import hu.neuron.java.warehouse.whBusiness.converter.RoleConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.UserConverter;
-import hu.neuron.java.warehouse.whBusiness.service.RegistrationServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whCore.dao.RoleDao;
 import hu.neuron.java.warehouse.whCore.dao.UserDao;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;

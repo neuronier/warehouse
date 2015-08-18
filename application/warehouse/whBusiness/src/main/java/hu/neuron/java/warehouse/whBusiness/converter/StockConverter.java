@@ -1,9 +1,7 @@
 package hu.neuron.java.warehouse.whBusiness.converter;
 
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
-import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whCore.entity.Stock;
-import hu.neuron.java.warehouse.whCore.entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
-
 @Singleton
 @Interceptors(SpringBeanAutowiringInterceptor.class)
 public class StockConverter {
@@ -24,7 +21,7 @@ public class StockConverter {
 	@Autowired
 	@Qualifier("mapper")
 	Mapper mapper;
-	
+
 	public StockVO toVO(Stock dto) {
 		if (dto == null) {
 			return null;

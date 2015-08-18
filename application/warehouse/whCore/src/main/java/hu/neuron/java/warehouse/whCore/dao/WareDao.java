@@ -1,5 +1,6 @@
 package hu.neuron.java.warehouse.whCore.dao;
 import hu.neuron.java.warehouse.whCore.entity.Ware;
+import hu.neuron.java.warehouse.whCore.entity.Warehouse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,9 @@ public interface WareDao extends JpaRepository<Ware, Long> {
 	Ware findByWareName(@Param("Name") String name) throws Exception;
 
 	Page<Ware> findByWareNameStartsWith(String filter,Pageable pageable);
+	
+	@Query("select w from Ware w where w.wareName=?1")	
+	Ware findWareByName(String wareName) throws Exception;
 	
 //	@Modifying
 //	@Query(value = "insert into user_ware_sw (ware_id) VALUES (?2)", nativeQuery = true)

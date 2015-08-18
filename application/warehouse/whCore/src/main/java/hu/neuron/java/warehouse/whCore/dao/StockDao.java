@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whCore.dao;
 
 import hu.neuron.java.warehouse.whCore.entity.Stock;
+import hu.neuron.java.warehouse.whCore.entity.Warehouse;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -13,12 +14,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(propagation = Propagation.SUPPORTS)
-public interface StockDao extends JpaRepository<Stock, Long> {
+public interface StockDao extends JpaRepository<Stock, Long>{
 
+	
 	@Modifying
 	@Query(value = "insert into stock (warehouseId, wareId, piece) VALUES (?1, ?2, ?3)", nativeQuery = true)
 	void addWareToWarehouse(String warehouseId, int wareId, int piece) throws Exception;
 
+	@Query ( value = "DELETE FROM stock  WHERE warehouse_id = ?1", nativeQuery=true)
+	public void deleteByWarehouseId(Long warehouseId);
 	Page<Stock> findByWarehouseStartsWith(String filter, Pageable pageable);
 
 	Page<Stock> findByWareStartsWith(String filter, Pageable pageable);
