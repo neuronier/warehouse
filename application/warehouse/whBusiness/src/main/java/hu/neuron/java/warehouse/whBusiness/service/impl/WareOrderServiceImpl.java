@@ -24,34 +24,24 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Remote(WareOrderRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class WareOrderServiceImpl implements WareOrderLOcal, WareOrderRemote{
-	
+public class WareOrderServiceImpl implements WareOrderLOcal, WareOrderRemote {
+
 	@Autowired
 	WarehouseDao warehouseDao;
-	
+
 	@Autowired
 	StockDao stockDao;
 
 	@EJB
 	WarehouseConverter warehouseConverter;
-	
+
 	@EJB
 	StockConverter stockConverter;
-	
+
 	public void order(StockVO order) {
-		
+
 		stockDao.save(stockConverter.toEntity(order));
-		
-//		try {
-//			if ( warehouseDao.findWareByWareIdAndWarehouseId(ware.getId(), warehouse.getId()) == null) {
-//				warehouseDao.addWareToWarehouse(warehouse.getId(), ware.getId(), piece);
-//			} else {
-//				
-//			}
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
 	}
 
 }

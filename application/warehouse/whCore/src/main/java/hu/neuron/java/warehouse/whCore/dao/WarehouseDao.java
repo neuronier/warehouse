@@ -27,9 +27,6 @@ public interface WarehouseDao extends JpaRepository<Warehouse, Long>{
 	Warehouse findWarehouseByWarehouseId(String warehouseId) throws Exception;
 	
 	
-//	@Query("select w from stock w where w.ware=?1 and w.warehouse=?2")
-//	Warehouse findWareByWareIdAndWarehouseId(Long ware, Long warehousd) throws Exception;
-	
 	Page<Warehouse> findByNameStartsWith(String filter,Pageable pageable);
 	
 	Page<Warehouse> findByWarehouseIdStartsWith(String filter,Pageable pageable);
