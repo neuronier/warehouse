@@ -8,11 +8,12 @@
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Stock</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.StockHistory</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.Transport</class>
+		<class>hu.neuron.java.warehouse.whCore.entity.TransportDetails</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.User</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Ware</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Warehouse</class>
-		<class>hu.neuron.java.warehouse.whCore.entity.Transport</class>
-		<class>hu.neuron.java.warehouse.whCore.entity.TransportDetails</class>
 		<exclude-unlisted-classes>true</exclude-unlisted-classes>
 
 		<properties>

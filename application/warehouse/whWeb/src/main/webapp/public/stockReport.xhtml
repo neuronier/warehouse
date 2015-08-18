@@ -1,0 +1,98 @@
+<ui:composition template="/templates/masterLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="head-extra">
+		<!-- custom css -->
+	</ui:define>
+	<ui:define name="pageTitle">Stock/Transfer Report</ui:define>
+	<ui:define name="content">
+
+		<h:panelGroup rendered="#{empty request.remoteUser}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 align="center" style="font-family: Broadway; color: white">To
+				access this content, please login.</h2>
+		</h:panelGroup>
+
+		<h:form id="form" rendered="#{not empty request.remoteUser}">
+			<p:tabView>
+				<p:tab title="Stock/Changes">
+<!-- 					<p:outputLabel for="selectWarehouse" value="Select warehouse: " /> -->
+<!-- 					<p:selectOneMenu id="selectWarehouse" -->
+<!-- 						value="#{stockReportController.selectedWarehouse}"> -->
+<!-- 						<p:ajax listener="#{stockReportController.onWarehouseChange}" -->
+<!-- 							update="whStock:stockTable,whStock:stockHistoryTable" /> -->
+<!-- 						<f:selectItem itemLabel="Select warehouse" itemValue="" -->
+<!-- 							noSelectionOption="true" /> -->
+<!-- 						<f:selectItems value="#{stockReportController.warehouses}" -->
+<!-- 							var="warehouses" itemLabel="#{warehouses.name}" /> -->
+<!-- 					</p:selectOneMenu> -->
+					<p:tabView id="whStock">
+						<p:tab title="Actual stock level">
+							<p:dataTable id="stockTable" var="stock"
+								value="#{stockReportController.lazyStockReportActualModel}"
+								emptyMessage="#{out.empty_message}"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+								rows="10">
+
+								<p:column headerText="Warehouse"
+									sortBy="#{stock.warehouse.warehouseId}"
+									filterBy="#{stock.warehouse.warehouseId}">
+									<h:outputText value="#{stock.warehouse.warehouseId}" />
+								</p:column>
+
+								<p:column headerText="Ware" sortBy="#{stock.ware.wareName}"
+									filterBy="#{stock.ware.wareName}">
+									<h:outputText value="#{stock.ware.wareName}" />
+								</p:column>
+
+								<p:column headerText="Amount">
+									<h:outputText value="#{stock.piece}" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+						<p:tab title="Stock changes">
+							<p:dataTable id="stockHistoryTable" var="stockHistory"
+								value="#{stockReportController.lazyStockReportHistoryModel}"
+								emptyMessage="#{out.empty_message}"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+								rows="10">
+
+								<p:column headerText="Warehouse"
+									sortBy="#{stockHistory.warehouse}"
+									filterBy="#{stockHistory.warehouse}">
+									<h:outputText value="#{stockHistory.warehouse}" />
+								</p:column>
+
+								<p:column headerText="Ware" sortBy="#{stockHistory.ware}"
+									filterBy="#{stockHistory.ware}">
+									<h:outputText value="#{stockHistory.ware}" />
+								</p:column>
+
+								<p:column headerText="Amount">
+									<h:outputText value="#{stockHistory.piece}" />
+								</p:column>
+
+								<p:column headerText="Change time">
+									<h:outputText value="#{stockHistory.changeTime}" />
+								</p:column>
+							</p:dataTable>
+						</p:tab>
+					</p:tabView>
+				</p:tab>
+				<p:tab title="Pending transfers">
+					<!-- lazy loados tabla lesz itt ha elkeszul a transferes funkcio  -->
+				</p:tab>
+			</p:tabView>
+		</h:form>
+	</ui:define>
+</ui:composition>

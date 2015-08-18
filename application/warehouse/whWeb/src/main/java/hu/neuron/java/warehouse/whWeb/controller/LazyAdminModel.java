@@ -16,14 +16,6 @@ public class LazyAdminModel extends LazyDataModel<UserVO> {
 
 	private AdminServiceRemote adminService;
 
-	public AdminServiceRemote getAdminService() {
-		return adminService;
-	}
-
-	public void setAdminService(AdminServiceRemote adminService) {
-		this.adminService = adminService;
-	}
-
 	public LazyAdminModel(AdminServiceRemote adminService) {
 		super();
 		this.adminService = adminService;
@@ -73,6 +65,22 @@ public class LazyAdminModel extends LazyDataModel<UserVO> {
 
 		return visibleUserList;
 
+	}
+	
+	public AdminServiceRemote getAdminService() {
+		return adminService;
+	}
+
+	public void setAdminService(AdminServiceRemote adminService) {
+		this.adminService = adminService;
+	}
+
+	public List<UserVO> getVisibleUserList() {
+		return visibleUserList;
+	}
+
+	public void setVisibleUserList(List<UserVO> visibleUserList) {
+		this.visibleUserList = visibleUserList;
 	}
 
 }
