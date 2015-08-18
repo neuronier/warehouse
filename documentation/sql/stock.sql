@@ -1,9 +1,9 @@
 CREATE TABLE IF NOT EXISTS `stock` (
   `id` BIGINT(20) NOT NULL unique auto_increment ,
-  `warehouseId` VARCHAR (20) NOT NULL,
-  `wareId` BIGINT(20) NOT NULL,
+  `warehouse_id` BIGINT(20) NOT NULL,
+  `ware_id` BIGINT(20) NOT NULL,
   `piece` INT(6),
-  PRIMARY KEY (warehouseId, wareId))
+  PRIMARY KEY (warehouse_id, ware_id))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = latin1;
 
