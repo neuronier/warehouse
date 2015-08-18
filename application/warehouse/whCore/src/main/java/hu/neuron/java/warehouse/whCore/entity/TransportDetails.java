@@ -21,15 +21,15 @@ public class TransportDetails extends BaseEntity {
 	private Long transportId;
 
 	@ManyToOne(targetEntity = Warehouse.class)
-	Warehouse fromWarehouse;
+	private Warehouse fromWarehouse;
 
 	@ManyToOne(targetEntity = Warehouse.class)
-	Warehouse toWarehouse;
+	private Warehouse toWarehouse;
 
 	@ManyToOne(targetEntity = Ware.class)
-	Ware ware;
+	private Ware ware;
 
-	int piece;
+	private int piece;
 
 	public Warehouse getToWarehouse() {
 		return toWarehouse;
