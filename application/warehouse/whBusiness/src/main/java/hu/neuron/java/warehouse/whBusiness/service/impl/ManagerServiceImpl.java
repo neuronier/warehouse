@@ -64,7 +64,7 @@ public class ManagerServiceImpl implements ManagerServiceLocal {
 		for (ManagerVO managerVO : managers) {
 			try {
 				warehouses.add(warehouseConverter.toVO(warehouseDao
-						.findWarehouseByWarehouseId(managerVO.getUser())));
+						.findWarehouseByWarehouseId(managerVO.getWarehouse())));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
