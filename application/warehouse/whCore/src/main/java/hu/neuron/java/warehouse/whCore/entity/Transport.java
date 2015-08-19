@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -15,11 +16,13 @@ public class Transport extends BaseEntity {
 	/**
 	 * A feladó raktár id-ja
 	 */
+	@ManyToOne(targetEntity = Warehouse.class)
 	private long fromWarehouseId;
 
 	/**
 	 * Az átvevő raktár id-ja
 	 */
+	@ManyToOne(targetEntity = Warehouse.class)
 	private long toWarehouseId;
 	
 	/**

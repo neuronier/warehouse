@@ -20,39 +20,17 @@ public class TransportDetails extends BaseEntity {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
 	private Long transportId;
 
-	@ManyToOne(targetEntity = Warehouse.class)
-	private Warehouse fromWarehouse;
-
-	@ManyToOne(targetEntity = Warehouse.class)
-	private Warehouse toWarehouse;
-
 	@ManyToOne(targetEntity = Ware.class)
-	private Ware ware;
+	private Ware wareId;
 
 	private int piece;
 
-	public Warehouse getToWarehouse() {
-		return toWarehouse;
-	}
-
-	public void setToWarehouse(Warehouse toWarehouse) {
-		this.toWarehouse = toWarehouse;
-	}
-
-	public Warehouse getFromWarehouse() {
-		return fromWarehouse;
-	}
-
-	public void setFromWarehouse(Warehouse fromWarehouse) {
-		this.fromWarehouse = fromWarehouse;
-	}
-
 	public Ware getWare() {
-		return ware;
+		return wareId;
 	}
 
 	public void setWare(Ware ware) {
-		this.ware = ware;
+		this.wareId = ware;
 	}
 
 	public int getPiece() {
@@ -65,9 +43,10 @@ public class TransportDetails extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "TransportDetails [toWarehouse=" + toWarehouse
-				+ ", fromWarehouse=" + fromWarehouse + ", ware=" + ware
-				+ ", piece=" + piece + "]";
+		return "TransportDetails [transportId=" + transportId + ", ware="
+				+ wareId + ", piece=" + piece + "]";
 	}
+
+	
 
 }
