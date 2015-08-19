@@ -34,15 +34,16 @@
 					value="#{transportController.selectedwareNames}" label="Wares"
 					filter="true" filterMatchMode="startsWith">
 					<f:selectItems value="#{transportController.wareNames}" />
-					<p:outputPanel id="num" value="Darabszám: ">
-						<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
-							var="ware" emptyMessage="No wares selected">
+				</p:selectCheckboxMenu>
+					<p:commandLink value="Kiválasztás" update="num" />
+
+				<p:outputPanel id="num">
+					<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
+						var="ware" emptyMessage="No wares selected">
 							#{ware}
 							<p:spinner id="darab" value="#{transportController.db}" min="0" />
-						</p:dataList>
-					</p:outputPanel>
-					<p:commandLink value="Kiválasztás" update="num" />
-				</p:selectCheckboxMenu>
+					</p:dataList>
+				</p:outputPanel>
 
 				<p:commandButton value="OK" id="ajax"
 					actionListener="#{transportController.buttonAction}"
