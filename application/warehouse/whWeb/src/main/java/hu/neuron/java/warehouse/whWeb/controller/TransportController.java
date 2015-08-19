@@ -35,6 +35,8 @@ public class TransportController implements Serializable {
 	
 	private LinkedList<Integer> pieces;
 	
+	private String transportStatus;
+	
 	@EJB(name = "TransportService")
 	TransportServiceLocal transportOrder;
 
@@ -97,6 +99,8 @@ public class TransportController implements Serializable {
 			transportVO.setToWarehouseId(toWarehouse.getWarehouseId());
 			
 			transportVO.setTransportStatus("Szállítás alatt");
+			setTransportStatus(transportVO.getTransportStatus());
+			
 			
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
@@ -184,6 +188,14 @@ public class TransportController implements Serializable {
 
 	public void setSelectedwareNames(Collection<String> selectedwareNames) {
 		this.selectedwareNames = selectedwareNames;
+	}
+
+	public String getTransportStatus() {
+		return transportStatus;
+	}
+
+	public void setTransportStatus(String transportStatus) {
+		this.transportStatus = transportStatus;
 	}
 
 }

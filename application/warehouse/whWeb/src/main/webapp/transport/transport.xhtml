@@ -44,10 +44,17 @@
 							<p:spinner id="darab" value="#{transportController.db}" min="0" />
 					</p:dataList>
 				</p:outputPanel>
+				
+				<h:outputLabel for="status" value="Státusz: ">
+					<p:outputLabel id="status" value="#{transportController.transportStatus}"/>
+				</h:outputLabel>
+
 
 				<p:commandButton value="OK" id="ajax"
-					actionListener="#{transportController.buttonAction}"
-					styleClass="ui-priority-primary" />
+					actionListener="#{transportController.transport}"
+					disabled="#{transportController.wares} == null}"
+					styleClass="ui-priority-primary" update="status"/>
+				
 			</h:panelGrid>
 		</h:form>
 
