@@ -34,19 +34,6 @@ public class Warehouse extends BaseEntity {
 	@Column(nullable = false)
 	private int addressNumber;
 
-	// @ManyToMany(fetch = FetchType.LAZY)
-	// @JoinTable(name = "warehouse_user")
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "warehouse_user", joinColumns = { @JoinColumn(name = "warehouseId") }, inverseJoinColumns = { @JoinColumn(name = "userName") })
-	private Collection<User> users;
-
-	public Collection<User> getUsers() {
-		return users;
-	}
-
-	public void setUsers(Collection<User> users) {
-		this.users = users;
-	}
 
 	public String getName() {
 		return name;
@@ -100,8 +87,7 @@ public class Warehouse extends BaseEntity {
 	public String toString() {
 		return "Warehouse [name=" + name + ", warehouseId=" + warehouseId
 				+ ", zipCode=" + zipCode + ", city=" + city + ", address="
-				+ address + ", addressNumber=" + addressNumber + ", users="
-				+ users + "]";
+				+ address + ", addressNumber=" + addressNumber ;
 	}
 
 }

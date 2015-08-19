@@ -22,14 +22,7 @@ public class WarehouseVO implements Serializable{
 
 	private int addressNumber;
 
-	private Collection<UserVO> users;
-	
-	public Collection<UserVO> getUsers() {
-		return users;
-	}
-	public void setUsers(Collection<UserVO> users) {
-		this.users = users;
-	}
+
 	public String getName() {
 		return name;
 	}
@@ -78,8 +71,7 @@ public class WarehouseVO implements Serializable{
 	public String toString() {
 		return "WarehouseVO [name=" + name + ", id=" + id + ", warehouseId="
 				+ warehouseId + ", zipCode=" + zipCode + ", city=" + city
-				+ ", address=" + address + ", addressNumber=" + addressNumber
-				+ ", users=" + users + "]";
+				+ ", address=" + address + ", addressNumber=" + addressNumber;
 	}
 	
 	

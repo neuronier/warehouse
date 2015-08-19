@@ -1,7 +1,9 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
+import hu.neuron.java.warehouse.whBusiness.service.ManagerServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.vo.ManagerVO;
 import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
@@ -56,6 +58,9 @@ public class WarehouseController implements Serializable {
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
 	
+	@EJB(name = "ManagerService")
+	ManagerServiceLocal managerService;
+	
 	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
 	private UserSelfCareServiceRemote userSelfCareService;
 
@@ -67,8 +72,16 @@ public class WarehouseController implements Serializable {
 
 	public void addUserToWarehouse(UserVO user, WarehouseVO warehouse ) {
 		try {
-			warehouseService
-					.addUserToWarehouse(user.getUserName(), warehouse.getWarehouseId());
+			ManagerVO manager = new ManagerVO();
+			
+			manager.setUser(user.getUserName());
+			manager.setWarehouse(warehouse.getWarehouseId());
+			
+			managerService.addManager(manager);
+			
+//			warehouseService
+//					.addUserToWarehouse(user.getUserName(), warehouse.getWarehouseId());
+			
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
@@ -158,7 +171,6 @@ public class WarehouseController implements Serializable {
 		updateWarehouseAddress = selectedWarehouse.getAddress();
 		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
 		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
-		updateWarehouseAddressZipusres = selectedWarehouse.getUsers();
 		updateWarehouseCity = selectedWarehouse.getCity();
 
 		FacesContext.getCurrentInstance().addMessage(
