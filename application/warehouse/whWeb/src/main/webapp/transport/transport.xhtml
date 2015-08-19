@@ -38,7 +38,7 @@
 					<p:commandLink value="Kiválasztás" update="num" />
 
 				<p:outputPanel id="num">
-					<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
+					<p:dataList value="#{transportController.selectedwareNames}"
 						var="ware" emptyMessage="No wares selected">
 							#{ware}
 							<p:spinner id="darab" value="#{transportController.db}" min="0" />
