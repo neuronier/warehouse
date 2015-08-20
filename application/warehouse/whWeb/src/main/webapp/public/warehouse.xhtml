@@ -14,6 +14,7 @@
 
 
 		<h:form id="form">
+
 			<!-- Ez itt a tabla -->
 			<p:dataTable id="warehouseTable" var="warehouse"
 				value="#{warehouseController.lazyWarehouseModel}"
@@ -28,7 +29,7 @@
 				<p:ajax event="rowSelect"
 					listener="#{warehouseController.onRowSelect}"
 					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton,
-					:dialogFormUpdate,:dialogForm,:dialogFormAddUser	" />
+					:dialogFormUpdate,:dialogForm" />
 
 				<p:column headerText="Name" sortBy="#{warehouse.name}"
 					filterBy="#{warehouse.name}">
@@ -68,87 +69,58 @@
 		<!-- new warehouse,delete and update button -->
 		<h:form id="warehouseCommandsForm">
 
+
 			<h:panelGrid columns="4" cellpadding="5">
-				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="new"
-					rendered="#{sec:areAllGranted('ROLE_ADMIN')}"
+				<p:commandButton id="new"
 					value="Add New Warehouse" title="Save" type="button"
 					onclick="PF('new').show()">
 				</p:commandButton>
 
-				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="update"
+				<p:commandButton  id="update"
 					value="Update Warehouse" title="Update" type="button"
 					onclick="PF('update').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 
-				<p:commandButton value="Delete" id="removeButton"
-					rendered="#{sec:areAllGranted('ROLE_ADMIN')}"
+				<p:commandButton value="Delete Warehouse" id="removeButton"
 					actionListener="#{warehouseController.removeWarehouse}"
 					update=":form:warehouseTable,warehouseCommandsForm"
 					disabled="#{warehouseController.selectedWarehouse == null}" />
 
-				<p:commandButton icon="ui-icon-arrowrefresh-1-n" id="addUser"
-					rendered="#{sec:areAllGranted('ROLE_ADMIN')}" value="Add User"
-					title="Add" type="button" onclick="PF('addUser').show()"
+
+				<p:commandButton id="addUser"
+					actionListener="#{warehouseController.setList}" update="pickList"
+					value="Select Users" title="Add" onclick="PF('addUser').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 			</h:panelGrid>
+
+			<!-- userek hozzaadasa -->
+			<p:dialog id="WarehouseDialogAddUser" widgetVar="addUser"
+				header="User Select" modal="true" resizable="false">
+
+				<p:pickList id="pickList" value="#{warehouseController.users}"
+					showSourceFilter="true" showTargetFilter="true" var="user"
+					itemLabel="#{user}" itemValue="#{user}">
+					<f:facet name="sourceCaption">Available Users</f:facet>
+					<f:facet name="targetCaption">Added Users</f:facet>
+				</p:pickList>
+
+
+				<p:commandButton id="addUserToWarehouse" value="Submit"
+					action="#{warehouseController.addUserToWarehouse(warehouseController.selectedWarehouse)}">
+				</p:commandButton>
+			</p:dialog>
 		</h:form>
 
 
-		<!-- userek hozzaadasa -->
-		<p:dialog id="WarehouseDialogAddUser" width="50%" widgetVar="addUser"
-			modal="true" resizable="false">
-			<h:form id="dialogFormAddUser">
-				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
-					<p:dataTable id="adminTablea" var="admin"
-						value="#{adminController.lazyAdminModel}"
-						emptyMessage="#{out.empty_message}"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-						rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
-						rows="10" selectionMode="single"
-						selection="#{adminController.selectedUser}">
-
-						<p:ajax event="rowSelect"
-							listener="#{adminController.onRowSelect}" />
-
-						<p:column headerText="Username" sortBy="#{admin.userName}"
-							filterBy="#{admin.userName}">
-							<h:outputText value="#{admin.userName}" />
-						</p:column>
-
-						<p:column headerText="Fullname" sortBy="#{admin.fullName}"
-							filterBy="#{admin.fullName}">
-							<h:outputText value="#{admin.fullName}" />
-						</p:column>
-
-						<p:column headerText="Email" sortBy="#{admin.email}"
-							filterBy="#{admin.email}">
-							<h:outputText value="#{admin.email}" />
-						</p:column>
-
-						<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
-							filterBy="#{admin.phoneNumber}">
-							<h:outputText value="#{admin.phoneNumber}" />
-						</p:column>
-					</p:dataTable>
-
-				</h:panelGrid>
-			</h:form>
-
-
-			<p:commandButton id="addUserToWarehouse" value="Add"
-				action="#{warehouseController.addUserToWarehouse(adminController.selectedUser,warehouseController.selectedWarehouse)}"
-				update=":form:warehouseTable">
-			</p:commandButton>
-		</p:dialog>
 
 
 
 		<!--update warehouse dialog -->
 		<p:dialog id="WarehouseDialogUpdate" width="50%" widgetVar="update"
-			modal="true" resizable="false">
+			modal="true" resizable="false" header="Update Warehouse">
 			<h:form id="dialogFormUpdate">
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
@@ -190,7 +162,7 @@
 
 		<!-- uj raktar, dialog -->
 		<p:dialog id="WarehouseDialog" width="50%" widgetVar="new"
-			modal="true" resizable="false">
+			modal="true" resizable="false" header="New Warehouse">
 			<h:form id="dialogForm">
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 

@@ -50,11 +50,6 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 
 	@Override
 	public void dalete(WarehouseVO warehouseVo) {
-		try {
-		stockDao.deleteByWarehouseId(warehouseVo.getId());
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
 		warehouseDao.delete(warehouseVo.getId());
 	}
 
