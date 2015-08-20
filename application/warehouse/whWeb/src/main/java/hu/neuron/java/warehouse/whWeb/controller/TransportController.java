@@ -114,6 +114,8 @@ public class TransportController implements Serializable {
 			
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			pieces.clear();
 		}
 
 		
@@ -132,6 +134,7 @@ public class TransportController implements Serializable {
 	}
 
 	public void setDb(int db) {
+		pieces.add(db);
 		this.db = db;
 	}
 
