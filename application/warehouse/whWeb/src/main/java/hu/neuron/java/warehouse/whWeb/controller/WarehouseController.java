@@ -1,16 +1,18 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
+import hu.neuron.java.warehouse.whBusiness.service.AdminServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.ManagerServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.vo.ManagerVO;
-import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whWeb.model.LazyWarehouseModel;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -20,8 +22,9 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.primefaces.event.TransferEvent;
+import org.primefaces.model.DualListModel;
+import org.springframework.ui.context.Theme;
 
 @ViewScoped
 @ManagedBean(name = "warehouseController")
@@ -50,38 +53,96 @@ public class WarehouseController implements Serializable {
 	private int newWarehouseAddressZipCode;
 	private int updateWarehouseAddressZipCode;
 
-	private Collection<UserVO> newWarehouseAddressZipUsers;
-	private Collection<UserVO> updateWarehouseAddressZipusres;
 
 	LazyWarehouseModel lazyWarehouseModel;
 
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
-	
+
 	@EJB(name = "ManagerService")
 	ManagerServiceLocal managerService;
-	
+
 	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
 	private UserSelfCareServiceRemote userSelfCareService;
+
+	@EJB(name = "AdminService")
+	AdminServiceRemote adminService;
+
+	private DualListModel<String> users;
+	
+	 
+	
 
 	@PostConstruct
 	public void init() {
 
-		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService,userSelfCareService));
+		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService,
+				userSelfCareService));
+		
+
+    	List<String> citiesSource = new ArrayList<String>();
+		List<String> citiesTarget = new ArrayList<String>();
+
+		users = new DualListModel<String>(citiesSource, citiesTarget);;
+	}
+	
+
+
+	public void setList() {
+		
+		List<UserVO> selectusers = new ArrayList<UserVO>();
+		selectusers = managerService
+				.getUserByWarehouseId(selectedWarehouse.getWarehouseId());
+
+		List<String> selectedusersName = new ArrayList<String>();
+		
+		for (UserVO peoples : selectusers) {
+			selectedusersName.add(peoples.getUserName());
+		}
+
+		List<UserVO> allUsers = new ArrayList<UserVO>();
+		allUsers = adminService.getUsers();
+		
+		List<String> allUsersName = new ArrayList<String>();
+	
+		for (UserVO peoples : allUsers) {
+			allUsersName.add(peoples.getUserName());
+		}
+		
+		for (String name : selectedusersName) {
+			allUsersName.remove(name);
+		}
+		
+		users = new DualListModel<String>(allUsersName, selectedusersName);
+		
 	}
 
-	public void addUserToWarehouse(UserVO user, WarehouseVO warehouse ) {
+	public void addUserToWarehouse(WarehouseVO warehouse) {
 		try {
 			ManagerVO manager = new ManagerVO();
-			
-			manager.setUser(user.getUserName());
 			manager.setWarehouse(warehouse.getWarehouseId());
+
+			List<String> addedUsers = users.getTarget();
+			for (String string : addedUsers) {
+				manager.setUser(string);
+				try {
+				managerService.addManager(manager);
+				} catch (Exception e) {
+					
+				}
+			}
 			
-			managerService.addManager(manager);
+			List<String> removeUsers = users.getSource();
+			for (String string : removeUsers) {
+				manager.setUser(string);
+				try {
+					managerService.deleteManager(manager);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 			
-//			warehouseService
-//					.addUserToWarehouse(user.getUserName(), warehouse.getWarehouseId());
-			
+			}
+
 			FacesContext.getCurrentInstance().addMessage(
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes",
@@ -114,7 +175,7 @@ public class WarehouseController implements Serializable {
 					null,
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error",
 							"Save"));
-		}finally {
+		} finally {
 			newWarehouseName = "";
 			newWarehouseAddress = "";
 			newWarehouseAddressNumber = 0;
@@ -163,8 +224,7 @@ public class WarehouseController implements Serializable {
 							"Update: "));
 		}
 	}
-	
-	
+
 	public void onRowSelect(SelectEvent event) {
 		selectedWarehouse = (WarehouseVO) event.getObject();
 		updateWarehouseName = selectedWarehouse.getName();
@@ -177,6 +237,20 @@ public class WarehouseController implements Serializable {
 				null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
 						updateWarehouseName));
+	}
+
+	
+	
+	
+	
+	
+	
+	public DualListModel<String> getUsers() {
+		return users;
+	}
+
+	public void setUsers(DualListModel<String> users) {
+		this.users = users;
 	}
 
 	public WarehouseVO getSelectedWarehouse() {
@@ -284,23 +358,6 @@ public class WarehouseController implements Serializable {
 		this.updateWarehouseAddressZipCode = updateWarehouseAddressZipCode;
 	}
 
-	public Collection<UserVO> getNewWarehouseAddressZipUsers() {
-		return newWarehouseAddressZipUsers;
-	}
-
-	public void setNewWarehouseAddressZipUsers(
-			Collection<UserVO> newWarehouseAddressZipUsers) {
-		this.newWarehouseAddressZipUsers = newWarehouseAddressZipUsers;
-	}
-
-	public Collection<UserVO> getUpdateWarehouseAddressZipusres() {
-		return updateWarehouseAddressZipusres;
-	}
-
-	public void setUpdateWarehouseAddressZipusres(
-			Collection<UserVO> updateWarehouseAddressZipusres) {
-		this.updateWarehouseAddressZipusres = updateWarehouseAddressZipusres;
-	}
 
 	public String getNewWarehouseId() {
 		return newWarehouseId;
