@@ -15,28 +15,26 @@
 		<p:panel header="Ware Order">
 			<h:form id="select">
 
-				<h:panelGrid columns="3" cellpadding="5">
-					<p:selectCheckboxMenu id="menu" 
+				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+					<h:outputLabel for="items" value="Áru: " />
+					<p:selectCheckboxMenu id="items"
 						value="#{wareOrderConttroller.selectedwareNames}" label="Wares"
-						filter="true" filterMatchMode="startsWith"
-						panelStyle="width:250px">
+						filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{wareOrderConttroller.wareNames}" />
-						<p:ajax event="change" update="display" />
+						<p:ajax event="toggleSelect" update="num" />
+						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
-					<p:commandLink value="Select" update="display" />
+
+					<h:outputLabel for="num" value="Number of items:	" styleClass="paginated">
+						<p:dataList id="num" 
+							value="#{wareOrderConttroller.selectedwareNames}" var="ware"
+							emptyMessage="No wares selected">
+								#{ware}
+								<p:spinner id="darab" value="#{wareOrderConttroller.db}" min="0" />
+						</p:dataList>
+					</h:outputLabel>
 				</h:panelGrid>
-
-
-				<p:outputPanel id="display"
-					style="width:250px;padding-left:5px;margin-top:1px">
-					<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
-						var="ware" emptyMessage="No wares selected">
-					 #{ware}
-					<p:spinner style="padding-left:250px;margin-top:1px" id="darab"
-							value="#{wareOrderConttroller.db}" min="0" />
-					</p:dataList>
-
-				</p:outputPanel>
+				
 
 				<p:commandButton value="Order" id="ajax"
 					actionListener="#{wareOrderConttroller.order}"
