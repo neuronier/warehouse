@@ -12,45 +12,39 @@
 	</ui:define>
 	<ui:define name="pageTitle">Warehouse Managment</ui:define>
 	<ui:define name="content">
+		<p:panel header="Ware Order">
+			<h:form id="select">
 
-		<h:form id="select">
-			<p:outputLabel for="toWarehouse" value="To Warehouse: " />
-			<p:selectOneMenu id="toWarehouse"
-				value="#{wareOrderConttroller.selectedWhNames}">
-				<f:selectItem itemLabel="Default Warehouse" itemValue="" />
-				<f:selectItems value="#{wareOrderConttroller.whNames}" />
-			</p:selectOneMenu>
-
-
-
-			<h:panelGrid columns="3" cellpadding="5">
-				<p:selectCheckboxMenu id="menu"
-					value="#{wareOrderConttroller.selectedwareNames}" label="Wares"
-					filter="true" filterMatchMode="startsWith" panelStyle="width:250px">
-					<f:selectItems value="#{wareOrderConttroller.wareNames}" />
-				</p:selectCheckboxMenu>
-				<p:commandLink value="Submit" update="display" />
-			</h:panelGrid>
+				<h:panelGrid columns="3" cellpadding="5">
+					<p:selectCheckboxMenu id="menu" 
+						value="#{wareOrderConttroller.selectedwareNames}" label="Wares"
+						filter="true" filterMatchMode="startsWith"
+						panelStyle="width:250px">
+						<f:selectItems value="#{wareOrderConttroller.wareNames}" />
+						<p:ajax event="change" update="display" />
+					</p:selectCheckboxMenu>
+					<p:commandLink value="Select" update="display" />
+				</h:panelGrid>
 
 
-			<p:outputPanel id="display"
-				style="width:250px;padding-left:5px;margin-top:1px">
-				<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
-					var="ware" emptyMessage="No wares selected">
+				<p:outputPanel id="display"
+					style="width:250px;padding-left:5px;margin-top:1px">
+					<p:dataList value="#{wareOrderConttroller.selectedwareNames}"
+						var="ware" emptyMessage="No wares selected">
 					 #{ware}
 					<p:spinner style="padding-left:250px;margin-top:1px" id="darab"
-						value="#{wareOrderConttroller.db}" min="0" />
-				</p:dataList>
+							value="#{wareOrderConttroller.db}" min="0" />
+					</p:dataList>
 
-			</p:outputPanel>
+				</p:outputPanel>
 
-			<p:commandButton value="OK" id="ajax"
-				actionListener="#{wareOrderConttroller.order}"
-				disabled="#{wareOrderConttroller.wares} == null}"
-				styleClass="ui-priority-primary" />
-		</h:form>
+				<p:commandButton value="Order" id="ajax"
+					actionListener="#{wareOrderConttroller.order}"
+					disabled="#{wareOrderConttroller.selectedwareNames} == null}"
+					styleClass="ui-priority-primary" />
+			</h:form>
 
-
+		</p:panel>
 
 	</ui:define>
 </ui:composition>

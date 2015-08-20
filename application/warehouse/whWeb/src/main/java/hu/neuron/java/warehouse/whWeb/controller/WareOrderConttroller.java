@@ -28,35 +28,30 @@ public class WareOrderConttroller implements Serializable {
 
 	@EJB(name = "WareOrderService")
 	WareOrderLOcal wareOrder;
-	
+
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
-	
+
 	@EJB(name = "WareService")
 	WareServiceLocal wareService;
-	
+
 	private int db;
-	
-	
+
 	private LinkedList<Integer> pieces;
 
-	
 	private Collection<WarehouseVO> warehouses;
-	
+
 	private Collection<String> whNames;
-	
+
 	private String selectedWhNames;
 
-	
-	
 	private List<WareVo> wares;
-	
+
 	private Collection<WareVo> selectedware;
-	
+
 	private Collection<String> wareNames;
-	
+
 	private Collection<String> selectedwareNames;
-	
 
 	@PostConstruct
 	void init() {
@@ -68,7 +63,7 @@ public class WareOrderConttroller implements Serializable {
 		for (WarehouseVO warehouseVO : warehouses) {
 			whNames.add(warehouseVO.getName());
 		}
-		
+
 		wareNames = new ArrayList<String>();
 		wares = new ArrayList<WareVo>();
 		wares = wareService.getWares();
@@ -76,37 +71,34 @@ public class WareOrderConttroller implements Serializable {
 			wareNames.add(wareVo.getWareName());
 		}
 	}
-	
+
 	public void order() {
 		WarehouseVO wh;
 		WareVo ware;
 		StockVO order = new StockVO();
 		try {
-			wh = warehouseService.findWarehouseByName(selectedWhNames);
-			if(wh == null) {
-				wh = warehouseService.findWarehouseByName("Default Warehouse");
-			}
-			
+
+			wh = warehouseService.findWarehouseByName("Default Warehouse");
+
 			order.setWarehouse(wh);
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
 				order.setWare(ware);
 				order.setPiece(pieces.getLast());
-				pieces.removeLast();
 				wareOrder.order(order);
+				pieces.removeLast();
 			}
 			FacesContext.getCurrentInstance().addMessage(
-					null,new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes ","Order"));
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes ",
+							"Order"));
 		} catch (Exception e) {
-			
 			e.printStackTrace();
 		} finally {
 			pieces.clear();
 		}
-		
+
 	}
-
-
 
 	public Collection<WareVo> getSelectedware() {
 		return selectedware;
@@ -136,6 +128,16 @@ public class WareOrderConttroller implements Serializable {
 	public void setDb(int db) {
 		pieces.addFirst(db);
 		this.db = db;
+	}
+	
+	
+
+	public LinkedList<Integer> getPieces() {
+		return pieces;
+	}
+
+	public void setPieces(LinkedList<Integer> pieces) {
+		this.pieces = pieces;
 	}
 
 	public Collection<String> getWhNames() {
@@ -170,7 +172,6 @@ public class WareOrderConttroller implements Serializable {
 		this.wareOrder = wareOrder;
 	}
 
-
 	public String getSelectedWhNames() {
 		return selectedWhNames;
 	}
@@ -203,5 +204,4 @@ public class WareOrderConttroller implements Serializable {
 		this.selectedwareNames = selectedwareNames;
 	}
 
-	
 }
