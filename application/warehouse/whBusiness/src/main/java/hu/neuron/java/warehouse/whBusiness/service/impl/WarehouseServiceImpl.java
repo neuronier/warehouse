@@ -4,6 +4,7 @@ import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
+import hu.neuron.java.warehouse.whCore.dao.ManagerDao;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
 import hu.neuron.java.warehouse.whCore.entity.Warehouse;
@@ -38,6 +39,9 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 	
 	@Autowired
 	StockDao stockDao;
+	
+	@Autowired
+	ManagerDao managerDao;
 
 	@EJB
 	WarehouseConverter warehouseConverter;
@@ -45,12 +49,17 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 	@Override
 	public void save(WarehouseVO warehouseVo) {
 		warehouseDao.save(warehouseConverter.toEntity(warehouseVo));
-
 	}
 
 	@Override
 	public void dalete(WarehouseVO warehouseVo) {
+		try {
+		managerDao.deleteManagerByWarehouseId(warehouseVo.getWarehouseId());
+		stockDao.deleteByWarehouseId(warehouseVo.getId());
 		warehouseDao.delete(warehouseVo.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

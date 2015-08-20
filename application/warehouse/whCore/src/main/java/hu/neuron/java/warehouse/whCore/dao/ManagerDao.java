@@ -23,4 +23,8 @@ public interface ManagerDao extends JpaRepository<Manager,Long> {
 	@Query(value = "DELETE FROM `manager` WHERE username=?1 and warehouseId=?2",nativeQuery=true)
 	public void deleteManager(String userName, String warehouseId);
 	
+	@Modifying
+	@Query(value = "DELETE FROM `manager` WHERE warehouseId=?1",nativeQuery=true)
+	public void deleteManagerByWarehouseId(String warehouseId);
+	
 }

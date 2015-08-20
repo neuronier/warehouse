@@ -28,6 +28,7 @@ public interface StockDao extends JpaRepository<Stock, Long>{
 	@Query (value = "UPDATE stock SET piece = ?3 WHERE warehouse_id = ?1 and ware_id = ?2", nativeQuery=true)
 	public void updateStock(Long warehouseId, Long wareId, int piece);
 
+	@Modifying
 	@Query ( value = "DELETE FROM stock  WHERE warehouse_id = ?1", nativeQuery=true)
 	public void deleteByWarehouseId(Long warehouseId);
 	
