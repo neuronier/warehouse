@@ -1,5 +1,7 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
+import java.util.List;
+
 import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
 import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
@@ -7,6 +9,7 @@ import hu.neuron.java.warehouse.whBusiness.service.WareOrderRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
+import hu.neuron.java.warehouse.whCore.entity.Stock;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -39,9 +42,16 @@ public class WareOrderServiceImpl implements WareOrderLOcal, WareOrderRemote {
 	StockConverter stockConverter;
 
 	public void order(StockVO order) {
-
-		stockDao.save(stockConverter.toEntity(order));
-
+		StockVO asd = new StockVO();
+		try {
+			
+			asd = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(
+					order.getWarehouse().getId(), order.getWare().getId()));
+			
+			stockDao.updateStock(	order.getWarehouse().getId(), order.getWare().getId(),asd.getPiece()+order.getPiece());
+		} catch (Exception e) {
+			stockDao.save(stockConverter.toEntity(order));
+		}
 	}
 
 }
