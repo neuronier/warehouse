@@ -13,10 +13,16 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS)
 public interface TransportDao extends JpaRepository<Transport, Long> {
 
-	//még kell ide egy update -1fromwh; +1towh
 	@Modifying
-	@Query(value = "INSERT INTO transport_details (from_warehouseId, to_warehouseId, wareId, piece) "
-				   + "VALUES (?1, ?2, ?3, ?4)", nativeQuery = true) 
-	void transportItemToWarehouse(String fromWarehouseId, String toWarehouseId,
-			Long wareId, int piece) throws Exception;
+	@Query(value = "UPDATE stock SET piece=piece+?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true) 
+	void transportToWarehouse(int piece, Long wareId, String toWarehouseId) throws Exception;
+	
+	@Modifying
+	@Query(value = "UPDATE stock SET piece=piece-?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true) 
+	void transportFromWarehouse(int piece, Long wareId, String toWarehouseId) throws Exception;
+	
+	@Modifying
+	@Query(value = "INSERT INTO transport(from_warehouseId, to_warehouseId)"
+				   + "VALUES (?1, ?2)", nativeQuery = true) 
+	void addToTransport(String fromWarehouseId, String toWarehouseId) throws Exception;
 }

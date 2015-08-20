@@ -80,6 +80,7 @@ public class TransportController implements Serializable {
 	}
 
 	public void transport() {
+		System.out.println("transport()");
 		WarehouseVO fromWarehouse;
 		WarehouseVO toWarehouse;
 		WareVo ware;
@@ -104,26 +105,18 @@ public class TransportController implements Serializable {
 			
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
-				detailsVO.setWare(ware);
+				detailsVO.setWareId(ware.getId());
 				detailsVO.setPiece(pieces.getLast());
 				pieces.removeLast();
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
+			FacesContext.getCurrentInstance().addMessage("A szállítás megkezdődött", null);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		
-	}
-
-	public void buttonAction(ActionEvent actionEvent) {
-		addMessage("A szállítás hamarosan megkezdődik");
-	}
-
-	public void addMessage(String summary) {
-		FacesContext context = FacesContext.getCurrentInstance();
-		context.addMessage(null, new FacesMessage("Siker", summary));
 	}
 
 	public Collection<WarehouseVO> getWarehouses() {
