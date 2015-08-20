@@ -14,6 +14,8 @@ public interface WarehouseServiceRemote {
 	
 	public void addUserToWarehouse(String userName, String warehouseId) throws Exception;
 	
+	public WarehouseVO findWarehouseWarehouseId(String warehouseId) throws Exception;
+	
 	
 	public WarehouseVO findWarehouseByName(String name) throws Exception;
 

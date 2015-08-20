@@ -78,7 +78,7 @@ public class WareOrderConttroller implements Serializable {
 		StockVO order = new StockVO();
 		try {
 
-			wh = warehouseService.findWarehouseByName("Default Warehouse");
+			wh = warehouseService.findWarehouseWarehouseId("Default Warehouse");
 
 			order.setWarehouse(wh);
 			for (String wareName : selectedwareNames) {

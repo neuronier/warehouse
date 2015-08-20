@@ -16,6 +16,8 @@ public interface WarehouseServiceLocal {
 	
 	
 	public WarehouseVO findWarehouseByName(String name) throws Exception;
+	
+	public WarehouseVO findWarehouseWarehouseId(String warehouseId) throws Exception;
 
 	public List<WarehouseVO> getWarehouse(int i, int pageSize, String sortField,
 			int dir, String filter, String filterColumnName);

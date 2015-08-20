@@ -70,6 +70,11 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 	public WarehouseVO findWarehouseByName(String name) throws Exception {
 		return warehouseConverter.toVO(warehouseDao.findWarehouseByName(name));
 	}
+	
+	@Override
+	public WarehouseVO findWarehouseWarehouseId(String warehouseId) throws Exception {
+		return warehouseConverter.toVO(warehouseDao.findWarehouseByWarehouseId(warehouseId));
+	}
 
 	@Override
 	public List<WarehouseVO> getWarehouse(int page, int size, String sortField,
