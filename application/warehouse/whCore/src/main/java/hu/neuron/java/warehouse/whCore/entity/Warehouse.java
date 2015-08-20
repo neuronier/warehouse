@@ -23,7 +23,7 @@ public class Warehouse extends BaseEntity {
 	private String warehouseId;
 
 	@Column(nullable = false)
-	private int zipCode;
+	private String zipCode;
 
 	@Column(nullable = false)
 	private String city;
@@ -32,7 +32,7 @@ public class Warehouse extends BaseEntity {
 	private String address;
 
 	@Column(nullable = false)
-	private int addressNumber;
+	private String addressNumber;
 
 
 	public String getName() {
@@ -51,13 +51,7 @@ public class Warehouse extends BaseEntity {
 		this.warehouseId = warehouseId;
 	}
 
-	public int getZipCode() {
-		return zipCode;
-	}
 
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
 
 	public String getCity() {
 		return city;
@@ -75,11 +69,21 @@ public class Warehouse extends BaseEntity {
 		this.address = address;
 	}
 
-	public int getAddressNumber() {
+	
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getAddressNumber() {
 		return addressNumber;
 	}
 
-	public void setAddressNumber(int addressNumber) {
+	public void setAddressNumber(String addressNumber) {
 		this.addressNumber = addressNumber;
 	}
 

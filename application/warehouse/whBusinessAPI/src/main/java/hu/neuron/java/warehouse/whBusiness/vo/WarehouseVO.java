@@ -14,13 +14,13 @@ public class WarehouseVO implements Serializable{
 
 	private String warehouseId;
 
-	private int zipCode;
+	private String zipCode;
 
 	private String city;
 
 	private String address;
 
-	private int addressNumber;
+	private String addressNumber;
 
 
 	public String getName() {
@@ -35,12 +35,7 @@ public class WarehouseVO implements Serializable{
 	public void setWarehouseId(String warehouseId) {
 		this.warehouseId = warehouseId;
 	}
-	public int getZipCode() {
-		return zipCode;
-	}
-	public void setZipCode(int zipCode) {
-		this.zipCode = zipCode;
-	}
+
 	public String getCity() {
 		return city;
 	}
@@ -53,14 +48,25 @@ public class WarehouseVO implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public int getAddressNumber() {
+	
+	
+		
+	public String getZipCode() {
+		return zipCode;
+	}
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+	public String getAddressNumber() {
 		return addressNumber;
 	}
-	public void setAddressNumber(int addressNumber) {
+	public void setAddressNumber(String addressNumber) {
 		this.addressNumber = addressNumber;
-		
-		
 	}
+
+
+
+	
 	public Long getId() {
 		return id;
 	}

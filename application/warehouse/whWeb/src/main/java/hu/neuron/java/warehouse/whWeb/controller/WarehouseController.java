@@ -44,14 +44,14 @@ public class WarehouseController implements Serializable {
 	private String newWarehouseAddress;
 	private String updateWarehouseAddress;
 
-	private int newWarehouseAddressNumber;
-	private int updateWarehouseAddressNumber;
+	private String newWarehouseAddressNumber;
+	private String updateWarehouseAddressNumber;
 
 	private String newWarehouseCity;
 	private String updateWarehouseCity;
 
-	private int newWarehouseAddressZipCode;
-	private int updateWarehouseAddressZipCode;
+	private String newWarehouseAddressZipCode;
+	private String updateWarehouseAddressZipCode;
 
 
 	LazyWarehouseModel lazyWarehouseModel;
@@ -178,9 +178,9 @@ public class WarehouseController implements Serializable {
 		} finally {
 			newWarehouseName = "";
 			newWarehouseAddress = "";
-			newWarehouseAddressNumber = 0;
+			newWarehouseAddressNumber = "";
 			newWarehouseCity = "";
-			newWarehouseAddressZipCode = 0;
+			newWarehouseAddressZipCode = "";
 			newWarehouseId = "";
 		}
 
@@ -309,21 +309,7 @@ public class WarehouseController implements Serializable {
 		this.updateWarehouseAddress = updateWarehouseAddress;
 	}
 
-	public int getNewWarehouseAddressNumber() {
-		return newWarehouseAddressNumber;
-	}
 
-	public void setNewWarehouseAddressNumber(int newWarehouseAddressNumber) {
-		this.newWarehouseAddressNumber = newWarehouseAddressNumber;
-	}
-
-	public int getUpdateWarehouseAddressNumber() {
-		return updateWarehouseAddressNumber;
-	}
-
-	public void setUpdateWarehouseAddressNumber(int updateWarehouseAddressNumber) {
-		this.updateWarehouseAddressNumber = updateWarehouseAddressNumber;
-	}
 
 	public String getNewWarehouseCity() {
 		return newWarehouseCity;
@@ -341,22 +327,93 @@ public class WarehouseController implements Serializable {
 		this.updateWarehouseCity = updateWarehouseCity;
 	}
 
-	public int getNewWarehouseAddressZipCode() {
+
+
+
+
+	public String getNewWarehouseAddressNumber() {
+		return newWarehouseAddressNumber;
+	}
+
+
+
+	public void setNewWarehouseAddressNumber(String newWarehouseAddressNumber) {
+		this.newWarehouseAddressNumber = newWarehouseAddressNumber;
+	}
+
+
+
+	public String getUpdateWarehouseAddressNumber() {
+		return updateWarehouseAddressNumber;
+	}
+
+
+
+	public void setUpdateWarehouseAddressNumber(String updateWarehouseAddressNumber) {
+		this.updateWarehouseAddressNumber = updateWarehouseAddressNumber;
+	}
+
+
+
+	public String getNewWarehouseAddressZipCode() {
 		return newWarehouseAddressZipCode;
 	}
 
-	public void setNewWarehouseAddressZipCode(int newWarehouseAddressZipCode) {
+
+
+	public void setNewWarehouseAddressZipCode(String newWarehouseAddressZipCode) {
 		this.newWarehouseAddressZipCode = newWarehouseAddressZipCode;
 	}
 
-	public int getUpdateWarehouseAddressZipCode() {
+
+
+	public String getUpdateWarehouseAddressZipCode() {
 		return updateWarehouseAddressZipCode;
 	}
 
+
+
 	public void setUpdateWarehouseAddressZipCode(
-			int updateWarehouseAddressZipCode) {
+			String updateWarehouseAddressZipCode) {
 		this.updateWarehouseAddressZipCode = updateWarehouseAddressZipCode;
 	}
+
+
+
+	public ManagerServiceLocal getManagerService() {
+		return managerService;
+	}
+
+
+
+	public void setManagerService(ManagerServiceLocal managerService) {
+		this.managerService = managerService;
+	}
+
+
+
+	public UserSelfCareServiceRemote getUserSelfCareService() {
+		return userSelfCareService;
+	}
+
+
+
+	public void setUserSelfCareService(UserSelfCareServiceRemote userSelfCareService) {
+		this.userSelfCareService = userSelfCareService;
+	}
+
+
+
+	public AdminServiceRemote getAdminService() {
+		return adminService;
+	}
+
+
+
+	public void setAdminService(AdminServiceRemote adminService) {
+		this.adminService = adminService;
+	}
+
 
 
 	public String getNewWarehouseId() {
