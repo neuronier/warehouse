@@ -59,7 +59,7 @@
 					</h:outputLabel>
 
 					<p:commandButton value="Szállítás" id="ajax"
-						actionListener="#{transportController.transport}"
+						actionListener="#{transportController.transport()}"
 						disabled="#{transportController.wares} == null}"
 						styleClass="ui-priority-primary" update="status" />
 						

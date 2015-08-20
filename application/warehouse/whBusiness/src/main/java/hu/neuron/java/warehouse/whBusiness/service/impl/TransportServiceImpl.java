@@ -33,7 +33,7 @@ public class TransportServiceImpl implements TransportServiceLocal,
 
 	@EJB
 	TransportConverter transportConverter;
-	
+
 	@Autowired
 	TransportDetailsDao transportDetailsDao;
 
@@ -43,7 +43,23 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	@Override
 	public void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO) {
-		// itt jön a harc
+		try {
+			// táblák feltöltése
+			transportDao.addToTransport(transportVO.getFromWarehouseId(),
+					transportVO.getToWarehouseId());
+			transportDetailsDao.addToTransportDetails(detailsVO.getWareId(),
+					detailsVO.getPiece());
+
+			// csökkentsük a from piece mezőjét az adott mennyiséggel
+			// növeljük a to piece mezőjét az adott mennyiséggel
+			transportDao.transportToWarehouse(detailsVO.getPiece(),
+					detailsVO.getWareId(), transportVO.getToWarehouseId());
+			transportDao.transportFromWarehouse(detailsVO.getPiece(),
+					detailsVO.getWareId(), transportVO.getFromWarehouseId());
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
