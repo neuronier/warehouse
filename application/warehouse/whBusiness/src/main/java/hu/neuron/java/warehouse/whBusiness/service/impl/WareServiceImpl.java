@@ -1,12 +1,5 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
-import hu.neuron.java.warehouse.whBusiness.converter.WareConverter;
-import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.service.WareServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
-import hu.neuron.java.warehouse.whCore.dao.WareDao;
-import hu.neuron.java.warehouse.whCore.entity.Ware;
-
 import java.io.Serializable;
 import java.util.List;
 
@@ -28,46 +21,52 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
+
+
+
+
+import hu.neuron.java.warehouse.whBusiness.converter.WareConverter;
+import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WareServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
+import hu.neuron.java.warehouse.whCore.dao.WareDao;
+import hu.neuron.java.warehouse.whCore.entity.Ware;
+
+
+
+
+
 @Stateless(mappedName = "WareService", name = "WareService")
 @Local(WareServiceLocal.class)
 @Remote(WareServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
-		Serializable {
+public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = Logger
 			.getLogger(WareServiceImpl.class);
-
+	
+	
 	@PersistenceContext
 	private EntityManager entityManager;
+	
 
+	
 	@Autowired
 	WareDao wareDao;
-
-	// @EJB
-	// WareServiceLocal wareService;
+	
+//	@EJB
+//	WareServiceLocal wareService;
 
 	@EJB
 	WareConverter wareConverter;
 
+	
+	
 	@Override
-	public WareVo findWareByName(String wareName) {
-		WareVo vo = null;
-		try {
-			vo = wareConverter.toVO(wareDao.findWareByName(wareName));
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		return vo;
-	}
-
-	@Override
-	public WareVo getWareByName(String ware) {
+	public WareVo findWareByName(String ware) {
 		WareVo vo = null;
 		try {
 			vo = wareConverter.toVO(wareDao.findByWareName(ware));
@@ -80,7 +79,7 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 
 	@Override
 	public WareVo setUpWares(WareVo vo) throws Exception {
-
+		
 		return null;
 	}
 
@@ -92,6 +91,11 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 	@Override
 	public List<WareVo> getWares() {
 		return wareConverter.toVO(wareDao.findAll());
+		
+	}
+	@Override
+	public void updateWare(WareVo wareVo) {
+		wareDao.save(wareConverter.toEntity(wareVo));
 
 	}
 
@@ -108,7 +112,7 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 			entities = wareDao.findByWareNameStartsWith(filter, pageRequest);
 		} else {
 			entities = wareDao.findAll(pageRequest);
-
+			
 		}
 
 		List<WareVo> ret = wareConverter.toVO(entities.getContent());
@@ -119,6 +123,20 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 	@Override
 	public int getRoleCount() {
 		return (int) wareDao.count();
+	}
+
+	@Override
+	public void saveWare(WareVo wareVo) {
+		wareDao.save(wareConverter.toEntity(wareVo));
+		
+	}
+
+	@Override
+	public void removeWare(WareVo selectedWare) {
+		wareDao.delete(selectedWare.getId());
+		
+		
+		
 	}
 
 }

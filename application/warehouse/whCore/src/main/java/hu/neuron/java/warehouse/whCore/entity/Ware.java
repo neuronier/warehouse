@@ -22,6 +22,7 @@ public class Ware extends BaseEntity  {
 	private String wareName;
 	private int itemNumber;
 	private String description;
+	private int visible;
 	
 	public String getWareName() {
 		return wareName;
@@ -46,9 +47,10 @@ public class Ware extends BaseEntity  {
 		return "Ware [Name=" + wareName + ", ItemNumber=" + itemNumber
 				+ ", Description=" + description + "]";
 	}
-	
-	
-	
-	
-
+	public int getVisible() {
+		return visible;
+	}
+	public void setVisible(int visible) {
+		this.visible = visible;
+	}
 }

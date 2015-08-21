@@ -10,7 +10,7 @@ public interface WareServiceRemote {
 
 	
 	
-public WareVo getWareByName(String role);
+public WareVo findWareByName(String role);
 	
 	
 	public  WareVo setUpWares( WareVo vo) throws Exception;
@@ -24,5 +24,9 @@ public WareVo getWareByName(String role);
 	
 	public int getRoleCount();
 	
-	public WareVo findWareByName(String wareName);
+	public void saveWare(WareVo wareVo);
+	
+	public void removeWare(WareVo selectedWare);
+	
+	void updateWare(WareVo wareVo);
 }

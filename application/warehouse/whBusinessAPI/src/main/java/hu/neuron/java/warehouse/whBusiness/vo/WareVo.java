@@ -16,7 +16,7 @@ public class WareVo implements Serializable {
 	}
 	private int itemNumber;
 	private String description;
-	
+	private int visible;
 
 	
 	public int getItemNumber() {
@@ -42,6 +42,12 @@ public class WareVo implements Serializable {
 	public String toString() {
 		return "WareVo [Id=" + Id + ", wareName=" + wareName + ", ItemNumber="
 				+ itemNumber + ", Description=" + description + "]";
+	}
+	public int getVisible() {
+		return visible;
+	}
+	public void setVisible(int visible) {
+		this.visible = visible;
 	}
 	
 	
