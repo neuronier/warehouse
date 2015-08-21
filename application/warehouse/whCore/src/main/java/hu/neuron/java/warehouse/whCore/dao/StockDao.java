@@ -22,7 +22,7 @@ public interface StockDao extends JpaRepository<Stock, Long>{
 	
 	@Modifying
 	@Query(value = "insert into stock (warehouseId, wareId, piece) VALUES (?1, ?2, ?3)", nativeQuery = true)
-	void addWareToWarehouse(String warehouseId, int wareId, int piece) throws Exception;
+	void addWareToWarehouse(Long warehouseId, Long wareId, int piece) throws Exception;
 	
 	@Modifying
 	@Query (value = "UPDATE stock SET piece = ?3 WHERE warehouse_id = ?1 and ware_id = ?2", nativeQuery=true)
