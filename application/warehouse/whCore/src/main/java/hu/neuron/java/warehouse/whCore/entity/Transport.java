@@ -17,32 +17,32 @@ public class Transport extends BaseEntity {
 	 * A feladó raktár id-ja
 	 */
 	@ManyToOne(targetEntity = Warehouse.class)
-	private long fromWarehouseId;
+	private Long fromWarehouseId;
 
 	/**
 	 * Az átvevő raktár id-ja
 	 */
 	@ManyToOne(targetEntity = Warehouse.class)
-	private long toWarehouseId;
+	private Long toWarehouseId;
 	
 	/**
 	 * A szállítás státusza
 	 */
 	private String transportStatus;
 
-	public long getFromWarehouseId() {
+	public Long getFromWarehouseId() {
 		return fromWarehouseId;
 	}
 
-	public void setFromWarehouseId(long fromWarehouseId) {
+	public void setFromWarehouseId(Long fromWarehouseId) {
 		this.fromWarehouseId = fromWarehouseId;
 	}
 
-	public long getToWarehouseId() {
+	public Long getToWarehouseId() {
 		return toWarehouseId;
 	}
 
-	public void setToWarehouseId(long toWarehouseId) {
+	public void setToWarehouseId(Long toWarehouseId) {
 		this.toWarehouseId = toWarehouseId;
 	}
 

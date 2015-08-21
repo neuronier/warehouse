@@ -15,14 +15,14 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 
 	@Modifying
 	@Query(value = "UPDATE stock SET piece=piece+?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true) 
-	void transportToWarehouse(int piece, Long wareId, String toWarehouseId) throws Exception;
+	void transportToWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
 	
 	@Modifying
 	@Query(value = "UPDATE stock SET piece=piece-?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true) 
-	void transportFromWarehouse(int piece, Long wareId, String toWarehouseId) throws Exception;
+	void transportFromWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
 	
 	@Modifying
-	@Query(value = "INSERT INTO transport(from_warehouseId, to_warehouseId)"
+	@Query(value = "INSERT INTO transport(fromWarehouseId, toWarehouseId)"
 				   + "VALUES (?1, ?2)", nativeQuery = true) 
-	void addToTransport(String fromWarehouseId, String toWarehouseId) throws Exception;
+	void addToTransport(Long fromWarehouseId, Long toWarehouseId) throws Exception;
 }

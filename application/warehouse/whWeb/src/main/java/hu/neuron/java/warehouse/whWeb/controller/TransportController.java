@@ -16,11 +16,9 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
 
 @ViewScoped
 @ManagedBean(name = "transportController")
@@ -80,7 +78,6 @@ public class TransportController implements Serializable {
 	}
 
 	public void transport() {
-		System.out.println("transport()");
 		WarehouseVO fromWarehouse;
 		WarehouseVO toWarehouse;
 		WareVo ware;
@@ -91,13 +88,13 @@ public class TransportController implements Serializable {
 			if (fromWarehouse == null) {
 				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setFromWarehouseId(fromWarehouse.getWarehouseId());
+			transportVO.setFromWarehouseId(fromWarehouse.getId());
 			
 			toWarehouse = warehouseService.findWarehouseByName(selectedWarehouseNames);
 			if (toWarehouse == null) {
 				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setToWarehouseId(toWarehouse.getWarehouseId());
+			transportVO.setToWarehouseId(toWarehouse.getId());
 			
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
