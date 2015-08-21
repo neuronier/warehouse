@@ -22,7 +22,7 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 	void transportFromWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
 	
 	@Modifying
-	@Query(value = "INSERT INTO transport(fromWarehouseId, toWarehouseId)"
-				   + "VALUES (?1, ?2)", nativeQuery = true) 
-	void addToTransport(Long fromWarehouseId, Long toWarehouseId) throws Exception;
+	@Query(value = "INSERT INTO transport(fromWarehouse_id, toWarehouse_id, transportStatus)"
+				   + "VALUES (?1, ?2, ?3)", nativeQuery = true) 
+	void addToTransport(Long fromWarehouseId, Long toWarehouseId, String transportStatus) throws Exception;
 }

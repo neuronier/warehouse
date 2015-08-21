@@ -18,14 +18,14 @@
 
 					<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
 					<p:selectOneMenu id="fromWarehouse"
-						value="#{transportController.selectedWarehouseNames}">
+						value="#{transportController.selectedFromWarehouseName}">
 						<f:selectItem itemLabel="Select One" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="toWarehouse" value="Cél raktár: " />
 					<p:selectOneMenu id="toWarehouse"
-						value="#{transportController.selectedWarehouseNames}">
+						value="#{transportController.selectedToWarehouseName}">
 						<f:selectItem itemLabel="Select One" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
 					</p:selectOneMenu>

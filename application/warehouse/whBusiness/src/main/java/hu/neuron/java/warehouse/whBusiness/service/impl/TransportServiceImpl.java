@@ -46,9 +46,9 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		try {
 			// táblák feltöltése
 			transportDao.addToTransport(transportVO.getFromWarehouseId(),
-					transportVO.getToWarehouseId());
+					transportVO.getToWarehouseId(), transportVO.getTransportStatus());
 			transportDetailsDao.addToTransportDetails(detailsVO.getWareId(),
-					detailsVO.getPiece());
+					detailsVO.getPiece(), detailsVO.getTransportId());
 
 			// csökkentsük a from piece mezőjét az adott mennyiséggel
 			// növeljük a to piece mezőjét az adott mennyiséggel

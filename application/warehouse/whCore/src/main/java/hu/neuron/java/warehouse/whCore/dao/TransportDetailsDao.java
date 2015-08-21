@@ -14,9 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TransportDetailsDao extends JpaRepository<Transport, Long> {
 
 	@Modifying
-	@Query(value = "INSERT INTO transport_details (wareId, piece)"
-			   + "VALUES (?1, ?2)", nativeQuery = true)
-	void addToTransportDetails(Long wareId, int piece) throws Exception;
+	@Query(value = "INSERT INTO transportdetails (ware_Id, piece, transportId)"
+			   + "VALUES (?1, ?2, ?3)", nativeQuery = true)
+	void addToTransportDetails(Long wareId, int piece, Long transportId) throws Exception;
 	
 	
 }

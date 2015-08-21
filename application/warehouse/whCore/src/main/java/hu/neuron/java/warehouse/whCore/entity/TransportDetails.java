@@ -1,15 +1,11 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "TransportDetails")
-@SequenceGenerator(name="seq", initialValue=1, allocationSize=100)
+@Table(name = "Transport_Details")
 public class TransportDetails extends BaseEntity {
 
 	/**
@@ -17,20 +13,20 @@ public class TransportDetails extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
 	private Long transportId;
 
+	//id, csak odagenerálja mögé a _id -t
 	@ManyToOne(targetEntity = Ware.class)
-	private Ware wareId;
+	private Ware ware;
 
 	private int piece;
 
 	public Ware getWare() {
-		return wareId;
+		return ware;
 	}
 
 	public void setWare(Ware ware) {
-		this.wareId = ware;
+		this.ware = ware;
 	}
 
 	public int getPiece() {
@@ -41,10 +37,18 @@ public class TransportDetails extends BaseEntity {
 		this.piece = piece;
 	}
 
+	public Long getTransportId() {
+		return transportId;
+	}
+
+	public void setTransportId(Long transportId) {
+		this.transportId = transportId;
+	}
+
 	@Override
 	public String toString() {
 		return "TransportDetails [transportId=" + transportId + ", ware="
-				+ wareId + ", piece=" + piece + "]";
+				+ ware + ", piece=" + piece + "]";
 	}
 
 	

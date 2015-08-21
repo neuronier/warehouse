@@ -43,7 +43,9 @@ public class TransportController implements Serializable {
 
 	private Collection<String> whNames;
 	
-	private String selectedWarehouseNames;
+	private String selectedFromWarehouseName;
+	
+	private String selectedToWarehouseName;
 
 	@EJB(name = "WarehouseService")
 	WarehouseServiceLocal warehouseService;
@@ -84,13 +86,13 @@ public class TransportController implements Serializable {
 		TransportVO transportVO = new TransportVO();
 		TransportDetailsVO detailsVO = new TransportDetailsVO();
 		try {
-			fromWarehouse = warehouseService.findWarehouseByName(selectedWarehouseNames);
+			fromWarehouse = warehouseService.findWarehouseByName(selectedFromWarehouseName);
 			if (fromWarehouse == null) {
 				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setFromWarehouseId(fromWarehouse.getId());
 			
-			toWarehouse = warehouseService.findWarehouseByName(selectedWarehouseNames);
+			toWarehouse = warehouseService.findWarehouseByName(selectedToWarehouseName);
 			if (toWarehouse == null) {
 				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
@@ -105,6 +107,7 @@ public class TransportController implements Serializable {
 				detailsVO.setWareId(ware.getId());
 				detailsVO.setPiece(pieces.getLast());
 				pieces.removeLast();
+//				detailsVO.setTransportId(detailsVO.getId());
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
 			FacesContext.getCurrentInstance().addMessage("A szállítás megkezdődött", null);
@@ -167,14 +170,6 @@ public class TransportController implements Serializable {
 		this.pieces = pieces;
 	}
 
-	public String getSelectedWarehouseNames() {
-		return selectedWarehouseNames;
-	}
-
-	public void setSelectedWarehouseNames(String selectedWarehouseNames) {
-		this.selectedWarehouseNames = selectedWarehouseNames;
-	}
-
 	public Collection<String> getSelectedwareNames() {
 		return selectedwareNames;
 	}
@@ -191,4 +186,20 @@ public class TransportController implements Serializable {
 		this.transportStatus = transportStatus;
 	}
 
+	public String getSelectedToWarehouseName() {
+		return selectedToWarehouseName;
+	}
+
+	public void setSelectedToWarehouseName(String selectedToWarehouseName) {
+		this.selectedToWarehouseName = selectedToWarehouseName;
+	}
+
+	public String getSelectedFromWarehouseName() {
+		return selectedFromWarehouseName;
+	}
+
+	public void setSelectedFromWarehouseName(String selectedFromWarehouseName) {
+		this.selectedFromWarehouseName = selectedFromWarehouseName;
+	}
+	
 }
