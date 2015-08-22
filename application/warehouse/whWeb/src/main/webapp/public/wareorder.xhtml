@@ -25,16 +25,22 @@
 						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
 
-					<h:outputLabel for="num" value="Number of items:	" styleClass="paginated">
-						<p:dataList id="num" 
-							value="#{wareOrderConttroller.selectedwareNames}" var="ware"
-							emptyMessage="No wares selected">
+					<h:outputLabel for="num" value="Number of items:"
+						styleClass="paginated">
+						<p:scrollPanel mode="native"
+							style="margin-left:50px;width:800px;height:300px">
+							<p:dataList id="num"
+								value="#{wareOrderConttroller.selectedwareNames}" var="ware"
+								emptyMessage="No wares selected">
 								#{ware}
-								<p:spinner id="darab" value="#{wareOrderConttroller.db}" min="0" />
-						</p:dataList>
+								<h:outputText style="height:70px" value="&lt;br/&gt;" escape="false" />
+								<p:spinner style="margin-left:50px" id="darab"
+									value="#{wareOrderConttroller.db}" min="0" />
+							</p:dataList>
+						</p:scrollPanel>
 					</h:outputLabel>
 				</h:panelGrid>
-				
+
 
 				<p:commandButton value="Order" id="ajax"
 					actionListener="#{wareOrderConttroller.order}"

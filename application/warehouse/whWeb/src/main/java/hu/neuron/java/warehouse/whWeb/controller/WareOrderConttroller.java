@@ -93,6 +93,10 @@ public class WareOrderConttroller implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Succes ",
 							"Order"));
 		} catch (Exception e) {
+			FacesContext.getCurrentInstance().addMessage(
+					null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error ",
+							"Order"));
 			e.printStackTrace();
 		} finally {
 			pieces.clear();
