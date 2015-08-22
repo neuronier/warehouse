@@ -23,7 +23,7 @@
 					content, please logout.</h2>
 			</h:panelGroup>
 
-			<p:panel rendered="#{empty request.remoteUser}" style="width:320px">
+			<p:panel rendered="#{empty request.remoteUser}" style="width:360px">
 				<f:facet name="header">
 					<h:outputText value="Login" />
 				</f:facet>
@@ -35,13 +35,14 @@
 					method="POST">
 					<h:panelGrid columns="2" cellpadding="5">
 						<h:outputText value="Username: " />
-						<input type="text" name="username" />
+						<p:inputText id="username" />
 
 						<h:outputText value="Password: " />
-						<input type="password" name="password" />
+						<p:password id="password" />
 					</h:panelGrid>
 					<p:separator />
-					<input name="submit" type="submit" value="Login" />
+					<p:commandButton id="submit" value="Login"
+						oncomplete="/index.xhtml" icon="ui-icon-key" />
 				</form>
 			</p:panel>
 		</div>
