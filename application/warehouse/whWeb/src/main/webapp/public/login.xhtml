@@ -11,34 +11,39 @@
 	</ui:define>
 	<ui:define name="pageTitle">Login</ui:define>
 	<ui:define name="content">
+
 		<div align="center">
-			<h:panelGroup rendered="#{empty request.remoteUser}"
+			<br />
+
+			<h:panelGroup rendered="#{not empty request.remoteUser}"
 				style="color: white;">
 				<br />
 				<br />
-				<br />
+				<h2 style="font-family: Broadway; color: white">To access this
+					content, please logout.</h2>
+			</h:panelGroup>
+
+			<p:panel rendered="#{empty request.remoteUser}" style="width:320px">
+				<f:facet name="header">
+					<h:outputText value="Login" />
+				</f:facet>
 
 				<h:panelGroup style="color: white;" layout="block" class="error"
 					rendered="#{param['error'] == 1}">Wrong password</h:panelGroup>
 
 				<form name="loginForm" action="#{request.contextPath}/login"
 					method="POST">
+					<h:panelGrid columns="2" cellpadding="5">
+						<h:outputText value="Username: " />
+						<input type="text" name="username" />
 
-					<table>
-						<tr>
-							<td style="color: white;">User:</td>
-							<td><input type="text" name="username" /></td>
-						</tr>
-						<tr>
-							<td style="color: white;">Password:</td>
-							<td><input type="password" name="password" /></td>
-						</tr>
-						<tr>
-							<td><input name="submit" type="submit" value="Login" /></td>
-						</tr>
-					</table>
+						<h:outputText value="Password: " />
+						<input type="password" name="password" />
+					</h:panelGrid>
+					<p:separator />
+					<input name="submit" type="submit" value="Login" />
 				</form>
-			</h:panelGroup>
+			</p:panel>
 		</div>
 	</ui:define>
 </ui:composition>

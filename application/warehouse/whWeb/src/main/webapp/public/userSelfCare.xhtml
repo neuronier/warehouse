@@ -13,54 +13,60 @@
 	<ui:define name="content">
 
 		<div align="center">
-			<h:panelGroup rendered="#{not empty request.remoteUser}"
+			<br />
+
+			<h:panelGroup rendered="#{empty request.remoteUser}"
 				style="color: white;">
 				<br />
 				<br />
-				<br />
-				<h2 align="center" style="font-family: Broadway; color: white">Selfcare
-					area! You can modify your details here.</h2>
-				<h2 align="center" style="font-family: Broadway; color: white">
-					Welcome
-					<h:outputText id="userNameInput"
-						value="#{userSelfCareController.currentUser.userName}" />
-				</h2>
+				<h2 style="font-family: Broadway; color: white">To access this
+					content, please login.</h2>
+			</h:panelGroup>
+
+			<p:panel rendered="#{not empty request.remoteUser}"
+				style="width:435px;">
+				<f:facet name="header">
+					<h:outputText
+						value="Selfcare
+					area! You can modify your details here. Welcome #{userSelfCareController.currentUser.userName}" />
+				</f:facet>
 
 				<h:form id="userSelfCareForm" prependId="false">
 
 					<h:panelGrid columns="2" cellpadding="5">
-
-						<h:outputText style="color: white;" value="New Password: " />
+						<h:outputText value="New Password: " />
 						<p:password id="password1"
 							value="#{userSelfCareController.password1}" match="password2" />
 
-						<h:outputText style="color: white;" value="New Password again: " />
+						<h:outputText value="New Password again: " />
 						<p:password id="password2"
 							value="#{userSelfCareController.password2}" />
 
-						<h:outputText style="color: white;" value="Fullname: " />
+						<h:outputText value="Fullname: " />
 						<p:inputText id="fullNameInput" required="true"
 							value="#{userSelfCareController.currentUser.fullName}"
 							requiredMessage="Please enter your fullname" />
 
-						<h:outputText style="color: white;" value="Email: " />
+						<h:outputText value="Email: " />
 						<p:inputText id="emailInput" required="true"
 							value="#{userSelfCareController.currentUser.email}"
 							requiredMessage="Please enter your email" />
 
-						<h:outputText style="color: white;" value="Phone number: " />
+						<h:outputText value="Phone number: " />
 						<p:inputText id="phoneNumberInput" required="true"
 							value="#{userSelfCareController.currentUser.phoneNumber}"
 							requiredMessage="Please enter your phone number" />
-
 					</h:panelGrid>
+
+					<p:separator />
 
 					<p:commandButton id="userSelfCareApply" value="Apply modifications"
 						action="#{userSelfCareController.updateUser()}"
 						icon="ui-icon-check" update="userSelfCareForm" />
 
 				</h:form>
-			</h:panelGroup>
+			</p:panel>
+
 		</div>
 
 	</ui:define>

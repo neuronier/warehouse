@@ -12,95 +12,110 @@
 	<ui:define name="pageTitle">Admin</ui:define>
 	<ui:define name="content">
 
-		<h:form id="adminForm">
-			<p:dataTable id="adminTable" var="admin"
-				value="#{adminController.lazyAdminModel}"
-				emptyMessage="#{out.empty_message}"
-				paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-				rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" rows="10"
-				selectionMode="single" selection="#{adminController.selectedUser}">
+		<div align="center">
+			<br />
 
-				<p:ajax event="rowSelect" listener="#{adminController.onRowSelect}"
-					update=":adminForm:userDetail" oncomplete="PF('userDialog').show()" />
+			<p:panel>
+				<f:facet name="header">
+					<h:outputText
+						value='Admin area - "click on user for more information"' />
+				</f:facet>
 
-				<p:column headerText="Username" sortBy="#{admin.userName}"
-					filterBy="#{admin.userName}">
-					<h:outputText value="#{admin.userName}" />
-				</p:column>
+				<h:form id="adminForm">
+					<p:dataTable id="adminTable" var="admin"
+						value="#{adminController.lazyAdminModel}"
+						emptyMessage="#{out.empty_message}"
+						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+						rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+						rows="10" selectionMode="single"
+						selection="#{adminController.selectedUser}">
 
-				<p:column headerText="Fullname" sortBy="#{admin.fullName}"
-					filterBy="#{admin.fullName}">
-					<h:outputText value="#{admin.fullName}" />
-				</p:column>
+						<p:ajax event="rowSelect"
+							listener="#{adminController.onRowSelect}"
+							update=":adminForm:userDetail"
+							oncomplete="PF('userDialog').show()" />
 
-				<p:column headerText="Email" sortBy="#{admin.email}"
-					filterBy="#{admin.email}">
-					<h:outputText value="#{admin.email}" />
-				</p:column>
+						<p:column headerText="Username" sortBy="#{admin.userName}"
+							filterBy="#{admin.userName}">
+							<h:outputText value="#{admin.userName}" />
+						</p:column>
 
-				<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
-					filterBy="#{admin.phoneNumber}">
-					<h:outputText value="#{admin.phoneNumber}" />
-				</p:column>
+						<p:column headerText="Fullname" sortBy="#{admin.fullName}"
+							filterBy="#{admin.fullName}">
+							<h:outputText value="#{admin.fullName}" />
+						</p:column>
 
-				<p:column headerText="Roles">
-					<h:outputText value="#{admin.roles}" />
-				</p:column>
+						<p:column headerText="Email" sortBy="#{admin.email}"
+							filterBy="#{admin.email}">
+							<h:outputText value="#{admin.email}" />
+						</p:column>
 
-				<p:column headerText="Enabled" sortBy="#{admin.enabled}">
-					<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
-				</p:column>
-			</p:dataTable>
+						<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
+							filterBy="#{admin.phoneNumber}">
+							<h:outputText value="#{admin.phoneNumber}" />
+						</p:column>
+
+						<p:column headerText="Roles">
+							<h:outputText value="#{admin.roles}" />
+						</p:column>
+
+						<p:column headerText="Enabled" sortBy="#{admin.enabled}">
+							<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
+						</p:column>
+					</p:dataTable>
 
 
-			<p:dialog header="User Details" widgetVar="userDialog" modal="true"
-				showEffect="fade" hideEffect="fade" resizable="false">
-				<p:outputPanel id="userDetail" style="text-align:center;">
-					<p:panelGrid columns="2"
-						rendered="#{not empty adminController.selectedUser}"
-						columnClasses="label,value">
+					<p:dialog header="User Details" widgetVar="userDialog" modal="true"
+						showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="userDetail" style="text-align:center;">
+							<p:panelGrid columns="2"
+								rendered="#{not empty adminController.selectedUser}"
+								columnClasses="label,value">
 
-						<h:outputText value="Username" />
-						<h:outputText value="#{adminController.selectedUser.userName}" />
+								<h:outputText value="Username" />
+								<h:outputText value="#{adminController.selectedUser.userName}" />
 
-						<h:outputText value="Fullname" />
-						<h:outputText value="#{adminController.selectedUser.fullName}" />
+								<h:outputText value="Fullname" />
+								<h:outputText value="#{adminController.selectedUser.fullName}" />
 
-						<h:outputText value="Email" />
-						<h:outputText value="#{adminController.selectedUser.email}" />
+								<h:outputText value="Email" />
+								<h:outputText value="#{adminController.selectedUser.email}" />
 
-						<h:outputText value="Phone number" />
-						<h:outputText value="#{adminController.selectedUser.phoneNumber}" />
+								<h:outputText value="Phone number" />
+								<h:outputText
+									value="#{adminController.selectedUser.phoneNumber}" />
 
-						<h:outputText value="Roles" />
-						<p:dataTable id="checkboxRoles" var="roles"
-							value="#{adminController.roles}"
-							selection="#{adminController.selectedRoles}"
-							rowKey="#{roles.roleName}"
-							style="width:250px !important;margin-bottom:0">
-							<p:column selectionMode="multiple" style="width:16px" />
-							<p:column>
-								<h:outputText value="#{roles.roleName}" />
-							</p:column>
-						</p:dataTable>
+								<h:outputText value="Roles" />
+								<p:dataTable id="checkboxRoles" var="roles"
+									value="#{adminController.roles}"
+									selection="#{adminController.selectedRoles}"
+									rowKey="#{roles.roleName}"
+									style="width:250px !important;margin-bottom:0">
+									<p:column selectionMode="multiple" style="width:16px" />
+									<p:column>
+										<h:outputText value="#{roles.roleName}" />
+									</p:column>
+								</p:dataTable>
 
-						<h:outputText value="Enabled" />
-						<p:selectBooleanButton value="#{adminController.enabled}"
-							onLabel="Yes" offLabel="No" style="width:60px" />
+								<h:outputText value="Enabled" />
+								<p:selectBooleanButton value="#{adminController.enabled}"
+									onLabel="Yes" offLabel="No" style="width:60px" />
 
-						<p:commandButton value="Update" id="update"
-							actionListener="#{adminController.updateUser}"
-							update=":adminForm:adminTable"
-							oncomplete="PF('userDialog').hide();" />
+								<p:commandButton value="Update" id="update"
+									actionListener="#{adminController.updateUser}"
+									update=":adminForm:adminTable"
+									oncomplete="PF('userDialog').hide();" />
 
-						<p:commandButton value="Cancel" id="cancel"
-							actionListener="#{adminController.cancelSelect}"
-							update=":adminForm:adminTable"
-							oncomplete="PF('userDialog').hide();" />
+								<p:commandButton value="Cancel" id="cancel"
+									actionListener="#{adminController.cancelSelect}"
+									update=":adminForm:adminTable"
+									oncomplete="PF('userDialog').hide();" />
 
-					</p:panelGrid>
-				</p:outputPanel>
-			</p:dialog>
-		</h:form>
+							</p:panelGrid>
+						</p:outputPanel>
+					</p:dialog>
+				</h:form>
+			</p:panel>
+		</div>
 	</ui:define>
 </ui:composition>
