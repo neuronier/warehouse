@@ -174,26 +174,19 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 			int num) {
 		WarehouseVO wh = new WarehouseVO();
 		try {
-			
+
 			wh = warehouseConverter.toVO((warehouseDao
 					.findWarehouseByWarehouseId(warehouseId)));
-			
-			List<StockVO> wares = stockConverter.toVO(stockDao
-					.findStockByWarehouseId(wh.getId()));
-
 
 			StockVO ware = stockConverter.toVO(stockDao
 					.findStockByWarehouseIdandWareId(wh.getId(), wareId));
 
-			for (StockVO stockVO : wares) {
-				if (stockVO.getPiece() - num >= 0
-						&& stockVO.getWare().getId() == wareId) {
-					stockDao.updateStock(wh.getId(), wareId, ware.getPiece()
-							- num);
-				} else {
-					logger.error("Too much number of items.");
-				}
+			if (ware.getPiece() - num >= 0) {
+				stockDao.updateStock(wh.getId(), wareId, ware.getPiece() - num);
+			} else {
+				logger.error("Too much number of items.");
 			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
