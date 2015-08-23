@@ -4,6 +4,7 @@ import hu.neuron.java.warehouse.whCore.entity.BaseEntity;
 
 import java.io.Serializable;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +20,9 @@ public class Ware extends BaseEntity  {
 	
 
 	private static final long serialVersionUID = 1L;
+	@Column(unique = true, nullable = false)
 	private String wareName;
+	@Column(unique = true, nullable = false)
 	private int itemNumber;
 	private String description;
 	private int visible;
