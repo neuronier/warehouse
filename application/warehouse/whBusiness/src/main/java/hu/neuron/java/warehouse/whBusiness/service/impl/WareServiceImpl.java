@@ -60,13 +60,13 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 
 	@EJB
 	WareConverter wareConverter;
-	
+
 	@EJB
 	WarehouseConverter warehouseConverter;
-	
+
 	@Autowired
 	WarehouseDao warehouseDao;
-	
+
 	@Autowired
 	StockDao stockDao;
 
@@ -174,17 +174,25 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 			int num) {
 		WarehouseVO wh = new WarehouseVO();
 		try {
+			
 			wh = warehouseConverter.toVO((warehouseDao
 					.findWarehouseByWarehouseId(warehouseId)));
+			
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
 
 			StockVO ware = stockConverter.toVO(stockDao
-                                        .findStockByWarehouseIdandWareId(wh.getId(), wareId));
+					.findStockByWarehouseIdandWareId(wh.getId(), wareId));
 
-			if(stockVO.getPiece()-num >= 0 && stockVO.getWare().getId() == wareId) {
-				stockDao.updateStock(wh.getId(), wareId, ware.getPiece()-num);
-			}
-			else {
-				logger.error("Too much number of items.");	
+			for (StockVO stockVO : wares) {
+				if (stockVO.getPiece() - num >= 0
+						&& stockVO.getWare().getId() == wareId) {
+					stockDao.updateStock(wh.getId(), wareId, ware.getPiece()
+							- num);
+				} else {
+					logger.error("Too much number of items.");
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
