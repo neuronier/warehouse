@@ -182,7 +182,7 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 
 			for (StockVO stockVO : wares) {
 				if (stockVO.getWare().getId() == wareId) {
-					stockDao.updateStock(wh.getId(), wareId, stockVO.getWare().getItemNumber()-num);
+					stockDao.updateStock(wh.getId(), wareId, stockVO.getPiece()-num);
 				}
 			}
 
