@@ -15,10 +15,10 @@ import hu.neuron.java.warehouse.whWeb.webVO.WarehouseWebVO;
 public class WarehouseWebServiceImpl implements WarehouseWebService {
 	
 	@EJB(name = "WarehouseService")
-	WarehouseServiceLocal warehouseService;
+	private WarehouseServiceLocal warehouseService;
 	
 	@EJB
-	WarehouseWebConverter warehouseWebConverter;
+	private WarehouseWebConverter warehouseWebConverter;
 
 	@Override
 	public List<WarehouseWebVO> getAllWarehouse() {

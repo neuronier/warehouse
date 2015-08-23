@@ -54,19 +54,19 @@ public class WarehouseController implements Serializable {
 	private String updateWarehouseAddressZipCode;
 
 
-	LazyWarehouseModel lazyWarehouseModel;
+	private LazyWarehouseModel lazyWarehouseModel;
 
 	@EJB(name = "WarehouseService")
-	WarehouseServiceLocal warehouseService;
+	private WarehouseServiceLocal warehouseService;
 
 	@EJB(name = "ManagerService")
-	ManagerServiceLocal managerService;
+	private ManagerServiceLocal managerService;
 
 	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
 	private UserSelfCareServiceRemote userSelfCareService;
 
 	@EJB(name = "AdminService")
-	AdminServiceRemote adminService;
+	private AdminServiceRemote adminService;
 
 	private DualListModel<String> users;
 	

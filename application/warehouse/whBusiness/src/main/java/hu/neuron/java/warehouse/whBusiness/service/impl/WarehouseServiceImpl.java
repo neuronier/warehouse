@@ -35,16 +35,16 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 		WarehouseServiceRemote {
 
 	@Autowired
-	WarehouseDao warehouseDao;
+	private WarehouseDao warehouseDao;
 	
 	@Autowired
-	StockDao stockDao;
+	private StockDao stockDao;
 	
 	@Autowired
-	ManagerDao managerDao;
+	private ManagerDao managerDao;
 
 	@EJB
-	WarehouseConverter warehouseConverter;
+	private WarehouseConverter warehouseConverter;
 
 	@Override
 	public void save(WarehouseVO warehouseVo) {

@@ -6,9 +6,9 @@ public class WarehouseWebVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	String name;
+	private String name;
 	
-	String warehouseId;
+	private String warehouseId;
 
 	public String getName() {
 		return name;

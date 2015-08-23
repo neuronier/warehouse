@@ -30,16 +30,16 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 public class WareOrderServiceImpl implements WareOrderLOcal, WareOrderRemote {
 
 	@Autowired
-	WarehouseDao warehouseDao;
+	private WarehouseDao warehouseDao;
 
 	@Autowired
-	StockDao stockDao;
+	private StockDao stockDao;
 
 	@EJB
-	WarehouseConverter warehouseConverter;
+	private WarehouseConverter warehouseConverter;
 
 	@EJB
-	StockConverter stockConverter;
+	private StockConverter stockConverter;
 
 	public void order(StockVO order) {
 		StockVO asd = new StockVO();

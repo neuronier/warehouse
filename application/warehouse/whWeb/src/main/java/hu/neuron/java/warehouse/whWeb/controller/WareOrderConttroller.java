@@ -27,13 +27,13 @@ public class WareOrderConttroller implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB(name = "WareOrderService")
-	WareOrderLOcal wareOrder;
+	private WareOrderLOcal wareOrder;
 
 	@EJB(name = "WarehouseService")
-	WarehouseServiceLocal warehouseService;
+	private WarehouseServiceLocal warehouseService;
 
 	@EJB(name = "WareService")
-	WareServiceLocal wareService;
+	private WareServiceLocal wareService;
 
 	private int db;
 
