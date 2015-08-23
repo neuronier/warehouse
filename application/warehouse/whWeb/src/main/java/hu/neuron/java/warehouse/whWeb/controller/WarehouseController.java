@@ -233,10 +233,6 @@ public class WarehouseController implements Serializable {
 		updateWarehouseAddressZipCode = selectedWarehouse.getZipCode();
 		updateWarehouseCity = selectedWarehouse.getCity();
 
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info",
-						updateWarehouseName));
 	}
 
 	
