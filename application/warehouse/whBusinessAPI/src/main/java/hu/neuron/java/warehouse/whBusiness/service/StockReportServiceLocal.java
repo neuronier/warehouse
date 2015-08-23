@@ -8,7 +8,7 @@ import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import java.util.List;
 import java.util.Map;
 
-public interface StockReportServiceRemote {
+public interface StockReportServiceLocal {
 
 	public WarehouseVO getWarehouseByName(String warehouseName);
 

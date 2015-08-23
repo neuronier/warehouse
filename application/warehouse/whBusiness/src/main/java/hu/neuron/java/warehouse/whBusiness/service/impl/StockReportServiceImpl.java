@@ -3,6 +3,7 @@ package hu.neuron.java.warehouse.whBusiness.service.impl;
 import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.StockHistoryConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
+import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockHistoryVO;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
@@ -15,9 +16,12 @@ import hu.neuron.java.warehouse.whCore.entity.Stock;
 import hu.neuron.java.warehouse.whCore.entity.StockHistory;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
+import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -34,10 +38,12 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 @Stateless(mappedName = "StockReportService", name = "StockReportService")
+@Local(StockReportServiceLocal.class)
 @Remote(StockReportServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class StockReportServiceImpl implements StockReportServiceRemote, Serializable {
+public class StockReportServiceImpl implements StockReportServiceRemote,
+		StockReportServiceLocal, Serializable {
 	private static final long serialVersionUID = 1L;
 
 	// private static final Logger logger = Logger
@@ -74,7 +80,8 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public WarehouseVO getWarehouseByName(String warehouseName) {
 		WarehouseVO warehouseVO = null;
 		try {
-			warehouseVO = warehouseConverter.toVO(warehouseDao.findWarehouseByName(warehouseName));
+			warehouseVO = warehouseConverter.toVO(warehouseDao
+					.findWarehouseByName(warehouseName));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -119,9 +126,10 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	}
 
 	@Override
-	public List<StockVO> getStock(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName) {
-		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
+	public List<StockVO> getStock(int i, int pageSize, String sortField,
+			int sortOrder, String filter, String filterColumnName) {
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC
+				: Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Stock> entities;
@@ -140,29 +148,35 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	}
 
 	@Override
-	public List<StockHistoryVO> getStockHistory(int i, int pageSize, String sortField,
-			int sortOrder, String filter, String filterColumnName) {
-		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
+	public List<StockHistoryVO> getStockHistory(int i, int pageSize,
+			String sortField, int sortOrder, String filter,
+			String filterColumnName) {
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC
+				: Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<StockHistory> entities;
 
 		if (filter.length() != 0 && filterColumnName.equals("warehouse")) {
-			entities = stockHistoryDao.findByWarehouseStartsWith(filter, pageRequest);
+			entities = stockHistoryDao.findByWarehouseStartsWith(filter,
+					pageRequest);
 		} else if (filter.length() != 0 && filterColumnName.equals("ware")) {
-			entities = stockHistoryDao.findByWareStartsWith(filter, pageRequest);
+			entities = stockHistoryDao
+					.findByWareStartsWith(filter, pageRequest);
 		} else {
 			entities = stockHistoryDao.findAll(pageRequest);
 		}
 
-		List<StockHistoryVO> ret = stockHistoryConverter.toVO(entities.getContent());
+		List<StockHistoryVO> ret = stockHistoryConverter.toVO(entities
+				.getContent());
 
 		return ret;
 	}
 
 	@Override
-	public List<TransportVO> getTransports(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName) {
+	public List<TransportVO> getTransports(int i, int pageSize,
+			String sortField, int sortOrder, String filter,
+			String filterColumnName) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -181,5 +195,75 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public int getTransportCount() {
 		// return (int) transportDao.count();
 		return 0;
+	}
+
+	public Map<String, Integer> findwareAndPiecesByWarehouseId(
+			String warehouseId) {
+		WarehouseVO wh = new WarehouseVO();
+		Map<String, Integer> res = new HashMap<String, Integer>();
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				res.put(stockVO.getWare().getWareName(), stockVO.getPiece());
+			}
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return res;
+	}
+
+	@Override
+	public int getNumByWarehouseAndWareId(String warehouseId, Long wareId) {
+		WarehouseVO wh = new WarehouseVO();
+		int out = 0;
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				if(stockVO.getWare().getId() == wareId)
+				{
+					out = stockVO.getPiece();
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return out;
+	}
+	
+	@Override
+	public void decreaseNumberByWhWareAndNum(String warehouseId, Long wareId, int num) {
+		WarehouseVO wh = new WarehouseVO();
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				if(stockVO.getWare().getId() == wareId)
+				{
+					stockVO.getWare().setItemNumber(stockVO.getPiece() - num);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

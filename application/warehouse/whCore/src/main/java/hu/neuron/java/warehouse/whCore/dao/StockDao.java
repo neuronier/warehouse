@@ -35,6 +35,9 @@ public interface StockDao extends JpaRepository<Stock, Long>{
 	@Query("select u from Stock u where u.warehouse.id=?1 and u.ware.id=?2")
 	Stock findStockByWarehouseIdandWareId(Long warehouseId, Long wareId) throws Exception;
 	
+	@Query("select u from Stock u where u.warehouse.id=?1")
+    List<Stock> findStockByWarehouseId(Long warehouseId) throws Exception;
+	
 	Page<Stock> findByWarehouseStartsWith(String filter, Pageable pageable);
 
 	Page<Stock> findByWareStartsWith(String filter, Pageable pageable);
