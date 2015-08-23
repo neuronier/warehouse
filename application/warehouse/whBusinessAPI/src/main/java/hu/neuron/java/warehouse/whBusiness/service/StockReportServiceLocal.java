@@ -6,7 +6,6 @@ import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.util.List;
-import java.util.Map;
 
 public interface StockReportServiceLocal {
 
@@ -34,12 +33,6 @@ public interface StockReportServiceLocal {
 
 	public List<TransportVO> getTransports(int i, int pageSize, String sortField, int sortOrder,
 			String filter, String filterColumnName);
-	
-	public Map<String, Integer> findwareAndPiecesByWarehouseId(String warehouseId);
-	
-	public int getNumByWarehouseAndWareId(String warehouseId, Long wareId);
-	
-	public void decreaseNumberByWhWareAndNum(String warehouseId, Long wareId, int num);
 
 	public int getStockCount();
 

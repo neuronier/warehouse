@@ -1,6 +1,5 @@
 package hu.neuron.java.warehouse.whWeb.web.service.impl;
 
-import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whWeb.web.converter.WareWebConverter;
@@ -30,9 +29,6 @@ public class WareWebServiceImpl implements WareWebService {
 	
 	@EJB
 	WarehouseWebConverter warehouseWebConverter;
-	
-	@EJB(name = "StockService")
-	StockReportServiceLocal stockService;
 
 	/**
 	 * Terméktípusok listája
@@ -51,7 +47,7 @@ public class WareWebServiceImpl implements WareWebService {
 	@Override
 	public Map<String, Integer> getWaresNumbers(String warehouseId) {
 		Map<String, Integer> out = new HashMap<String, Integer>();
-		out = stockService.findwareAndPiecesByWarehouseId(warehouseId);
+		out = wareService.findwareAndPiecesByWarehouseId(warehouseId);
         return out;
 	}
 
@@ -61,7 +57,7 @@ public class WareWebServiceImpl implements WareWebService {
 	 */
 	@Override
 	public int getNumberOfWares(String warehouseId, Long wareId) {
-		return stockService.getNumByWarehouseAndWareId(warehouseId, wareId);
+		return wareService.getNumByWarehouseAndWareId(warehouseId, wareId);
 	}
 
 	/**
@@ -70,7 +66,7 @@ public class WareWebServiceImpl implements WareWebService {
 	 */
 	@Override
 	public void decreaseNumberOfWares(String warehouseId, Long wareId, int number) {
-		stockService.decreaseNumberByWhWareAndNum(warehouseId, wareId, number);
+		wareService.decreaseNumberByWhWareAndNum(warehouseId, wareId, number);
 	}
 
 }

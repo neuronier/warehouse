@@ -1,7 +1,22 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
+import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
+import hu.neuron.java.warehouse.whBusiness.converter.WareConverter;
+import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
+import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WareServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
+import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
+import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
+import hu.neuron.java.warehouse.whCore.dao.StockDao;
+import hu.neuron.java.warehouse.whCore.dao.WareDao;
+import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
+import hu.neuron.java.warehouse.whCore.entity.Ware;
+
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -21,57 +36,49 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
-
-
-
-
-import hu.neuron.java.warehouse.whBusiness.converter.WareConverter;
-import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.service.WareServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
-import hu.neuron.java.warehouse.whCore.dao.WareDao;
-import hu.neuron.java.warehouse.whCore.entity.Ware;
-
-
-
-
-
 @Stateless(mappedName = "WareService", name = "WareService")
 @Local(WareServiceLocal.class)
 @Remote(WareServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Serializable {
+public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
+		Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	private static final Logger logger = Logger
 			.getLogger(WareServiceImpl.class);
-	
-	
+
 	@PersistenceContext
 	private EntityManager entityManager;
-	
 
-	
 	@Autowired
 	WareDao wareDao;
-	
-//	@EJB
-//	WareServiceLocal wareService;
+
+	// @EJB
+	// WareServiceLocal wareService;
 
 	@EJB
 	WareConverter wareConverter;
+	
+	@EJB
+	WarehouseConverter warehouseConverter;
+	
+	@Autowired
+	WarehouseDao warehouseDao;
+	
+	@Autowired
+	StockDao stockDao;
 
-	
-	
+	@EJB
+	StockConverter stockConverter;
+
 	@Override
 	public WareVo findWareByName(String ware) {
 		WareVo vo = null;
 		try {
 			vo = wareConverter.toVO(wareDao.findByWareName(ware));
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return vo;
@@ -79,7 +86,7 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 
 	@Override
 	public WareVo setUpWares(WareVo vo) throws Exception {
-		
+
 		return null;
 	}
 
@@ -91,8 +98,9 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 	@Override
 	public List<WareVo> getWares() {
 		return wareConverter.toVO(wareDao.findAll());
-		
+
 	}
+
 	@Override
 	public void updateWare(WareVo wareVo) {
 		wareDao.save(wareConverter.toEntity(wareVo));
@@ -112,7 +120,7 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 			entities = wareDao.findByWareNameStartsWith(filter, pageRequest);
 		} else {
 			entities = wareDao.findAll(pageRequest);
-			
+
 		}
 
 		List<WareVo> ret = wareConverter.toVO(entities.getContent());
@@ -128,15 +136,82 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote, Ser
 	@Override
 	public void saveWare(WareVo wareVo) {
 		wareDao.save(wareConverter.toEntity(wareVo));
-		
+
 	}
 
 	@Override
 	public void removeWare(WareVo selectedWare) {
 		wareDao.delete(selectedWare.getId());
-		
-		
-		
+
+	}
+
+	@Override
+	public int getNumByWarehouseAndWareId(String warehouseId, Long wareId) {
+		WarehouseVO wh = new WarehouseVO();
+		int out = 0;
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				if (stockVO.getWare().getId() == wareId) {
+					out = stockVO.getPiece();
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return out;
+	}
+
+	@Override
+	public void decreaseNumberByWhWareAndNum(String warehouseId, Long wareId,
+			int num) {
+		WarehouseVO wh = new WarehouseVO();
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				if (stockVO.getWare().getId() == wareId) {
+					stockDao.updateStock(wh.getId(), wareId, stockVO.getWare().getItemNumber()-num);
+				}
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public Map<String, Integer> findwareAndPiecesByWarehouseId(
+			String warehouseId) {
+		WarehouseVO wh = new WarehouseVO();
+		Map<String, Integer> res = new HashMap<String, Integer>();
+		try {
+			wh = warehouseConverter.toVO((warehouseDao
+					.findWarehouseByWarehouseId(warehouseId)));
+
+			List<StockVO> wares = stockConverter.toVO(stockDao
+					.findStockByWarehouseId(wh.getId()));
+
+			for (StockVO stockVO : wares) {
+				res.put(stockVO.getWare().getWareName(), stockVO.getPiece());
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return res;
 	}
 
 }
