@@ -23,15 +23,14 @@ public class WareController implements Serializable {
 	private LazyWareModel lazyWareModel;
 
 	private WareVo selectedWare;
-	
+
 	private String newWareName;
 	private int newItemNumber;
 	private String newDescription;
 	private String updateWareName;
 	private int updateItemNumber;
 	private String updateDescription;
-	
-	
+
 	@EJB(beanName = "WareService")
 	WareServiceLocal wareService;
 
@@ -40,13 +39,7 @@ public class WareController implements Serializable {
 
 		setLazyWareModel(new LazyWareModel(getWareService()));
 	}
-	
 
-	
-	
-
-	
-	
 	public void saveNewWare() {
 		WareVo wareVo = new WareVo();
 		wareVo.setWareName(newWareName);
@@ -56,19 +49,15 @@ public class WareController implements Serializable {
 
 		getWareService().saveWare(wareVo);
 	}
-	
-	public void deleteWare () {
-		
+
+	public void deleteWare() {
+
 		getWareService().removeWare(selectedWare);
-	
+
 	}
-	
-	
-	
-	WareVo test(){
-		
-		
-		
+
+	WareVo test() {
+
 		return selectedWare;
 	}
 
@@ -80,16 +69,16 @@ public class WareController implements Serializable {
 		updateDescription = selectedWare.getDescription();
 
 	}
+
 	public void updateWare() {
-		
+
 		selectedWare.setWareName(updateWareName);
 		selectedWare.setItemNumber(updateItemNumber);
 		selectedWare.setDescription(updateDescription);
-//		System.out.println("II**II :" + selectedWare);
+		// System.out.println("II**II :" + selectedWare);
 		getWareService().saveWare(selectedWare);
 
-		
-}
+	}
 
 	public String getUpdateWareName() {
 		return updateWareName;
@@ -114,10 +103,6 @@ public class WareController implements Serializable {
 	public void setUpdateDescription(String updateDescription) {
 		this.updateDescription = updateDescription;
 	}
-
-	
-
-	
 
 	public WareVo getSelectedWare() {
 		return selectedWare;

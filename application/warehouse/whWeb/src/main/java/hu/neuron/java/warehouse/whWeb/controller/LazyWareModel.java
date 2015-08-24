@@ -11,14 +11,10 @@ import org.primefaces.model.SortOrder;
 
 public class LazyWareModel extends LazyDataModel<WareVo> {
 
+	private List<WareVo> visibleRoleList = null;
 
-	
-
-	private List<WareVo> visibleRoleList;
-	
 	private WareServiceLocal wareService;
-	
-	
+
 	public WareServiceLocal getWareService() {
 		return wareService;
 	}
@@ -29,9 +25,9 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 
 	public LazyWareModel(WareServiceLocal wareService) {
 		super();
-		this.wareService=wareService;
+		this.wareService = wareService;
 	}
-	
+
 	@Override
 	public WareVo getRowData(String rowkey) {
 		if (visibleRoleList != null || rowkey != null) {
@@ -43,6 +39,7 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 		}
 		return null;
 	}
+
 	@Override
 	public Object getRowKey(WareVo wareVo) {
 		if (wareVo == null) {
@@ -54,7 +51,7 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 	@Override
 	public List<WareVo> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
-
+		int vSize = -1;
 		String filter = "";
 		String filterColumnName = "";
 		if (filters.keySet().size() > 0) {
@@ -64,18 +61,25 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 		if (sortField == null) {
 			sortField = "wareName";
 		}
-
+//		List<WareVo> wareList = null;
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleRoleList = wareService.getWares(first / pageSize, pageSize,
-				sortField, dir, filter, filterColumnName);
+		visibleRoleList = wareService.getWares(first / pageSize, pageSize, sortField,
+				dir, filter, filterColumnName);
 
-		int dataSize = wareService.getRoleCount();
+//		for (WareVo wareVo : wareList) {
+//			if (wareVo.getVisible() == 1) {
+//				visibleRoleList.add(wareVo);
+//
+//			}
+//
+//		}
+
+		int dataSize = wareService.getRowNumber();
 
 		this.setRowCount(dataSize);
 
 		return visibleRoleList;
 
 	}
-
 
 }

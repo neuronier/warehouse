@@ -17,14 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 public interface WareDao extends JpaRepository<Ware, Long> {
 
 	Ware findByWareName(@Param("Name") String name) throws Exception;
-
+	Ware findByItemNumber(@Param("ItemNumber") int number) throws Exception;
+	
+	
 	Page<Ware> findByWareNameStartsWith(String filter,Pageable pageable);
+	
+	Page<Ware> findByItemNumberStartsWith(String filter,Pageable pageable);
+	
+	Page<Ware> findByDescriptionStartsWith(String filter,Pageable pageable);
 	
 	@Query("select w from Ware w where w.wareName=?1")	
 	Ware findWareByName(String wareName) throws Exception;
+	@Query("select w from Ware w where w.itemNumber=?1")	
+	Ware findWareByItemNumber(String itemNumber) throws Exception;
 	
-//	@Modifying
-//	@Query(value = "insert into user_ware_sw (ware_id) VALUES (?2)", nativeQuery = true)
-//	void addUserToWarehouse(Long userId, Long wareId) throws Exception;
 	
 }

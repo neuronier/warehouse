@@ -112,13 +112,21 @@ public class WareServiceImpl implements WareServiceLocal, WareServiceRemote,
 			int sortOrder, String filter, String filterColumnName) {
 		Direction dir = sortOrder == 1 ? Sort.Direction.ASC
 				: Sort.Direction.DESC;
+//		Integer filternum=Integer.parseInt(filter);
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Ware> entities;
-
+		
 		if (filter.length() != 0 && filterColumnName.equals("wareName")) {
 			entities = wareDao.findByWareNameStartsWith(filter, pageRequest);
-		} else {
+		} 
+		else if (filter.length() != 0 && filterColumnName.equals("itemNumber")) {
+			entities = wareDao.findByItemNumberStartsWith(filter, pageRequest);
+		} 
+		else if (filter.length() != 0 && filterColumnName.equals("description")) {
+			entities = wareDao.findByDescriptionStartsWith(filter, pageRequest);
+		} 
+		else {
 			entities = wareDao.findAll(pageRequest);
 
 		}
