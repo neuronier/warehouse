@@ -56,7 +56,6 @@ public class WareOrderConttroller implements Serializable {
 	@PostConstruct
 	void init() {
 		pieces = new LinkedList<Integer>();
-		System.out.println(db);
 		whNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();

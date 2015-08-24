@@ -65,6 +65,7 @@ public class TransportController implements Serializable {
 
 	@PostConstruct
 	void init() {
+		pieces = new LinkedList<Integer>();
 		whNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();
@@ -78,8 +79,6 @@ public class TransportController implements Serializable {
 		for (WareVo wareVo : wares) {
 			wareNames.add(wareVo.getWareName());
 		}
-		
-		setPieces(new LinkedList<Integer>());
 	}
 
 	public void transport() {
@@ -149,7 +148,7 @@ public class TransportController implements Serializable {
 	}
 
 	public void setDb(int db) {
-		pieces.add(db);
+		pieces.addFirst(db);
 		this.db = db;
 	}
 
