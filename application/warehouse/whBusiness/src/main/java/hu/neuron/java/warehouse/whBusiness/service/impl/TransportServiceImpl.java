@@ -55,10 +55,13 @@ public class TransportServiceImpl implements TransportServiceLocal,
 
 	@EJB
 	StockConverter stockConverter;
+	
+	private StockVO ware;
 
 	@Override
 	public void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO) {
+		ware = new StockVO();
 		try {
 			// táblák feltöltése
 			transportDao.addToTransport(transportVO.getFromWarehouseId(),
@@ -76,11 +79,11 @@ public class TransportServiceImpl implements TransportServiceLocal,
 				transportDao.addTransportToWarehouse(detailsVO.getPiece(),
 						detailsVO.getWareId(), transportVO.getToWarehouseId());
 			}
-
-			StockVO ware = stockConverter.toVO(stockDao
-					.findStockByWarehouseIdandWareId(detailsVO.getWareId(),
-							transportVO.getFromWarehouseId()));
-			if (detailsVO.getPiece() >= ware.getPiece()) {
+			
+			ware = new StockVO();
+			 ware = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(transportVO.getFromWarehouseId(), detailsVO.getWareId()));
+			
+			if (detailsVO.getPiece() <= ware.getPiece()) {
 				int from = transportDao.transportFromWarehouse(
 						detailsVO.getPiece(), detailsVO.getWareId(),
 						transportVO.getFromWarehouseId());
