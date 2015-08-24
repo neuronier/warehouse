@@ -63,6 +63,17 @@ public class AdminServiceImpl implements AdminServiceRemote, Serializable {
 		}
 		return userVO;
 	}
+	
+	@Override
+	public RoleVO getRoleByName(String roleName) {
+		RoleVO roleVO = null;
+		try {
+			roleVO = roleConverter.toVO(roleDao.findRoleByName(roleName));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return roleVO;
+	}
 
 	@Override
 	public UserVO setUpUsers(UserVO userVO) throws Exception {

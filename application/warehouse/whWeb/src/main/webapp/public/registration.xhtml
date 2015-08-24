@@ -53,13 +53,19 @@
 						<h:outputText value="Email: " />
 						<p:inputText id="emailInput" required="true"
 							value="#{registrationController.email}"
-							requiredMessage="Please enter your email" />
+							requiredMessage="Please enter your email address."
+							validatorMessage="Invalid email format">
+							<f:validateRegex
+								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+						</p:inputText>
 
 						<h:outputText value="Phone number: " />
 						<p:inputText id="phoneNumberInput" required="true"
 							value="#{registrationController.phoneNumber}"
-							requiredMessage="Please enter your phone number" />
-
+							requiredMessage="Please enter your phone number"
+							validatorMessage="Invalid phone number format">
+							<f:validateRegex pattern="^([\d]{11})?$" />
+						</p:inputText>
 					</h:panelGrid>
 
 					<p:separator />

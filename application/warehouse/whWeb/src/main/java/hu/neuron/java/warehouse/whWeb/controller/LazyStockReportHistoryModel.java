@@ -12,7 +12,7 @@ import org.primefaces.model.SortOrder;
 public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 	private static final long serialVersionUID = 1L;
 
-	private List<StockHistoryVO> visibleUserList;
+	private List<StockHistoryVO> visibleList;
 
 	private StockReportServiceRemote stockReportService;
 
@@ -23,8 +23,8 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 
 	@Override
 	public StockHistoryVO getRowData(String rowkey) {
-		if (visibleUserList != null || rowkey != null) {
-			for (StockHistoryVO stockHistoryVO : visibleUserList) {
+		if (visibleList != null || rowkey != null) {
+			for (StockHistoryVO stockHistoryVO : visibleList) {
 				if (stockHistoryVO.getId().toString().equals(rowkey)) {
 					return stockHistoryVO;
 				}
@@ -56,31 +56,31 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleUserList = stockReportService.getStockHistory(first / pageSize, pageSize, sortField,
+		visibleList = stockReportService.getStockHistory(first / pageSize, pageSize, sortField,
 				dir, filter, filterColumnName);
 
 		int dataSize = stockReportService.getStockHistoryCount();
 
 		this.setRowCount(dataSize);
 
-		return visibleUserList;
+		return visibleList;
 
 	}
 
-	public StockReportServiceRemote getAdminService() {
+	public List<StockHistoryVO> getVisibleList() {
+		return visibleList;
+	}
+
+	public void setVisibleList(List<StockHistoryVO> visibleList) {
+		this.visibleList = visibleList;
+	}
+
+	public StockReportServiceRemote getStockReportService() {
 		return stockReportService;
 	}
 
-	public void setAdminService(StockReportServiceRemote adminService) {
-		this.stockReportService = adminService;
-	}
-
-	public List<StockHistoryVO> getVisibleUserList() {
-		return visibleUserList;
-	}
-
-	public void setVisibleUserList(List<StockHistoryVO> visibleUserList) {
-		this.visibleUserList = visibleUserList;
+	public void setStockReportService(StockReportServiceRemote stockReportService) {
+		this.stockReportService = stockReportService;
 	}
 
 }

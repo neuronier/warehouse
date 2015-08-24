@@ -12,7 +12,7 @@ import org.primefaces.model.SortOrder;
 public class LazyStockReportTransferModel extends LazyDataModel<TransportVO> {
 	private static final long serialVersionUID = 1L;
 
-	private List<TransportVO> visibleUserList;
+	private List<TransportVO> visibleList;
 
 	private StockReportServiceRemote stockReportService;
 
@@ -23,8 +23,8 @@ public class LazyStockReportTransferModel extends LazyDataModel<TransportVO> {
 
 	@Override
 	public TransportVO getRowData(String rowkey) {
-//		if (visibleUserList != null || rowkey != null) {
-//			for (TransportVO transportVO : visibleUserList) {
+//		if (visibleList != null || rowkey != null) {
+//			for (TransportVO transportVO : visibleList) {
 //				if (transportVO.getId().toString().equals(rowkey)) {
 //					return transportVO;
 //				}
@@ -53,35 +53,21 @@ public class LazyStockReportTransferModel extends LazyDataModel<TransportVO> {
 			filterColumnName = filters.keySet().iterator().next();
 		}
 		if (sortField == null) {
-			sortField = "fromWarehouseId";
+			sortField = "fromWarehouse";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleUserList = stockReportService.getTransports(first / pageSize, pageSize, sortField, dir, filter,
+		visibleList = stockReportService.getTransports(first / pageSize, pageSize, sortField, dir, filter,
 				filterColumnName);
 
 		int dataSize = stockReportService.getTransportCount();
 
 		this.setRowCount(dataSize);
 
-		return visibleUserList;
+		return visibleList;
 
 	}
 
-	public StockReportServiceRemote getAdminService() {
-		return stockReportService;
-	}
 
-	public void setAdminService(StockReportServiceRemote adminService) {
-		this.stockReportService = adminService;
-	}
-
-	public List<TransportVO> getVisibleUserList() {
-		return visibleUserList;
-	}
-
-	public void setVisibleUserList(List<TransportVO> visibleUserList) {
-		this.visibleUserList = visibleUserList;
-	}
 
 }

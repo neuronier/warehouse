@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -21,21 +22,19 @@ public class StockHistory implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
-	private String warehouse;
+	@ManyToOne(targetEntity = Warehouse.class)
+	private Warehouse warehouse;
 
-	private String ware;
+	@ManyToOne(targetEntity = Ware.class)
+	private Ware ware;
 
-	private int piece;
+	private int new_piece;
+
+	private int old_piece;
 
 	@Column(name = "changeTime", columnDefinition = "DATETIME")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date changeTime;
-
-	@Override
-	public String toString() {
-		return "StockHistory [Warehouse=" + warehouse + ", ware=" + ware + ", piece=" + piece
-				+ ", changeTime=" + changeTime + "]";
-	}
 
 	public Long getId() {
 		return id;
@@ -45,28 +44,20 @@ public class StockHistory implements Serializable {
 		this.id = id;
 	}
 
-	public String getWarehouse() {
-		return warehouse;
+	public int getNew_piece() {
+		return new_piece;
 	}
 
-	public void setWarehouse(String warehouse) {
-		this.warehouse = warehouse;
+	public void setNew_piece(int new_piece) {
+		this.new_piece = new_piece;
 	}
 
-	public String getWare() {
-		return ware;
+	public int getOld_piece() {
+		return old_piece;
 	}
 
-	public void setWare(String ware) {
-		this.ware = ware;
-	}
-
-	public int getPiece() {
-		return piece;
-	}
-
-	public void setPiece(int piece) {
-		this.piece = piece;
+	public void setOld_piece(int old_piece) {
+		this.old_piece = old_piece;
 	}
 
 	public Date getChangeTime() {
@@ -76,5 +67,22 @@ public class StockHistory implements Serializable {
 	public void setChangeTime(Date changeTime) {
 		this.changeTime = changeTime;
 	}
+
+	public Warehouse getWarehouse() {
+		return warehouse;
+	}
+
+	public void setWarehouse(Warehouse warehouse) {
+		this.warehouse = warehouse;
+	}
+
+	public Ware getWare() {
+		return ware;
+	}
+
+	public void setWare(Ware ware) {
+		this.ware = ware;
+	}
+
 
 }

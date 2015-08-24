@@ -23,6 +23,7 @@ public class UserSelfCareController implements Serializable {
 	private UserVO currentUser = new UserVO();
 	private String password1 = null;
 	private String password2 = null;
+	private boolean newPasswordCheck = false;
 
 	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
 	private UserSelfCareServiceRemote userSelfCareService;
@@ -36,7 +37,7 @@ public class UserSelfCareController implements Serializable {
 	public String updateUser() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		try {
-			if (!password1.equals(getPassword2())) {
+			if (newPasswordCheck && !password1.equals(getPassword2())) {
 				context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
 						"Password not match"));
 				return null;
@@ -48,7 +49,7 @@ public class UserSelfCareController implements Serializable {
 				return null;
 			}
 
-			if (!password1.equals("")) {
+			if (newPasswordCheck && !password1.equals("")) {
 				BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
 				String encPassword = bCryptPasswordEncoder.encode(password1);
 				currentUser.setPassword(encPassword);
@@ -98,6 +99,14 @@ public class UserSelfCareController implements Serializable {
 
 	public void setUserSelfCareService(UserSelfCareServiceRemote userSelfCareService) {
 		this.userSelfCareService = userSelfCareService;
+	}
+
+	public boolean isNewPasswordCheck() {
+		return newPasswordCheck;
+	}
+
+	public void setNewPasswordCheck(boolean newPasswordCheck) {
+		this.newPasswordCheck = newPasswordCheck;
 	}
 
 }

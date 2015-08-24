@@ -12,7 +12,7 @@ import org.primefaces.model.SortOrder;
 public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 	private static final long serialVersionUID = 1L;
 
-	private List<StockVO> visibleUserList;
+	private List<StockVO> visibleStockList;
 
 	private StockReportServiceRemote stockReportService;
 
@@ -23,8 +23,8 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 
 	@Override
 	public StockVO getRowData(String rowkey) {
-		if (visibleUserList != null || rowkey != null) {
-			for (StockVO stockVO : visibleUserList) {
+		if (visibleStockList != null || rowkey != null) {
+			for (StockVO stockVO : visibleStockList) {
 				if (stockVO.getId().toString().equals(rowkey)) {
 					return stockVO;
 				}
@@ -47,6 +47,7 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 
 		String filter = "";
 		String filterColumnName = "";
+		
 		if (filters.keySet().size() > 0) {
 			filter = (String) filters.values().toArray()[0];
 			filterColumnName = filters.keySet().iterator().next();
@@ -56,23 +57,23 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleUserList = stockReportService.getStock(first / pageSize, pageSize, sortField, dir, filter,
+		visibleStockList = stockReportService.getStock(first / pageSize, pageSize, sortField, dir, filter,
 				filterColumnName);
 
 		int dataSize = stockReportService.getStockCount();
 
 		this.setRowCount(dataSize);
-
-		return visibleUserList;
+		
+		return visibleStockList;
 
 	}
 
-	public List<StockVO> getVisibleUserList() {
-		return visibleUserList;
+	public List<StockVO> getVisibleStockList() {
+		return visibleStockList;
 	}
 
-	public void setVisibleUserList(List<StockVO> visibleUserList) {
-		this.visibleUserList = visibleUserList;
+	public void setVisibleStockList(List<StockVO> visibleStockList) {
+		this.visibleStockList = visibleStockList;
 	}
 
 	public StockReportServiceRemote getStockReportService() {
@@ -82,5 +83,6 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 	public void setStockReportService(StockReportServiceRemote stockReportService) {
 		this.stockReportService = stockReportService;
 	}
+
 
 }

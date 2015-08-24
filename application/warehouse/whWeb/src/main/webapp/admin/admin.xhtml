@@ -66,11 +66,11 @@
 
 
 					<p:dialog header="User Details" widgetVar="userDialog" modal="true"
-						showEffect="fade" hideEffect="fade" resizable="false">
+						showEffect="fade" hideEffect="fade" resizable="false"
+						closable="false">
 						<p:outputPanel id="userDetail" style="text-align:center;">
-							<p:panelGrid columns="2"
-								rendered="#{not empty adminController.selectedUser}"
-								columnClasses="label,value">
+							<p:panelGrid columns="2" columnClasses="label,value"
+								rendered="#{not empty adminController.selectedUser}">
 
 								<h:outputText value="Username" />
 								<h:outputText value="#{adminController.selectedUser.userName}" />
@@ -86,32 +86,28 @@
 									value="#{adminController.selectedUser.phoneNumber}" />
 
 								<h:outputText value="Roles" />
-								<p:dataTable id="checkboxRoles" var="roles"
-									value="#{adminController.roles}"
-									selection="#{adminController.selectedRoles}"
-									rowKey="#{roles.roleName}"
-									style="width:250px !important;margin-bottom:0">
-									<p:column selectionMode="multiple" style="width:16px" />
-									<p:column>
-										<h:outputText value="#{roles.roleName}" />
-									</p:column>
-								</p:dataTable>
+								<p:pickList id="pickList" value="#{adminController.roles}"
+									showSourceFilter="true" showTargetFilter="true" var="role"
+									itemLabel="#{role}" itemValue="#{role}">
+									<f:facet name="sourceCaption">Available roles</f:facet>
+									<f:facet name="targetCaption">Added roles</f:facet>
+								</p:pickList>
 
 								<h:outputText value="Enabled" />
 								<p:selectBooleanButton value="#{adminController.enabled}"
 									onLabel="Yes" offLabel="No" style="width:60px" />
-
+							</p:panelGrid>
+							<div align="left" style="margin-top: 20px;">
 								<p:commandButton value="Update" id="update"
 									actionListener="#{adminController.updateUser}"
 									update=":adminForm:adminTable"
 									oncomplete="PF('userDialog').hide();" />
 
-								<p:commandButton value="Cancel" id="cancel"
-									actionListener="#{adminController.cancelSelect}"
+								<p:commandButton style="margin-left: 20px;" value="Cancel"
+									id="cancel" actionListener="#{adminController.cancelSelect}"
 									update=":adminForm:adminTable"
 									oncomplete="PF('userDialog').hide();" />
-
-							</p:panelGrid>
+							</div>
 						</p:outputPanel>
 					</p:dialog>
 				</h:form>

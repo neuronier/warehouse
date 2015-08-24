@@ -4,6 +4,7 @@ import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,24 +28,29 @@ public class StockReportController implements Serializable {
 	@EJB(beanName = "StockReportService")
 	private StockReportServiceRemote stockReportService;
 
-	private WarehouseVO selectedWarehouse;
-
 	private List<WarehouseVO> warehouses;
+	private List<String> warehouseNames;
+	private String selectedWarehouseName;
 
 	@PostConstruct
 	public void init() {
 		warehouses = stockReportService.getWarehouses();
+		warehouseNames = new ArrayList<String>();
+		for (WarehouseVO warehouseVO : warehouses) {
+			warehouseNames.add(warehouseVO.getName());
+		}
+
 		setLazyStockReportActualModel(new LazyStockReportActualModel(stockReportService));
 		setLazyStockReportHistoryModel(new LazyStockReportHistoryModel(stockReportService));
-		// setLazyStockReportTransferModel(new
-		// LazyStockReportTransferModel(stockReportService));
+//		setLazyStockReportTransferModel(new LazyStockReportTransferModel(stockReportService));
+
 	}
 
 	public void onWarehouseChange() {
 		FacesContext.getCurrentInstance().addMessage(
 				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Selection info", selectedWarehouse
-						.getName() + " selected"));
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Selection info",
+						selectedWarehouseName + " selected"));
 	}
 
 	public LazyStockReportActualModel getLazyStockReportActualModel() {
@@ -59,8 +65,7 @@ public class StockReportController implements Serializable {
 		return lazyStockReportHistoryModel;
 	}
 
-	public void setLazyStockReportHistoryModel(
-			LazyStockReportHistoryModel lazyStockReportHistoryModel) {
+	public void setLazyStockReportHistoryModel(LazyStockReportHistoryModel lazyStockReportHistoryModel) {
 		this.lazyStockReportHistoryModel = lazyStockReportHistoryModel;
 	}
 
@@ -89,12 +94,20 @@ public class StockReportController implements Serializable {
 		this.warehouses = warehouses;
 	}
 
-	public WarehouseVO getSelectedWarehouse() {
-		return selectedWarehouse;
+	public List<String> getWarehouseNames() {
+		return warehouseNames;
 	}
 
-	public void setSelectedWarehouse(WarehouseVO selectedWarehouse) {
-		this.selectedWarehouse = selectedWarehouse;
+	public void setWarehouseNames(List<String> warehouseNames) {
+		this.warehouseNames = warehouseNames;
+	}
+
+	public String getSelectedWarehouseName() {
+		return selectedWarehouseName;
+	}
+
+	public void setSelectedWarehouseName(String selectedWarehouseName) {
+		this.selectedWarehouseName = selectedWarehouseName;
 	}
 
 }

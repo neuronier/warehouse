@@ -30,16 +30,17 @@
 				<h:form id="form">
 					<p:tabView>
 						<p:tab title="Stock/Changes">
-							<!-- 					<p:outputLabel for="selectWarehouse" value="Select warehouse: " /> -->
-							<!-- 					<p:selectOneMenu id="selectWarehouse" -->
-							<!-- 						value="#{stockReportController.selectedWarehouse}"> -->
-							<!-- 						<p:ajax listener="#{stockReportController.onWarehouseChange}" -->
-							<!-- 							update="whStock:stockTable,whStock:stockHistoryTable" /> -->
-							<!-- 						<f:selectItem itemLabel="Select warehouse" itemValue="" -->
-							<!-- 							noSelectionOption="true" /> -->
-							<!-- 						<f:selectItems value="#{stockReportController.warehouses}" -->
-							<!-- 							var="warehouses" itemLabel="#{warehouses.name}" /> -->
-							<!-- 					</p:selectOneMenu> -->
+							<div align="left">
+								<p:outputLabel for="selectWarehouse" value="Select warehouse: " />
+								<p:selectOneMenu id="selectWarehouse"
+									value="#{stockReportController.selectedWarehouseName}">
+									<p:ajax listener="#{stockReportController.onWarehouseChange}"
+										update="whStock:stockTable,whStock:stockHistoryTable" />
+									<f:selectItem itemLabel="Select warehouse"
+										itemValue="000000000" noSelectionOption="true" />
+									<f:selectItems value="#{stockReportController.warehouseNames}" />
+								</p:selectOneMenu>
+							</div>
 							<p:tabView id="whStock">
 								<p:tab title="Actual stock level">
 									<p:dataTable id="stockTable" var="stock"
@@ -49,20 +50,19 @@
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column headerText="Warehouse"
-											sortBy="#{stock.warehouse.warehouseId}"
-											filterBy="#{stock.warehouse.warehouseId}">
-											<h:outputText value="#{stock.warehouse.warehouseId}" />
-										</p:column>
+										<p:column style="display: none" headerText="Warehouse"
+											filterBy="warehouseName"
+											filterValue="#{stockReportController.selectedWarehouseName}" />
 
 										<p:column headerText="Ware" sortBy="#{stock.ware.wareName}"
-											filterBy="#{stock.ware.wareName}">
+											filterBy="wareName">
 											<h:outputText value="#{stock.ware.wareName}" />
 										</p:column>
 
 										<p:column headerText="Amount">
 											<h:outputText value="#{stock.piece}" />
 										</p:column>
+
 									</p:dataTable>
 								</p:tab>
 								<p:tab title="Stock changes">
@@ -73,19 +73,18 @@
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column headerText="Warehouse"
-											sortBy="#{stockHistory.warehouse}"
-											filterBy="#{stockHistory.warehouse}">
-											<h:outputText value="#{stockHistory.warehouse}" />
+										<p:column headerText="Ware"
+											sortBy="#{stockHistory.ware.wareName}"
+											filterBy="#{stockHistory.ware.wareName}">
+											<h:outputText value="#{stockHistory.ware.wareName}" />
 										</p:column>
 
-										<p:column headerText="Ware" sortBy="#{stockHistory.ware}"
-											filterBy="#{stockHistory.ware}">
-											<h:outputText value="#{stockHistory.ware}" />
+										<p:column headerText="Old Amount">
+											<h:outputText value="#{stockHistory.old_piece}" />
 										</p:column>
 
-										<p:column headerText="Amount">
-											<h:outputText value="#{stockHistory.piece}" />
+										<p:column headerText="New Amount">
+											<h:outputText value="#{stockHistory.new_piece}" />
 										</p:column>
 
 										<p:column headerText="Change time">
@@ -96,7 +95,26 @@
 							</p:tabView>
 						</p:tab>
 						<p:tab title="Pending transfers">
-							<!-- lazy loados tabla lesz itt ha elkeszul a transferes funkcio  -->
+<!-- 							<p:dataTable id="transfersTable" var="transfers" -->
+<!-- 								value="#{stockReportController.lazyStockReportTransferModel}" -->
+<!-- 								emptyMessage="#{out.empty_message}" -->
+<!-- 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" -->
+<!-- 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" -->
+<!-- 								rows="10"> -->
+
+<!-- 								<p:column headerText="Initial warehouse id"> -->
+<!-- 									<h:outputText value="#{transfers.fromWarehouse}" /> -->
+<!-- 								</p:column> -->
+
+<!-- 								<p:column headerText="Target warehouse id"> -->
+<!-- 									<h:outputText value="#{transfers.toWarehouse}" /> -->
+<!-- 								</p:column> -->
+
+<!-- 								<p:column headerText="Transport status"> -->
+<!-- 									<h:outputText value="#{transfers.transportStatus}" /> -->
+<!-- 								</p:column> -->
+
+<!-- 							</p:dataTable> -->
 						</p:tab>
 					</p:tabView>
 				</h:form>

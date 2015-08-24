@@ -23,4 +23,6 @@ public interface AdminServiceRemote {
 	public Boolean updateUser(UserVO userVO) throws Exception;
 
 	public List<RoleVO> getRoles();
+
+	public RoleVO getRoleByName(String roleName);
 }
