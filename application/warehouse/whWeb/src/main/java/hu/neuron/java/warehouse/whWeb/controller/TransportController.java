@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -28,6 +29,8 @@ public class TransportController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private static Long id = 1l;
 
 	private int db;
 	
@@ -100,6 +103,19 @@ public class TransportController implements Serializable {
 			
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
+		
+			Random rand = new Random();
+			List<Long> ids = transportOrder.getids();
+			Long  id = rand.nextLong();
+			
+			while(true) {
+				if (ids.contains(id)) {
+					id = rand.nextLong();
+				}else {
+					detailsVO.setTransportId(id);
+					break;
+				}
+			}
 			
 			
 			for (String wareName : selectedwareNames) {
@@ -107,7 +123,6 @@ public class TransportController implements Serializable {
 				detailsVO.setWareId(ware.getId());
 				detailsVO.setPiece(pieces.getLast());
 				pieces.removeLast();
-//				detailsVO.setTransportId(detailsVO.getId());
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
 			FacesContext.getCurrentInstance().addMessage("A szállítás megkezdődött", null);

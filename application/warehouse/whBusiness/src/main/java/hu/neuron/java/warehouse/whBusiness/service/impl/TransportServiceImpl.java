@@ -1,5 +1,8 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import hu.neuron.java.warehouse.whBusiness.converter.TransportConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportDetailsConverter;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
@@ -52,8 +55,12 @@ public class TransportServiceImpl implements TransportServiceLocal,
 
 			// csökkentsük a from piece mezőjét az adott mennyiséggel
 			// növeljük a to piece mezőjét az adott mennyiséggel
-			transportDao.transportToWarehouse(detailsVO.getPiece(),
+			int number = transportDao.transportToWarehouse(detailsVO.getPiece(),
 					detailsVO.getWareId(), transportVO.getToWarehouseId());
+			if (number == 0) {
+				transportDao.addTransportToWarehouse(detailsVO.getPiece(),
+						detailsVO.getWareId(), transportVO.getToWarehouseId());
+			}
 			transportDao.transportFromWarehouse(detailsVO.getPiece(),
 					detailsVO.getWareId(), transportVO.getFromWarehouseId());
 
@@ -61,6 +68,20 @@ public class TransportServiceImpl implements TransportServiceLocal,
 			e.printStackTrace();
 		}
 
+	}
+	
+	
+	@Override
+	public List<Long> getids() {
+		List<Long> ids = new ArrayList<Long>();
+		try {
+			ids = transportDao.findAllTransportid();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ids;
 	}
 
 }
