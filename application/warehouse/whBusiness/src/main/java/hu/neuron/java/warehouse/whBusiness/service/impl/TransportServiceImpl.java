@@ -1,11 +1,14 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
+import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportDetailsConverter;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
+import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
 
@@ -47,6 +50,12 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	@EJB
 	TransportDetailsConverter transportDetailsConverter;
 
+	@Autowired
+	StockDao stockDao;
+
+	@EJB
+	StockConverter stockConverter;
+
 	@Override
 	public void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO) {
@@ -67,11 +76,19 @@ public class TransportServiceImpl implements TransportServiceLocal,
 				transportDao.addTransportToWarehouse(detailsVO.getPiece(),
 						detailsVO.getWareId(), transportVO.getToWarehouseId());
 			}
-			int from = transportDao.transportFromWarehouse(
-					detailsVO.getPiece(), detailsVO.getWareId(),
-					transportVO.getFromWarehouseId());
-			if (from == 0) {
-				logger.error("Hiba, nincs ilyen termék kombináció.");
+
+			StockVO ware = stockConverter.toVO(stockDao
+					.findStockByWarehouseIdandWareId(detailsVO.getWareId(),
+							transportVO.getFromWarehouseId()));
+			if (detailsVO.getPiece() >= ware.getPiece()) {
+				int from = transportDao.transportFromWarehouse(
+						detailsVO.getPiece(), detailsVO.getWareId(),
+						transportVO.getFromWarehouseId());
+				if (from == 0) {
+					logger.error("Hiba: nincs ilyen termék kombináció.");
+				}
+			} else {
+				logger.error("Hiba: nincs ennyi termék a kiindulási raktárban.");
 			}
 
 		} catch (Exception e) {
