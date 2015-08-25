@@ -19,7 +19,9 @@ import hu.neuron.java.warehouse.whCore.entity.StockHistory;
 import hu.neuron.java.warehouse.whCore.entity.Transport;
 
 import java.io.Serializable;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Remote;
@@ -125,29 +127,29 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 	@Override
 	public List<StockVO> getStock(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName) {
+			Map<String, Object> filters) {
 		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Stock> entities;
 
-		// if (filter.length() != 0 && filterColumnName.equals("warehouseName"))
-		// {
-		// try {
-		// Warehouse warehouse = warehouseDao.findWarehouseByName(filter);
-		// entities = stockDao.findByWarehouseStartsWith(warehouse,
-		// pageRequest);
-		// } catch (Exception e) {
-		// e.printStackTrace();
-		// entities = stockDao.findAll(pageRequest);
-		// }
-		// } else if (filter.length() != 0 &&
-		// filterColumnName.equals("wareName")) {
-		// entities = stockDao.findByWareStartsWith(filter, pageRequest);
-		// } else {
-		// entities = stockDao.findAll(pageRequest);
-		// }
-		entities = stockDao.findAll(pageRequest);
+		String warehouse = "", ware = "";
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			try {
+				String filterProperty = it.next();
+				if (filterProperty.equals("warehouse")) {
+					warehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("ware")) {
+					ware = (String) filters.get(filterProperty);
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		entities = stockDao.findByWarehouseNameStartsWithAndWareWareNameStartsWith(warehouse, ware,
+				pageRequest);
+
 		List<StockVO> ret = stockConverter.toVO(entities.getContent());
 
 		return ret;
@@ -155,21 +157,29 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 	@Override
 	public List<StockHistoryVO> getStockHistory(int i, int pageSize, String sortField,
-			int sortOrder, String filter, String filterColumnName) {
+			int sortOrder, Map<String, Object> filters) {
 		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<StockHistory> entities;
 
-		// if (filter.length() != 0 && filterColumnName.equals("warehouse")) {
-		// entities = stockHistoryDao.findByWarehouseStartsWith(filter,
-		// pageRequest);
-		// } else if (filter.length() != 0 && filterColumnName.equals("ware")) {
-		// entities = stockHistoryDao.findByWareStartsWith(filter, pageRequest);
-		// } else {
-		// entities = stockHistoryDao.findAll(pageRequest);
-		// }
-		entities = stockHistoryDao.findAll(pageRequest);
+		String warehouse = "", ware = "";
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			try {
+				String filterProperty = it.next();
+				if (filterProperty.equals("warehouse")) {
+					warehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("ware")) {
+					ware = (String) filters.get(filterProperty);
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		entities = stockHistoryDao.findByWarehouseNameStartsWithAndWareWareNameStartsWith(
+				warehouse, ware, pageRequest);
+
 		List<StockHistoryVO> ret = stockHistoryConverter.toVO(entities.getContent());
 
 		return ret;
@@ -182,14 +192,6 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Transport> entities;
-
-		// if (filter.length() != 0 && filterColumnName.equals("fromWarehouse"))
-		// {
-		// entities = transportDao.findByWarehouseStartsWith(filter,
-		// pageRequest);
-		// } else {
-		// entities = transportDao.findAll(pageRequest);
-		// }
 
 		entities = transportDao.findAll(pageRequest);
 

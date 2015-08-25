@@ -16,15 +16,18 @@ public interface UserDao extends JpaRepository<User, Long> {
 
 	@Query("select u from User u where u.userName=?1")
 	User findUserByName(String name) throws Exception;
-	
+
 	@Query("select u from User u where u.email=?1")
 	User findUserByEmail(String email) throws Exception;
-	
-	Page<User> findByUserNameStartsWith(String filter,Pageable pageable);
-	
-	Page<User> findByFullNameStartsWith(String filter,Pageable pageable);
-	
-	Page<User> findByEmailStartsWith(String filter,Pageable pageable);
-	
-	Page<User> findByPhoneNumberStartsWith(String filter,Pageable pageable);
+
+	Page<User> findByUserNameStartsWith(String filter, Pageable pageable);
+
+	Page<User> findByFullNameStartsWith(String filter, Pageable pageable);
+
+	Page<User> findByEmailStartsWith(String filter, Pageable pageable);
+
+	Page<User> findByPhoneNumberStartsWith(String filter, Pageable pageable);
+
+	Page<User> findByUserNameStartsWithAndFullNameStartsWithAndEmailStartsWithAndPhoneNumberStartsWith(
+			String filter1, String filter2, String filter3, String filter4, Pageable pageable);
 }

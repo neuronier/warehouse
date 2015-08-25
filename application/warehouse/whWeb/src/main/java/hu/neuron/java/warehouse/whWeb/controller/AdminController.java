@@ -60,9 +60,6 @@ public class AdminController implements Serializable {
 		}
 
 		roles = new DualListModel<String>(roleNames, selectedRoleNames);
-
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", selectedUser.getUserName()));
 	}
 
 	public String updateUser() {
@@ -103,8 +100,6 @@ public class AdminController implements Serializable {
 	public void cancelSelect() {
 		selectedUser = null;
 		roles = null;
-		FacesContext.getCurrentInstance().addMessage(null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Update Canceled"));
 	}
 
 	public LazyAdminModel getLazyAdminModel() {

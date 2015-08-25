@@ -3,6 +3,7 @@ package hu.neuron.java.warehouse.whWeb.controller;
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockHistoryVO;
 
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -15,6 +16,8 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 	private List<StockHistoryVO> visibleList;
 
 	private StockReportServiceRemote stockReportService;
+
+	private String selectedWarehouseName = " ";
 
 	public LazyStockReportHistoryModel(StockReportServiceRemote stockReportService) {
 		super();
@@ -44,20 +47,15 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 	@Override
 	public List<StockHistoryVO> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
+		filters.put("warehouse", selectedWarehouseName);
 
-		String filter = "";
-		String filterColumnName = "";
-		if (filters.keySet().size() > 0) {
-			filter = (String) filters.values().toArray()[0];
-			filterColumnName = filters.keySet().iterator().next();
-		}
 		if (sortField == null) {
 			sortField = "ware";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
 		visibleList = stockReportService.getStockHistory(first / pageSize, pageSize, sortField,
-				dir, filter, filterColumnName);
+				dir, filters);
 
 		int dataSize = stockReportService.getStockHistoryCount();
 
@@ -81,6 +79,14 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 
 	public void setStockReportService(StockReportServiceRemote stockReportService) {
 		this.stockReportService = stockReportService;
+	}
+
+	public String getSelectedWarehouseName() {
+		return selectedWarehouseName;
+	}
+
+	public void setSelectedWarehouseName(String selectedWarehouseName) {
+		this.selectedWarehouseName = selectedWarehouseName;
 	}
 
 }

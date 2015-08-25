@@ -30,7 +30,7 @@ public class StockReportController implements Serializable {
 
 	private List<WarehouseVO> warehouses;
 	private List<String> warehouseNames;
-	private String selectedWarehouseName;
+	private String selectedWarehouseName=" ";
 
 	@PostConstruct
 	public void init() {
@@ -47,10 +47,8 @@ public class StockReportController implements Serializable {
 	}
 
 	public void onWarehouseChange() {
-		FacesContext.getCurrentInstance().addMessage(
-				null,
-				new FacesMessage(FacesMessage.SEVERITY_INFO, "Selection info",
-						selectedWarehouseName + " selected"));
+		lazyStockReportActualModel.setSelectedWarehouseName(selectedWarehouseName);
+		lazyStockReportHistoryModel.setSelectedWarehouseName(selectedWarehouseName);
 	}
 
 	public LazyStockReportActualModel getLazyStockReportActualModel() {

@@ -45,28 +45,21 @@ public class LazyAdminModel extends LazyDataModel<UserVO> {
 	public List<UserVO> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
 
-		String filter = "";
-		String filterColumnName = "";
-		if (filters.keySet().size() > 0) {
-			filter = (String) filters.values().toArray()[0];
-			filterColumnName = filters.keySet().iterator().next();
-		}
 		if (sortField == null) {
 			sortField = "userName";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleUserList = adminService.getUsers(first / pageSize, pageSize, sortField, dir, filter,
-				filterColumnName);
+		visibleUserList = adminService
+				.getUsers(first / pageSize, pageSize, sortField, dir, filters);
 
 		int dataSize = adminService.getUserCount();
 
 		this.setRowCount(dataSize);
 
 		return visibleUserList;
-
 	}
-	
+
 	public AdminServiceRemote getAdminService() {
 		return adminService;
 	}

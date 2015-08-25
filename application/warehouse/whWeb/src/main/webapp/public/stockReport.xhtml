@@ -33,29 +33,26 @@
 							<div align="left">
 								<p:outputLabel for="selectWarehouse" value="Select warehouse: " />
 								<p:selectOneMenu id="selectWarehouse"
+									onchange="PF('stockTable').filter()"
 									value="#{stockReportController.selectedWarehouseName}">
-									<p:ajax listener="#{stockReportController.onWarehouseChange}"
+									<p:ajax listener="#{stockReportController.onWarehouseChange()}"
 										update="whStock:stockTable,whStock:stockHistoryTable" />
-									<f:selectItem itemLabel="Select warehouse"
-										itemValue="000000000" noSelectionOption="true" />
+									<f:selectItem itemLabel="Select warehouse" itemValue=" "
+										noSelectionOption="false" />
 									<f:selectItems value="#{stockReportController.warehouseNames}" />
 								</p:selectOneMenu>
 							</div>
 							<p:tabView id="whStock">
 								<p:tab title="Actual stock level">
-									<p:dataTable id="stockTable" var="stock"
+									<p:dataTable id="stockTable" var="stock" widgetVar="stockTable"
 										value="#{stockReportController.lazyStockReportActualModel}"
 										emptyMessage="#{out.empty_message}"
 										paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column style="display: none" headerText="Warehouse"
-											filterBy="warehouseName"
-											filterValue="#{stockReportController.selectedWarehouseName}" />
-
 										<p:column headerText="Ware" sortBy="#{stock.ware.wareName}"
-											filterBy="wareName">
+											filterBy="ware">
 											<h:outputText value="#{stock.ware.wareName}" />
 										</p:column>
 
@@ -74,9 +71,13 @@
 										rows="10">
 
 										<p:column headerText="Ware"
-											sortBy="#{stockHistory.ware.wareName}"
-											filterBy="#{stockHistory.ware.wareName}">
+											sortBy="#{stockHistory.ware.wareName}" filterBy="ware">
 											<h:outputText value="#{stockHistory.ware.wareName}" />
+										</p:column>
+
+										<p:column headerText="Change time"
+											sortBy="#{stockHistory.changeTime}">
+											<h:outputText value="#{stockHistory.changeTime}" />
 										</p:column>
 
 										<p:column headerText="Old Amount">
@@ -87,34 +88,32 @@
 											<h:outputText value="#{stockHistory.new_piece}" />
 										</p:column>
 
-										<p:column headerText="Change time">
-											<h:outputText value="#{stockHistory.changeTime}" />
-										</p:column>
+
 									</p:dataTable>
 								</p:tab>
 							</p:tabView>
 						</p:tab>
 						<p:tab title="Pending transfers">
-<!-- 							<p:dataTable id="transfersTable" var="transfers" -->
-<!-- 								value="#{stockReportController.lazyStockReportTransferModel}" -->
-<!-- 								emptyMessage="#{out.empty_message}" -->
-<!-- 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" -->
-<!-- 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" -->
-<!-- 								rows="10"> -->
+							<!-- 							<p:dataTable id="transfersTable" var="transfers" -->
+							<!-- 								value="#{stockReportController.lazyStockReportTransferModel}" -->
+							<!-- 								emptyMessage="#{out.empty_message}" -->
+							<!-- 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" -->
+							<!-- 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" -->
+							<!-- 								rows="10"> -->
 
-<!-- 								<p:column headerText="Initial warehouse id"> -->
-<!-- 									<h:outputText value="#{transfers.fromWarehouse}" /> -->
-<!-- 								</p:column> -->
+							<!-- 								<p:column headerText="Initial warehouse id"> -->
+							<!-- 									<h:outputText value="#{transfers.fromWarehouse}" /> -->
+							<!-- 								</p:column> -->
 
-<!-- 								<p:column headerText="Target warehouse id"> -->
-<!-- 									<h:outputText value="#{transfers.toWarehouse}" /> -->
-<!-- 								</p:column> -->
+							<!-- 								<p:column headerText="Target warehouse id"> -->
+							<!-- 									<h:outputText value="#{transfers.toWarehouse}" /> -->
+							<!-- 								</p:column> -->
 
-<!-- 								<p:column headerText="Transport status"> -->
-<!-- 									<h:outputText value="#{transfers.transportStatus}" /> -->
-<!-- 								</p:column> -->
+							<!-- 								<p:column headerText="Transport status"> -->
+							<!-- 									<h:outputText value="#{transfers.transportStatus}" /> -->
+							<!-- 								</p:column> -->
 
-<!-- 							</p:dataTable> -->
+							<!-- 							</p:dataTable> -->
 						</p:tab>
 					</p:tabView>
 				</h:form>

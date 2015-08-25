@@ -12,9 +12,11 @@ import org.primefaces.model.SortOrder;
 public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 	private static final long serialVersionUID = 1L;
 
-	private List<StockVO> visibleStockList;
+	private List<StockVO> visibleList;
 
 	private StockReportServiceRemote stockReportService;
+
+	private String selectedWarehouseName = " ";
 
 	public LazyStockReportActualModel(StockReportServiceRemote stockReportService) {
 		super();
@@ -23,8 +25,8 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 
 	@Override
 	public StockVO getRowData(String rowkey) {
-		if (visibleStockList != null || rowkey != null) {
-			for (StockVO stockVO : visibleStockList) {
+		if (visibleList != null || rowkey != null) {
+			for (StockVO stockVO : visibleList) {
 				if (stockVO.getId().toString().equals(rowkey)) {
 					return stockVO;
 				}
@@ -44,36 +46,29 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 	@Override
 	public List<StockVO> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
+		filters.put("warehouse", selectedWarehouseName);
 
-		String filter = "";
-		String filterColumnName = "";
-		
-		if (filters.keySet().size() > 0) {
-			filter = (String) filters.values().toArray()[0];
-			filterColumnName = filters.keySet().iterator().next();
-		}
 		if (sortField == null) {
 			sortField = "ware";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleStockList = stockReportService.getStock(first / pageSize, pageSize, sortField, dir, filter,
-				filterColumnName);
+		visibleList = stockReportService.getStock(first / pageSize, pageSize, sortField, dir,
+				filters);
 
 		int dataSize = stockReportService.getStockCount();
 
 		this.setRowCount(dataSize);
-		
-		return visibleStockList;
 
+		return visibleList;
 	}
 
-	public List<StockVO> getVisibleStockList() {
-		return visibleStockList;
+	public List<StockVO> getVisibleList() {
+		return visibleList;
 	}
 
-	public void setVisibleStockList(List<StockVO> visibleStockList) {
-		this.visibleStockList = visibleStockList;
+	public void setVisibleList(List<StockVO> visibleList) {
+		this.visibleList = visibleList;
 	}
 
 	public StockReportServiceRemote getStockReportService() {
@@ -84,5 +79,11 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 		this.stockReportService = stockReportService;
 	}
 
+	public String getSelectedWarehouseName() {
+		return selectedWarehouseName;
+	}
 
+	public void setSelectedWarehouseName(String selectedWarehouseName) {
+		this.selectedWarehouseName = selectedWarehouseName;
+	}
 }

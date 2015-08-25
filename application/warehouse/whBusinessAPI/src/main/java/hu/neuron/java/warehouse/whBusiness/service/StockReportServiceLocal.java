@@ -6,6 +6,7 @@ import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StockReportServiceLocal {
 
@@ -22,14 +23,14 @@ public interface StockReportServiceLocal {
 	public List<StockHistoryVO> getStockHistory();
 
 	public List<TransportVO> getTransports();
-	
+
 	public List<WarehouseVO> getWarehouses();
 
-	public List<StockVO> getStock(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName);
+	List<StockVO> getStock(int i, int pageSize, String sortField, int sortOrder,
+			Map<String, Object> filters);
 
 	public List<StockHistoryVO> getStockHistory(int i, int pageSize, String sortField,
-			int sortOrder, String filter, String filterColumnName);
+			int sortOrder, Map<String, Object> filters);
 
 	public List<TransportVO> getTransports(int i, int pageSize, String sortField, int sortOrder,
 			String filter, String filterColumnName);

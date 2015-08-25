@@ -37,6 +37,16 @@ public class CreateShema {
 				dto.setRoleName("ROLE_USER");
 				roleDAO.save(dto);
 			}
+			if (roleDAO.findRoleByName("ROLE_MANAGER") == null) {
+				dto = new Role();
+				dto.setRoleName("ROLE_MANAGER");
+				roleDAO.save(dto);
+			}
+			if (roleDAO.findRoleByName("ROLE_STOREKEEPER") == null) {
+				dto = new Role();
+				dto.setRoleName("ROLE_STOREKEEPER");
+				roleDAO.save(dto);
+			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
 		}
