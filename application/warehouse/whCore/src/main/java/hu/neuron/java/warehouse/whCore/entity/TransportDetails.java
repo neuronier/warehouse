@@ -49,8 +49,6 @@ public class TransportDetails extends BaseEntity {
 	public String toString() {
 		return "TransportDetails [transportId=" + transportId + ", ware="
 				+ ware + ", piece=" + piece + "]";
-	}
-
-	
+	}	
 
 }
