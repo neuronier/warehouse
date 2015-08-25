@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Welcome</ui:define>
+	<ui:define name="pageTitle">#{out.index_title}</ui:define>
 	<ui:define name="content">
 
 		<br />
@@ -18,21 +18,18 @@
 		<h:panelGroup
 			rendered="#{empty request.remoteUser and param['logout'] != 1}"
 			style="color: white;">
-			<h2 align="center" style="font-family: Broadway; color: white">Welcome
-				in the Warehouse project application's web area!</h2>
+			<h2 align="center" style="font-family: Broadway; color: white">#{out.index_start}</h2>
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{param['logout'] == 1}" style="color: white;">
-			<h2 align="center" style="font-family: Broadway; color: white">Thank
-				you for using Warehouse project application.</h2>
+			<h2 align="center" style="font-family: Broadway; color: white">#{out.index_logout}</h2>
 			<br />
-			<h2 align="center" style="font-family: Broadway; color: white">Bye!</h2>
+			<h2 align="center" style="font-family: Broadway; color: white">#{out.index_bye}</h2>
 		</h:panelGroup>
 
 		<h:panelGroup rendered="#{not empty request.remoteUser}"
 			style="color: white;">
-			<h2 align="center" style="font-family: Broadway; color: white">Succesfull
-				Login</h2>
+			<h2 align="center" style="font-family: Broadway; color: white">#{out.index_login}</h2>
 		</h:panelGroup>
 	</ui:define>
 </ui:composition>
