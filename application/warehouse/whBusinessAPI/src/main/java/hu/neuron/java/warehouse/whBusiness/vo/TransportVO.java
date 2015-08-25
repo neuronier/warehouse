@@ -6,6 +6,8 @@ public class TransportVO implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	
+	private Long id;
+	
 	/**
 	 * A feladó raktár id-ja
 	 */
@@ -21,20 +23,28 @@ public class TransportVO implements Serializable{
 	 */
 	private String transportStatus;
 
-	public Long getFromWarehouseId() {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getFromWarehouse() {
 		return fromWarehouse;
 	}
 
-	public void setFromWarehouseId(Long fromWarehouseId) {
-		this.fromWarehouse = fromWarehouseId;
+	public void setFromWarehouse(Long fromWarehouse) {
+		this.fromWarehouse = fromWarehouse;
 	}
 
-	public Long getToWarehouseId() {
+	public Long getToWarehouse() {
 		return toWarehouse;
 	}
 
-	public void setToWarehouseId(Long toWarehouseId) {
-		this.toWarehouse = toWarehouseId;
+	public void setToWarehouse(Long toWarehouse) {
+		this.toWarehouse = toWarehouse;
 	}
 
 	public String getTransportStatus() {

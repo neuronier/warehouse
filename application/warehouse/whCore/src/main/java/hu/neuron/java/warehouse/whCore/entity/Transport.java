@@ -8,9 +8,6 @@ import javax.persistence.Table;
 @Table(name = "Transport")
 public class Transport extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -32,20 +29,20 @@ public class Transport extends BaseEntity {
 	 */
 	private String transportStatus;
 
-	public Long getFromWarehouseId() {
+	public Long getFromWarehouse() {
 		return fromWarehouse;
 	}
 
-	public void setFromWarehouseId(Long fromWarehouseId) {
-		this.fromWarehouse = fromWarehouseId;
+	public void setFromWarehouse(Long fromWarehouse) {
+		this.fromWarehouse = fromWarehouse;
 	}
 
-	public Long getToWarehouseId() {
+	public Long getToWarehouse() {
 		return toWarehouse;
 	}
 
-	public void setToWarehouseId(Long toWarehouseId) {
-		this.toWarehouse = toWarehouseId;
+	public void setToWarehouse(Long toWarehouse) {
+		this.toWarehouse = toWarehouse;
 	}
 
 	public String getTransportStatus() {
@@ -54,6 +51,12 @@ public class Transport extends BaseEntity {
 
 	public void setTransportStatus(String transportStatus) {
 		this.transportStatus = transportStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Transport [fromWarehouse=" + fromWarehouse + ", toWarehouse="
+				+ toWarehouse + ", transportStatus=" + transportStatus + "]";
 	}
 	
 }

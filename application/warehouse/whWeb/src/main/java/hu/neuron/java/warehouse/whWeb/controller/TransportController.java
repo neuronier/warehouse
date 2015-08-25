@@ -29,8 +29,6 @@ public class TransportController implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private static Long id = 1l;
 
 	private int db;
 	
@@ -92,13 +90,13 @@ public class TransportController implements Serializable {
 			if (fromWarehouse == null) {
 				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setFromWarehouseId(fromWarehouse.getId());
+			transportVO.setFromWarehouse(fromWarehouse.getId());
 			
 			toWarehouse = warehouseService.findWarehouseByName(selectedToWarehouseName);
 			if (toWarehouse == null) {
 				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setToWarehouseId(toWarehouse.getId());
+			transportVO.setToWarehouse(toWarehouse.getId());
 			
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
@@ -119,7 +117,7 @@ public class TransportController implements Serializable {
 			
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
-				detailsVO.setWareId(ware.getId());
+				detailsVO.setWare(ware.getId());
 				detailsVO.setPiece(pieces.getLast());
 				pieces.removeLast();
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);

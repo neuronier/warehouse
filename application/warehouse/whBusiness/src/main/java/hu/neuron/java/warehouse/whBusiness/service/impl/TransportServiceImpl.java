@@ -64,29 +64,29 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		ware = new StockVO();
 		try {
 			// táblák feltöltése
-			transportDao.addToTransport(transportVO.getFromWarehouseId(),
-					transportVO.getToWarehouseId(),
+			transportDao.addToTransport(transportVO.getFromWarehouse(),
+					transportVO.getToWarehouse(),
 					transportVO.getTransportStatus());
-			transportDetailsDao.addToTransportDetails(detailsVO.getWareId(),
+			transportDetailsDao.addToTransportDetails(detailsVO.getWare(),
 					detailsVO.getPiece(), detailsVO.getTransportId());
 
 			// csökkentsük a from piece mezőjét az adott mennyiséggel
 			// növeljük a to piece mezőjét az adott mennyiséggel
 			int number = transportDao.transportToWarehouse(
-					detailsVO.getPiece(), detailsVO.getWareId(),
-					transportVO.getToWarehouseId());
+					detailsVO.getPiece(), detailsVO.getWare(),
+					transportVO.getToWarehouse());
 			if (number == 0) {
 				transportDao.addTransportToWarehouse(detailsVO.getPiece(),
-						detailsVO.getWareId(), transportVO.getToWarehouseId());
+						detailsVO.getWare(), transportVO.getToWarehouse());
 			}
 			
 			ware = new StockVO();
-			 ware = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(transportVO.getFromWarehouseId(), detailsVO.getWareId()));
+			 ware = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(transportVO.getFromWarehouse(), detailsVO.getWare()));
 			
 			if (detailsVO.getPiece() <= ware.getPiece()) {
 				int from = transportDao.transportFromWarehouse(
-						detailsVO.getPiece(), detailsVO.getWareId(),
-						transportVO.getFromWarehouseId());
+						detailsVO.getPiece(), detailsVO.getWare(),
+						transportVO.getFromWarehouse());
 				if (from == 0) {
 					logger.error("Hiba: nincs ilyen termék kombináció.");
 				}

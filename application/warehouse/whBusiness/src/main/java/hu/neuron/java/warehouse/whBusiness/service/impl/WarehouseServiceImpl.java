@@ -55,7 +55,6 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 	public void dalete(WarehouseVO warehouseVo) {
 		try {
 		managerDao.deleteManagerByWarehouseId(warehouseVo.getWarehouseId());
-		stockDao.deleteByWarehouseId(warehouseVo.getId());
 		warehouseDao.delete(warehouseVo.getId());
 		} catch (Exception e) {
 			e.printStackTrace();

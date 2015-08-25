@@ -18,6 +18,7 @@ import hu.neuron.java.warehouse.whBusiness.converter.ManagerConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.UserConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
 import hu.neuron.java.warehouse.whBusiness.service.ManagerServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.ManagerServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.ManagerVO;
@@ -29,9 +30,10 @@ import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
 
 @Stateless(mappedName = "ManagerService", name = "ManagerService")
 @Local(ManagerServiceLocal.class)
+@Remote(ManagerServiceLocal.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class ManagerServiceImpl implements ManagerServiceLocal {
+public class ManagerServiceImpl implements ManagerServiceLocal, ManagerServiceRemote {
 
 	@Autowired
 	ManagerDao managerDao;

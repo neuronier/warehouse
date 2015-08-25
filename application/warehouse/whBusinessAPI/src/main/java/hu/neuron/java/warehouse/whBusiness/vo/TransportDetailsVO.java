@@ -5,12 +5,22 @@ import java.io.Serializable;
 public class TransportDetailsVO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
+	
+	private Long id;
 
 	private Long transportId;
 
 	private Long ware;
 
 	private int piece;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public Long getTransportId() {
 		return transportId;
@@ -20,12 +30,12 @@ public class TransportDetailsVO implements Serializable {
 		this.transportId = transportId;
 	}
 
-	public Long getWareId() {
+	public Long getWare() {
 		return ware;
 	}
 
-	public void setWareId(Long long1) {
-		this.ware = long1;
+	public void setWare(Long ware) {
+		this.ware = ware;
 	}
 
 	public int getPiece() {
