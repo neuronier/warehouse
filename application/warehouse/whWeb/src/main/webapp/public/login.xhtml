@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Login</ui:define>
+	<ui:define name="pageTitle">#{out.login_title}</ui:define>
 	<ui:define name="content">
 
 		<div align="center">
@@ -19,29 +19,28 @@
 				style="color: white;">
 				<br />
 				<br />
-				<h2 style="font-family: Broadway; color: white">To access this
-					content, please logout.</h2>
+				<h2 style="font-family: Broadway; color: white">#{out.pleaselogout}</h2>
 			</h:panelGroup>
 
 			<p:panel rendered="#{empty request.remoteUser}" style="width:360px">
 				<f:facet name="header">
-					<h:outputText value="Login" />
+					<h:outputText value="#{out.login_title}" />
 				</f:facet>
 
 				<h:panelGroup style="color: white;" layout="block" class="error"
-					rendered="#{param['error'] == 1}">Wrong password</h:panelGroup>
+					rendered="#{param['error'] == 1}">#{out.login_wrongpassword}</h:panelGroup>
 
 				<form name="loginForm" action="#{request.contextPath}/login"
 					method="POST">
 					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputText value="Username: " />
+						<h:outputText value="#{out.username}: " />
 						<p:inputText id="username" />
 
-						<h:outputText value="Password: " />
+						<h:outputText value="#{out.password}: " />
 						<p:password id="password" />
 					</h:panelGrid>
 					<p:separator />
-					<p:commandButton id="submit" value="Login"
+					<p:commandButton id="submit" value="#{out.login_title}"
 						oncomplete="/index.xhtml" icon="ui-icon-key" />
 				</form>
 			</p:panel>
