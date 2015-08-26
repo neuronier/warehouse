@@ -73,11 +73,6 @@ public class TransportController implements Serializable {
 		}
 
 		wareNames = new ArrayList<String>();
-		wares = new ArrayList<WareVo>();
-		wares = wareService.getWares();
-		for (WareVo wareVo : wares) {
-			wareNames.add(wareVo.getWareName());
-		}
 	}
 
 	public void transport() {
@@ -94,8 +89,6 @@ public class TransportController implements Serializable {
 						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setFromWarehouse(fromWarehouse);
-
-			getWaresNames();
 
 			toWarehouse = warehouseService
 					.findWarehouseByName(selectedToWarehouseName);
