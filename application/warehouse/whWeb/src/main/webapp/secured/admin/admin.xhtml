@@ -15,7 +15,15 @@
 		<div align="center">
 			<br />
 
-			<p:panel>
+			<h:panelGroup rendered="#{!request.isUserInRole('ADMIN')}"
+				style="color: white;">
+				<br />
+				<br />
+				<h2 style="font-family: Broadway; color: white">!!!Access
+					Denied!!!</h2>
+			</h:panelGroup>
+
+			<p:panel rendered="#{request.isUserInRole('ADMIN')}">
 				<f:facet name="header">
 					<h:outputText
 						value='Admin area - "click on user for more information"' />

@@ -15,15 +15,17 @@
 		<div align="center">
 			<br />
 
-			<h:panelGroup rendered="#{empty request.remoteUser}"
+			<h:panelGroup
+				rendered="#{!(request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER'))}"
 				style="color: white;">
 				<br />
 				<br />
-				<h2 style="font-family: Broadway; color: white">To access this
-					content, please login.</h2>
+				<h2 style="font-family: Broadway; color: white">!!!Access
+					Denied!!!</h2>
 			</h:panelGroup>
 
-			<p:panel rendered="#{not empty request.remoteUser}">
+			<p:panel
+				rendered="#{request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER')}">
 				<f:facet name="header">
 					<h:outputText value="Stock/Transfer reports" />
 				</f:facet>

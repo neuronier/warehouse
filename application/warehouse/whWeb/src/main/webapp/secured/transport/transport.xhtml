@@ -12,8 +12,18 @@
 	<ui:define name="pageTitle">Item transport</ui:define>
 	<ui:define name="content">
 
+		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 style="font-family: Broadway; color: white">!!!Access
+				Denied!!!</h2>
+		</h:panelGroup>
+
 		<h:form>
-			<p:panel id="basic" header="Transport" style="margin-bottom:20px">
+			<p:panel id="basic" header="Transport" style="margin-bottom:20px"
+				rendered="#{request.isUserInRole('STOREKEEPER')}">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 					<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />

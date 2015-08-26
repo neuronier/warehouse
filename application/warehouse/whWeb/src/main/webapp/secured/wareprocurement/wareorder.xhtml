@@ -12,7 +12,17 @@
 	</ui:define>
 	<ui:define name="pageTitle">Warehouse Managment</ui:define>
 	<ui:define name="content">
-		<p:panel header="Ware Order">
+	
+		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 style="font-family: Broadway; color: white">!!!Access
+				Denied!!!</h2>
+		</h:panelGroup>
+	
+		<p:panel header="Ware Order" rendered="#{request.isUserInRole('STOREKEEPER')}">
 			<h:form id="select">
 
 				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
