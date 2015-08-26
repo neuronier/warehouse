@@ -11,6 +11,7 @@ import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -71,13 +72,6 @@ public class TransportController implements Serializable {
 		for (WarehouseVO warehouseVO : warehouses) {
 			whNames.add(warehouseVO.getName());
 		}
-
-		wareNames = new ArrayList<String>();
-		wares = new ArrayList<WareVo>();
-		wares = wareService.getWares();
-		for (WareVo wareVo : wares) {
-			wareNames.add(wareVo.getWareName());
-		}
 	}
 
 	public void transport() {
@@ -94,8 +88,6 @@ public class TransportController implements Serializable {
 						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setFromWarehouse(fromWarehouse);
-
-			getWaresNames();
 
 			toWarehouse = warehouseService
 					.findWarehouseByName(selectedToWarehouseName);
@@ -127,11 +119,18 @@ public class TransportController implements Serializable {
 	}
 
 	public void getWaresNames() {
-		Map<String, Integer> tmp = wareService
-				.findwareAndPiecesByWarehouseId(selectedFromWarehouseName);
-		Set<String> keys = tmp.keySet();
-		wareNames.clear();
-		for (String string : keys) {
+
+		Map<String, Integer> tmp = new HashMap<String, Integer>();
+		try {
+			tmp = wareService.findwareAndPiecesByWarehouseId(warehouseService
+					.findWarehouseByName(selectedFromWarehouseName)
+					.getWarehouseId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		Set<String> kesy = tmp.keySet();
+		wareNames = new ArrayList<String>();
+		for (String string : kesy) {
 			wareNames.add(string);
 		}
 	}

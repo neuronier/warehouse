@@ -1,7 +1,10 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -28,8 +31,8 @@ public class Transport extends BaseEntity {
 	 * Az szállítás id-ja
 	 */
 	//id, csak odagenerálja mögé a _id -t
-	@ManyToOne(targetEntity = TransportDetails.class)
-	private TransportDetails transport;
+	@OneToMany(targetEntity = TransportDetails.class)
+	private List<TransportDetails> transport;
 	
 	/**
 	 * A szállítás státusza
@@ -52,13 +55,21 @@ public class Transport extends BaseEntity {
 		this.toWarehouse = toWarehouse;
 	}
 
+	public List<TransportDetails> getTransport() {
+		return transport;
+	}
+
+	public void setTransport(List<TransportDetails> transport) {
+		this.transport = transport;
+	}
+
 	public String getTransportStatus() {
 		return transportStatus;
 	}
 
 	public void setTransportStatus(String transportStatus) {
 		this.transportStatus = transportStatus;
-	}
+	}	
 
 	@Override
 	public String toString() {

@@ -31,6 +31,8 @@
 						value="#{transportController.selectedFromWarehouseName}">
 						<f:selectItem itemLabel="Select One" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
+						<p:ajax event="change" update="items"
+							listener="#{transportController.getWaresNames()}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel for="toWarehouse" value="Cél raktár: " />

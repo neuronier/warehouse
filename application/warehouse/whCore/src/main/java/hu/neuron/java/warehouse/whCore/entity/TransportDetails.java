@@ -14,7 +14,7 @@ public class TransportDetails extends BaseEntity {
 	private static final long serialVersionUID = 1L;
 
 	//id, csak odagenerálja mögé a _id -t
-	@ManyToOne(targetEntity = Warehouse.class)
+	@ManyToOne(targetEntity = Transport.class)
 	private Transport transport;
 
 	//id, csak odagenerálja mögé a _id -t

@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whBusiness.vo;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class TransportVO implements Serializable{
 	
@@ -17,6 +18,11 @@ public class TransportVO implements Serializable{
 	 * Az átvevő raktár id-ja
 	 */
 	private WarehouseVO toWarehouse;
+	
+	/**
+	 * Az szállítás id-ja
+	 */
+	private List<TransportDetailsVO> transport;
 	
 	/**
 	 * A szállítás státusza
@@ -45,6 +51,14 @@ public class TransportVO implements Serializable{
 
 	public void setToWarehouse(WarehouseVO toWarehouse) {
 		this.toWarehouse = toWarehouse;
+	}
+
+	public List<TransportDetailsVO> getTransport() {
+		return transport;
+	}
+
+	public void setTransport(List<TransportDetailsVO> transport) {
+		this.transport = transport;
 	}
 
 	public String getTransportStatus() {
