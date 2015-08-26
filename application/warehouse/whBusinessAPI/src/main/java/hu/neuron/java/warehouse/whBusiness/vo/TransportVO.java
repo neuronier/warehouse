@@ -11,12 +11,12 @@ public class TransportVO implements Serializable{
 	/**
 	 * A feladó raktár id-ja
 	 */
-	private Long fromWarehouse;
+	private WarehouseVO fromWarehouse;
 
 	/**
 	 * Az átvevő raktár id-ja
 	 */
-	private Long toWarehouse;
+	private WarehouseVO toWarehouse;
 	
 	/**
 	 * A szállítás státusza
@@ -31,19 +31,19 @@ public class TransportVO implements Serializable{
 		this.id = id;
 	}
 
-	public Long getFromWarehouse() {
+	public WarehouseVO getFromWarehouse() {
 		return fromWarehouse;
 	}
 
-	public void setFromWarehouse(Long fromWarehouse) {
+	public void setFromWarehouse(WarehouseVO fromWarehouse) {
 		this.fromWarehouse = fromWarehouse;
 	}
 
-	public Long getToWarehouse() {
+	public WarehouseVO getToWarehouse() {
 		return toWarehouse;
 	}
 
-	public void setToWarehouse(Long toWarehouse) {
+	public void setToWarehouse(WarehouseVO toWarehouse) {
 		this.toWarehouse = toWarehouse;
 	}
 

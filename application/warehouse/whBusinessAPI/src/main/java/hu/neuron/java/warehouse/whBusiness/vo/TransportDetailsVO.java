@@ -8,9 +8,9 @@ public class TransportDetailsVO implements Serializable {
 	
 	private Long id;
 
-	private Long transportId;
+	private TransportVO transport;
 
-	private Long ware;
+	private WareVo ware;
 
 	private int piece;
 
@@ -22,19 +22,19 @@ public class TransportDetailsVO implements Serializable {
 		this.id = id;
 	}
 
-	public Long getTransportId() {
-		return transportId;
+	public TransportVO getTransport() {
+		return transport;
 	}
 
-	public void setTransportId(Long transportId) {
-		this.transportId = transportId;
+	public void setTransport(TransportVO transport) {
+		this.transport = transport;
 	}
 
-	public Long getWare() {
+	public WareVo getWare() {
 		return ware;
 	}
 
-	public void setWare(Long ware) {
+	public void setWare(WareVo ware) {
 		this.ware = ware;
 	}
 

@@ -15,33 +15,40 @@ public class Transport extends BaseEntity {
 	 */
 	//id, csak odagenerálja mögé a _id -t
 	@ManyToOne(targetEntity = Warehouse.class)
-	private Long fromWarehouse;
+	private Warehouse fromWarehouse;
 
 	/**
 	 * Az átvevő raktár id-ja
 	 */
 	//id, csak odagenerálja mögé a _id -t
 	@ManyToOne(targetEntity = Warehouse.class)
-	private Long toWarehouse;
+	private Warehouse toWarehouse;
+	
+	/**
+	 * Az szállítás id-ja
+	 */
+	//id, csak odagenerálja mögé a _id -t
+	@ManyToOne(targetEntity = TransportDetails.class)
+	private TransportDetails transport;
 	
 	/**
 	 * A szállítás státusza
 	 */
 	private String transportStatus;
 
-	public Long getFromWarehouse() {
+	public Warehouse getFromWarehouse() {
 		return fromWarehouse;
 	}
 
-	public void setFromWarehouse(Long fromWarehouse) {
+	public void setFromWarehouse(Warehouse fromWarehouse) {
 		this.fromWarehouse = fromWarehouse;
 	}
 
-	public Long getToWarehouse() {
+	public Warehouse getToWarehouse() {
 		return toWarehouse;
 	}
 
-	public void setToWarehouse(Long toWarehouse) {
+	public void setToWarehouse(Warehouse toWarehouse) {
 		this.toWarehouse = toWarehouse;
 	}
 
