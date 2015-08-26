@@ -13,7 +13,9 @@ public class TransportDetails extends BaseEntity {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private Long transportId;
+	//id, csak odagenerálja mögé a _id -t
+	@ManyToOne(targetEntity = Warehouse.class)
+	private Transport transport;
 
 	//id, csak odagenerálja mögé a _id -t
 	@ManyToOne(targetEntity = Ware.class)
@@ -37,18 +39,18 @@ public class TransportDetails extends BaseEntity {
 		this.piece = piece;
 	}
 
-	public Long getTransportId() {
-		return transportId;
+	public Transport getTransport() {
+		return transport;
 	}
 
-	public void setTransportId(Long transportId) {
-		this.transportId = transportId;
+	public void setTransport(Transport transport) {
+		this.transport = transport;
 	}
 
 	@Override
 	public String toString() {
-		return "TransportDetails [transportId=" + transportId + ", ware="
-				+ ware + ", piece=" + piece + "]";
+		return "TransportDetails [transport=" + transport + ", ware=" + ware
+				+ ", piece=" + piece + "]";
 	}	
 
 }

@@ -25,6 +25,13 @@ public class Transport extends BaseEntity {
 	private Warehouse toWarehouse;
 	
 	/**
+	 * Az szállítás id-ja
+	 */
+	//id, csak odagenerálja mögé a _id -t
+	@ManyToOne(targetEntity = TransportDetails.class)
+	private TransportDetails transport;
+	
+	/**
 	 * A szállítás státusza
 	 */
 	private String transportStatus;

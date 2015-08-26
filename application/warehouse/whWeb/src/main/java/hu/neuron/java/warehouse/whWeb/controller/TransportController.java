@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Random;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -31,11 +32,11 @@ public class TransportController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int db;
-	
+
 	private LinkedList<Integer> pieces;
-	
+
 	private String transportStatus;
-	
+
 	@EJB(name = "TransportService")
 	TransportServiceLocal transportOrder;
 
@@ -43,9 +44,9 @@ public class TransportController implements Serializable {
 	private Collection<WarehouseVO> warehouses;
 
 	private Collection<String> whNames;
-	
+
 	private String selectedFromWarehouseName;
-	
+
 	private String selectedToWarehouseName;
 
 	@EJB(name = "WarehouseService")
@@ -55,7 +56,7 @@ public class TransportController implements Serializable {
 	private List<WareVo> wares;
 
 	private Collection<String> wareNames;
-	
+
 	private Collection<String> selectedwareNames;
 
 	@EJB(name = "WareService")
@@ -86,51 +87,53 @@ public class TransportController implements Serializable {
 		TransportVO transportVO = new TransportVO();
 		TransportDetailsVO detailsVO = new TransportDetailsVO();
 		try {
-			fromWarehouse = warehouseService.findWarehouseByName(selectedFromWarehouseName);
+			fromWarehouse = warehouseService
+					.findWarehouseByName(selectedFromWarehouseName);
 			if (fromWarehouse == null) {
-				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
+				fromWarehouse = warehouseService
+						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setFromWarehouse(fromWarehouse);
-			
-			toWarehouse = warehouseService.findWarehouseByName(selectedToWarehouseName);
+
+			getWaresNames();
+
+			toWarehouse = warehouseService
+					.findWarehouseByName(selectedToWarehouseName);
 			if (toWarehouse == null) {
-				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
+				toWarehouse = warehouseService
+						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setToWarehouse(toWarehouse);
-			
+
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
-		
-			Random rand = new Random();
-			List<Long> ids = transportOrder.getids();
-			Long  id = rand.nextLong();
-			
-			while(true) {
-				if (ids.contains(id)) {
-					id = rand.nextLong();
-				}else {
-					detailsVO.setTransportId(id);
-					break;
-				}
-			}
-			
-			
+
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
-				detailsVO.setWare(ware.getId());
+				detailsVO.setWare(ware);
 				detailsVO.setPiece(pieces.getLast());
 				pieces.removeLast();
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
-			FacesContext.getCurrentInstance().addMessage("A szállítás megkezdődött", null);
-			
+			FacesContext.getCurrentInstance().addMessage(
+					"A szállítás megkezdődött", null);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
 			pieces.clear();
 		}
 
-		
+	}
+
+	public void getWaresNames() {
+		Map<String, Integer> tmp = wareService
+				.findwareAndPiecesByWarehouseId(selectedFromWarehouseName);
+		Set<String> keys = tmp.keySet();
+		wareNames.clear();
+		for (String string : keys) {
+			wareNames.add(string);
+		}
 	}
 
 	public Collection<WarehouseVO> getWarehouses() {
@@ -213,5 +216,5 @@ public class TransportController implements Serializable {
 	public void setSelectedFromWarehouseName(String selectedFromWarehouseName) {
 		this.selectedFromWarehouseName = selectedFromWarehouseName;
 	}
-	
+
 }

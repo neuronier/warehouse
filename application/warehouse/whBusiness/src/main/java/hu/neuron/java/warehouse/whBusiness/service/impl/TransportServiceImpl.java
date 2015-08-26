@@ -55,7 +55,7 @@ public class TransportServiceImpl implements TransportServiceLocal,
 
 	@EJB
 	StockConverter stockConverter;
-	
+
 	private StockVO ware;
 
 	@Override
@@ -67,26 +67,30 @@ public class TransportServiceImpl implements TransportServiceLocal,
 			transportDao.addToTransport(transportVO.getFromWarehouse().getId(),
 					transportVO.getToWarehouse().getId(),
 					transportVO.getTransportStatus());
-			transportDetailsDao.addToTransportDetails(detailsVO.getWare(),
-					detailsVO.getPiece(), detailsVO.getTransportId());
+			transportDetailsDao.addToTransportDetails(detailsVO.getWare().getId(),
+					detailsVO.getPiece(), detailsVO.getTransport().getId());
 
 			// csökkentsük a from piece mezőjét az adott mennyiséggel
 			// növeljük a to piece mezőjét az adott mennyiséggel
 			int number = transportDao.transportToWarehouse(
-					detailsVO.getPiece(), detailsVO.getWare(),
+					detailsVO.getPiece(), detailsVO.getWare().getId(),
 					transportVO.getToWarehouse().getId());
 			if (number == 0) {
 				transportDao.addTransportToWarehouse(detailsVO.getPiece(),
-						detailsVO.getWare(), transportVO.getToWarehouse().getId());
+						detailsVO.getWare().getId(), transportVO
+								.getToWarehouse().getId());
 			}
-			
+
 			ware = new StockVO();
-			 ware = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(transportVO.getFromWarehouse().getId(), detailsVO.getWare()));
-			
+			ware = stockConverter.toVO(stockDao
+					.findStockByWarehouseIdandWareId(transportVO
+							.getFromWarehouse().getId(), detailsVO.getWare()
+							.getId()));
+
 			if (detailsVO.getPiece() <= ware.getPiece()) {
-				int from = transportDao.transportFromWarehouse(
-						detailsVO.getPiece(), detailsVO.getWare(),
-						transportVO.getFromWarehouse().getId());
+				int from = transportDao.transportFromWarehouse(detailsVO
+						.getPiece(), detailsVO.getWare().getId(), transportVO
+						.getFromWarehouse().getId());
 				if (from == 0) {
 					logger.error("Hiba: nincs ilyen termék kombináció.");
 				}
