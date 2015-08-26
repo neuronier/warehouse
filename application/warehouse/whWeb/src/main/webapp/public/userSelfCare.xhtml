@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Selfcare</ui:define>
+	<ui:define name="pageTitle">#{out.usc_title}</ui:define>
 	<ui:define name="content">
 
 		<div align="center">
@@ -19,22 +19,21 @@
 				style="color: white;">
 				<br />
 				<br />
-				<h2 style="font-family: Broadway; color: white">To access this
-					content, please login.</h2>
+				<h2 style="font-family: Broadway; color: white">#{out.accessdenied}</h2>
 			</h:panelGroup>
 
 			<p:panel rendered="#{not empty request.remoteUser}"
 				style="width:435px;">
 				<f:facet name="header">
 					<h:outputText
-						value="Selfcare
-					area! You can modify your details here. Welcome #{userSelfCareController.currentUser.userName}" />
+						value="#{out.usc_title}&lt;br /&gt;#{out.usc_modify}&lt;br /&gt;#{out.usc_welcome}: #{userSelfCareController.currentUser.userName}"
+						escape="false" />
 				</f:facet>
 
 				<h:form id="userSelfCareForm" prependId="false">
 
 					<h:panelGrid columns="2" cellpadding="5">
-						<h:outputText value="Modify password: " />
+						<h:outputText value="#{out.usc_modifypw}: " />
 						<p:selectBooleanCheckbox
 							value="#{userSelfCareController.newPasswordCheck}">
 							<p:ajax update="userSelfCareForm" />
@@ -42,44 +41,44 @@
 
 						<h:outputText
 							rendered="#{userSelfCareController.newPasswordCheck}"
-							value="New Password: " />
+							value="#{out.usc_new_pw1}: " />
 						<p:password rendered="#{userSelfCareController.newPasswordCheck}"
 							id="password1" value="#{userSelfCareController.password1}"
-							match="password2" />
+							match="password2" validatorMessage="#{out.invalid_password}" />
 
 						<h:outputText
 							rendered="#{userSelfCareController.newPasswordCheck}"
-							value="New Password again: " />
+							value="#{out.usc_new_pw2}: " />
 						<p:password rendered="#{userSelfCareController.newPasswordCheck}"
 							id="password2" value="#{userSelfCareController.password2}" />
 
-						<h:outputText value="Fullname: " />
+						<h:outputText value="#{out.fullname}: " />
 						<p:inputText id="fullNameInput" required="true"
 							value="#{userSelfCareController.currentUser.fullName}"
-							requiredMessage="Please enter your fullname" />
+							requiredMessage="#{out.enter_fullname}" />
 
-						<h:outputText value="Email: " />
+						<h:outputText value="#{out.email}: " />
 						<p:inputText id="emailInput" required="true"
 							value="#{userSelfCareController.currentUser.email}"
-							requiredMessage="Please enter your email address."
-							validatorMessage="Invalid email format">
+							requiredMessage="#{out.enter_email}"
+							validatorMessage="#{out.invalid_email}">
 							<f:validateRegex
 								pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 						</p:inputText>
 
-						<h:outputText value="Phone number: " />
+						<h:outputText value="#{out.phonenumber}: " />
 						<p:inputText id="phoneNumberInput" required="true"
 							value="#{userSelfCareController.currentUser.phoneNumber}"
-							requiredMessage="Please enter your phone number"
-							validatorMessage="Invalid phone number format">
-							<f:validateRegex pattern="^([\d]{11})?$" />
+							requiredMessage="#{out.enter_phonenumber}"
+							validatorMessage="#{out.invalid_phonenumber}">
+							<f:validateRegex pattern="^([\d]{6,16})?$" />
 						</p:inputText>
 
 					</h:panelGrid>
 
 					<p:separator />
 
-					<p:commandButton id="userSelfCareApply" value="Apply modifications"
+					<p:commandButton id="userSelfCareApply" value="#{out.usc_apply}"
 						action="#{userSelfCareController.updateUser()}"
 						icon="ui-icon-check" update="userSelfCareForm" />
 
