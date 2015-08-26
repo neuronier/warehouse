@@ -9,7 +9,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:sec="http://www.springframework.org/security/tags">
 
-<f:view>
+<f:view locale="#{localizationController.locale}">
 
 	<h:head>
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -100,7 +100,15 @@
 						href="/public/login.xhtml" value="Login" icon="ui-icon-key" />
 					<p:button rendered="#{not empty request.remoteUser}" href="/logout"
 						value="Logout" icon="ui-icon-circle-close" />
+					<h:form>
+						<h:selectOneMenu value="#{localizationController.language}"
+							onchange="submit()">
+							<f:selectItem itemValue="en" itemLabel="#{out.language_en}" />
+							<f:selectItem itemValue="hu" itemLabel="#{out.language_hu}" />
+						</h:selectOneMenu>
+					</h:form>
 				</f:facet>
+
 			</p:menubar>
 		</h:form>
 
