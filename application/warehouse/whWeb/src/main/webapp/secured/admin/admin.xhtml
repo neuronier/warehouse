@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Admin</ui:define>
+	<ui:define name="pageTitle">#{out.adm_title}</ui:define>
 	<ui:define name="content">
 
 		<div align="center">			
@@ -19,14 +19,13 @@
 				<br />
 				<br />
 				<br />
-				<h2 style="font-family: Broadway; color: white">!!!Access
-					Denied!!!</h2>
+				<h2 style="font-family: Broadway; color: white">!!!#{out.accessdenied}!!!</h2>
 			</h:panelGroup>
 
 			<p:panel rendered="#{request.isUserInRole('ADMIN')}">
 				<f:facet name="header">
 					<h:outputText
-						value='Admin area - "click on user for more information"' />
+						value="#{out.adm_area}" />
 				</f:facet>
 
 				<h:form id="adminForm">
@@ -43,75 +42,75 @@
 							update=":adminForm:userDetail"
 							oncomplete="PF('userDialog').show()" />
 
-						<p:column headerText="Username" sortBy="#{admin.userName}"
+						<p:column headerText="#{out.username}" sortBy="#{admin.userName}"
 							filterBy="#{admin.userName}">
 							<h:outputText value="#{admin.userName}" />
 						</p:column>
 
-						<p:column headerText="Fullname" sortBy="#{admin.fullName}"
+						<p:column headerText="#{out.fullname}" sortBy="#{admin.fullName}"
 							filterBy="#{admin.fullName}">
 							<h:outputText value="#{admin.fullName}" />
 						</p:column>
 
-						<p:column headerText="Email" sortBy="#{admin.email}"
+						<p:column headerText="#{out.email}" sortBy="#{admin.email}"
 							filterBy="#{admin.email}">
 							<h:outputText value="#{admin.email}" />
 						</p:column>
 
-						<p:column headerText="Phone number" sortBy="#{admin.phoneNumber}"
+						<p:column headerText="#{out.phonenumber}" sortBy="#{admin.phoneNumber}"
 							filterBy="#{admin.phoneNumber}">
 							<h:outputText value="#{admin.phoneNumber}" />
 						</p:column>
 
-						<p:column headerText="Roles">
+						<p:column headerText="#{out.roles}">
 							<h:outputText value="#{admin.roles}" />
 						</p:column>
 
-						<p:column headerText="Enabled" sortBy="#{admin.enabled}">
+						<p:column headerText="#{out.adm_enable}" sortBy="#{admin.enabled}">
 							<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
 						</p:column>
 					</p:dataTable>
 
 
-					<p:dialog header="User Details" widgetVar="userDialog" modal="true"
+					<p:dialog header="#{out.adm_userdetails}" widgetVar="userDialog" modal="true"
 						showEffect="fade" hideEffect="fade" resizable="false"
 						closable="false">
 						<p:outputPanel id="userDetail" style="text-align:center;">
 							<p:panelGrid columns="2" columnClasses="label,value"
 								rendered="#{not empty adminController.selectedUser}">
 
-								<h:outputText value="Username" />
+								<h:outputText value="#{out.username}" />
 								<h:outputText value="#{adminController.selectedUser.userName}" />
 
-								<h:outputText value="Fullname" />
+								<h:outputText value="#{out.fullname}" />
 								<h:outputText value="#{adminController.selectedUser.fullName}" />
 
-								<h:outputText value="Email" />
+								<h:outputText value="#{out.email}" />
 								<h:outputText value="#{adminController.selectedUser.email}" />
 
-								<h:outputText value="Phone number" />
+								<h:outputText value="#{out.phonenumber}" />
 								<h:outputText
 									value="#{adminController.selectedUser.phoneNumber}" />
 
-								<h:outputText value="Roles" />
+								<h:outputText value="#{out.roles}" />
 								<p:pickList id="pickList" value="#{adminController.roles}"
 									showSourceFilter="true" showTargetFilter="true" var="role"
 									itemLabel="#{role}" itemValue="#{role}">
-									<f:facet name="sourceCaption">Available roles</f:facet>
-									<f:facet name="targetCaption">Added roles</f:facet>
+									<f:facet name="sourceCaption">#{out.adm_availableroles}</f:facet>
+									<f:facet name="targetCaption">#{out.adm_addedroles}</f:facet>
 								</p:pickList>
 
-								<h:outputText value="Enabled" />
+								<h:outputText value="#{out.adm_enable}" />
 								<p:selectBooleanButton value="#{adminController.enabled}"
-									onLabel="Yes" offLabel="No" style="width:60px" />
+									onLabel="#{out.yes}" offLabel="#{out.no}" style="width:80px" />
 							</p:panelGrid>
 							<div align="left" style="margin-top: 20px;">
-								<p:commandButton value="Update" id="update"
+								<p:commandButton value="#{out.adm_update}" id="update"
 									actionListener="#{adminController.updateUser}"
 									update=":adminForm:adminTable"
 									oncomplete="PF('userDialog').hide();" />
 
-								<p:commandButton style="margin-left: 20px;" value="Cancel"
+								<p:commandButton style="margin-left: 20px;" value="#{out.adm_cancel}"
 									id="cancel" actionListener="#{adminController.cancelSelect}"
 									update=":adminForm:adminTable"
 									oncomplete="PF('userDialog').hide();" />

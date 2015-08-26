@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Stock/Transfer Report</ui:define>
+	<ui:define name="pageTitle">#{out.ml_report}</ui:define>
 	<ui:define name="content">
 
 		<div align="center">
@@ -20,32 +20,31 @@
 				<br />
 				<br />
 				<br />
-				<h2 style="font-family: Broadway; color: white">!!!Access
-					Denied!!!</h2>
+				<h2 style="font-family: Broadway; color: white">!!!#{out.accessdenied}!!!</h2>
 			</h:panelGroup>
 
 			<p:panel
 				rendered="#{request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER')}">
 				<f:facet name="header">
-					<h:outputText value="Stock/Transfer reports" />
+					<h:outputText value="#{out.ml_report}" />
 				</f:facet>
 				<h:form id="form">
 					<p:tabView>
-						<p:tab title="Stock/Changes">
+						<p:tab title="#{out.str_stocklvlandchanges}">
 							<div align="left">
-								<p:outputLabel for="selectWarehouse" value="Select warehouse: " />
+								<p:outputLabel for="selectWarehouse" value="#{out.str_selectwarehouse}: " />
 								<p:selectOneMenu id="selectWarehouse"
 									onchange="PF('stockTable').filter()"
 									value="#{stockReportController.selectedWarehouseName}">
 									<p:ajax listener="#{stockReportController.onWarehouseChange()}"
 										update="whStock:stockTable,whStock:stockHistoryTable" />
-									<f:selectItem itemLabel="Select warehouse" itemValue=" "
+									<f:selectItem itemLabel="#{out.str_selectwarehouse}" itemValue=" "
 										noSelectionOption="false" />
 									<f:selectItems value="#{stockReportController.warehouseNames}" />
 								</p:selectOneMenu>
 							</div>
 							<p:tabView id="whStock">
-								<p:tab title="Actual stock level">
+								<p:tab title="#{out.str_actualstocklevel}">
 									<p:dataTable id="stockTable" var="stock" widgetVar="stockTable"
 										value="#{stockReportController.lazyStockReportActualModel}"
 										emptyMessage="#{out.empty_message}"
@@ -53,18 +52,18 @@
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column headerText="Ware" sortBy="#{stock.ware.wareName}"
+										<p:column headerText="#{out.ware}" sortBy="#{stock.ware.wareName}"
 											filterBy="ware">
 											<h:outputText value="#{stock.ware.wareName}" />
 										</p:column>
 
-										<p:column headerText="Amount">
+										<p:column headerText="#{out.str_amount}">
 											<h:outputText value="#{stock.piece}" />
 										</p:column>
 
 									</p:dataTable>
 								</p:tab>
-								<p:tab title="Stock changes">
+								<p:tab title="#{out.str_stockchanges}">
 									<p:dataTable id="stockHistoryTable" var="stockHistory"
 										value="#{stockReportController.lazyStockReportHistoryModel}"
 										emptyMessage="#{out.empty_message}"
@@ -72,21 +71,21 @@
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column headerText="Ware"
+										<p:column headerText="#{out.ware}"
 											sortBy="#{stockHistory.ware.wareName}" filterBy="ware">
 											<h:outputText value="#{stockHistory.ware.wareName}" />
 										</p:column>
 
-										<p:column headerText="Change time"
+										<p:column headerText="#{out.str_changetime}"
 											sortBy="#{stockHistory.changeTime}">
 											<h:outputText value="#{stockHistory.changeTime}" />
 										</p:column>
 
-										<p:column headerText="Old Amount">
+										<p:column headerText="#{out.str_newamount}">
 											<h:outputText value="#{stockHistory.old_piece}" />
 										</p:column>
 
-										<p:column headerText="New Amount">
+										<p:column headerText="#{out.str_oldamount}">
 											<h:outputText value="#{stockHistory.new_piece}" />
 										</p:column>
 
@@ -95,7 +94,7 @@
 								</p:tab>
 							</p:tabView>
 						</p:tab>
-						<p:tab title="Pending transfers">
+						<p:tab title="#{out.str_transfers}">
 							<!-- 							<p:dataTable id="transfersTable" var="transfers" -->
 							<!-- 								value="#{stockReportController.lazyStockReportTransferModel}" -->
 							<!-- 								emptyMessage="#{out.empty_message}" -->
