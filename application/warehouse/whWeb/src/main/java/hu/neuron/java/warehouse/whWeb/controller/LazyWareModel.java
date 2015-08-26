@@ -1,5 +1,6 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -11,7 +12,8 @@ import org.primefaces.model.SortOrder;
 
 public class LazyWareModel extends LazyDataModel<WareVo> {
 
-	private List<WareVo> visibleRoleList = null;
+
+	private List<WareVo> visibleWareList = new ArrayList<WareVo>();
 
 	private WareServiceLocal wareService;
 
@@ -30,8 +32,8 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 
 	@Override
 	public WareVo getRowData(String rowkey) {
-		if (visibleRoleList != null || rowkey != null) {
-			for (WareVo wareVo : visibleRoleList) {
+		if (visibleWareList != null || rowkey != null) {
+			for (WareVo wareVo : visibleWareList) {
 				if (wareVo.getId().toString().equals(rowkey)) {
 					return wareVo;
 				}
@@ -51,6 +53,7 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 	@Override
 	public List<WareVo> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
+		visibleWareList.clear();
 		int vSize = -1;
 		String filter = "";
 		String filterColumnName = "";
@@ -61,24 +64,24 @@ public class LazyWareModel extends LazyDataModel<WareVo> {
 		if (sortField == null) {
 			sortField = "wareName";
 		}
-//		List<WareVo> wareList = null;
+		List<WareVo> wareList = null;
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleRoleList = wareService.getWares(first / pageSize, pageSize, sortField,
+		wareList = wareService.getWares(first / pageSize, pageSize, sortField,
 				dir, filter, filterColumnName);
 
-//		for (WareVo wareVo : wareList) {
-//			if (wareVo.getVisible() == 1) {
-//				visibleRoleList.add(wareVo);
-//
-//			}
-//
-//		}
+		for (WareVo wareVo : wareList) {
+			if (wareVo.getVisible() == 1) {
+				visibleWareList.add(wareVo);
+
+			}
+
+		}
 
 		int dataSize = wareService.getRowNumber();
 
-		this.setRowCount(dataSize);
+		this.setRowCount(visibleWareList.size());
 
-		return visibleRoleList;
+		return visibleWareList;
 
 	}
 

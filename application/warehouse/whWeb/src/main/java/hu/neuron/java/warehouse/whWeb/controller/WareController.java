@@ -52,7 +52,9 @@ public class WareController implements Serializable {
 
 	public void deleteWare() {
 
-		getWareService().removeWare(selectedWare);
+		selectedWare.setVisible(0);
+		
+		getWareService().saveWare(selectedWare);
 
 	}
 
