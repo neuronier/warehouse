@@ -33,6 +33,8 @@ public class TransportController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int db;
+	
+	private int max;
 
 	private LinkedList<Integer> pieces;
 
@@ -104,6 +106,7 @@ public class TransportController implements Serializable {
 				ware = wareService.findWareByName(wareName);
 				detailsVO.setWare(ware);
 				detailsVO.setPiece(pieces.getLast());
+				detailsVO.setTransport(transportVO);
 				pieces.removeLast();
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
@@ -132,6 +135,7 @@ public class TransportController implements Serializable {
 		wareNames = new ArrayList<String>();
 		for (String string : kesy) {
 			wareNames.add(string);
+			setMax(tmp.get(string));
 		}
 	}
 
@@ -214,6 +218,14 @@ public class TransportController implements Serializable {
 
 	public void setSelectedFromWarehouseName(String selectedFromWarehouseName) {
 		this.selectedFromWarehouseName = selectedFromWarehouseName;
+	}
+
+	public int getMax() {
+		return max;
+	}
+
+	public void setMax(int max) {
+		this.max = max;
 	}
 
 }
