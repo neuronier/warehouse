@@ -20,7 +20,7 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 
 	@Modifying
 	@Query(value = "UPDATE stock SET piece=piece-?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true)
-	int transportFromWarehouse(int piece, Long wareId, Long toWarehouseId)
+	int transportFromWarehouse(int piece, Long wareId, Long fromWarehouseId)
 			throws Exception;
 
 	@Modifying

@@ -10,6 +10,7 @@ public interface TransportServiceRemote {
 	void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO);
 	
+	void fillTables(TransportVO transportVO, TransportDetailsVO detailsVO);
 	
 	public List<Long> getids();
 

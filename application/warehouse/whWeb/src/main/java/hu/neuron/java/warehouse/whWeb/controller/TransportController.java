@@ -33,7 +33,7 @@ public class TransportController implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private int db;
-	
+
 	private int max;
 
 	private LinkedList<Integer> pieces;
@@ -101,6 +101,8 @@ public class TransportController implements Serializable {
 
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
+
+			transportOrder.fillTables(transportVO, detailsVO);
 
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
