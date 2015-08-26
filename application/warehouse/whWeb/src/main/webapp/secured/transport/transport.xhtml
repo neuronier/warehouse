@@ -12,8 +12,18 @@
 	<ui:define name="pageTitle">Item transport</ui:define>
 	<ui:define name="content">
 
+		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 style="font-family: Broadway; color: white">!!!Access
+				Denied!!!</h2>
+		</h:panelGroup>
+
 		<h:form>
-			<p:panel id="basic" header="Transport" style="margin-bottom:20px">
+			<p:panel id="basic" header="Transport" style="margin-bottom:20px"
+				rendered="#{request.isUserInRole('STOREKEEPER')}">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 					<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
@@ -41,7 +51,8 @@
 						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
 
-					<h:outputLabel for="num" value="Number of items:	" styleClass="paginated">
+					<h:outputLabel for="num" value="Number of items:	"
+						styleClass="paginated">
 						<p:dataList id="num"
 							value="#{transportController.selectedwareNames}" var="ware"
 							emptyMessage="No wares selected">
@@ -50,7 +61,7 @@
 						</p:dataList>
 					</h:outputLabel>
 				</h:panelGrid>
-				
+
 				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 
 					<h:outputLabel for="status" value="Státusz: ">
@@ -62,7 +73,7 @@
 						actionListener="#{transportController.transport()}"
 						disabled="#{transportController.wares} == null}"
 						styleClass="ui-priority-primary" update="status" />
-						
+
 				</h:panelGrid>
 
 

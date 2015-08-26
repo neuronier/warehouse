@@ -5,24 +5,36 @@
 
 	<security:http disable-url-rewriting="false"
 		authentication-manager-ref="authenticationManager">
-		
+
 		<security:access-denied-handler
 			error-page="/public/accessDenied.xhtml" />
-			
+
 		<security:csrf disabled="true" />
 		<security:headers disabled="true" />
-		
-		<security:intercept-url pattern="/admin/**"
+
+		<security:intercept-url pattern="/secured/**"
+			access="hasRole('USER')" />
+		<security:intercept-url pattern="/secured/admin/**"
 			access="hasRole('ADMIN')" />
-			
+		<security:intercept-url pattern="/secured/stockreport/**"
+			access="hasAnyRole('MANAGER','STOREKEEPER')" />
+		<security:intercept-url pattern="/secured/transport/**"
+			access="hasRole('STOREKEEPER')" />
+		<security:intercept-url pattern="/secured/ware/**"
+			access="hasRole('STOREKEEPER')" />
+		<security:intercept-url pattern="/secured/warehouse/**"
+			access="hasRole('STOREKEEPER')" />
+		<security:intercept-url pattern="/secured/wareprocurement/**"
+			access="hasRole('STOREKEEPER')" />
+
 		<security:form-login login-page="/public/login.xhtml"
 			login-processing-url="/login" default-target-url="/index.xhtml"
 			authentication-failure-url="/public/login.xhtml?error=1"
 			username-parameter="username" password-parameter="password" />
-			
+
 		<security:logout logout-url="/logout"
 			logout-success-url="/index.xhtml?logout=1" />
-			
+
 	</security:http>
 
 	<security:authentication-manager id="authenticationManager">

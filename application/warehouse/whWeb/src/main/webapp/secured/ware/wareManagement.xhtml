@@ -11,7 +11,17 @@
 	</ui:define>
 	<ui:define name="pageTitle">Add/Remove Ware</ui:define>
 	<ui:define name="content">
-		<p:panel header="Warehouse Management">
+	
+		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 style="font-family: Broadway; color: white">!!!Access
+				Denied!!!</h2>
+		</h:panelGroup>
+	
+		<p:panel header="Warehouse Management" rendered="#{request.isUserInRole('STOREKEEPER')}">
 
 
 
