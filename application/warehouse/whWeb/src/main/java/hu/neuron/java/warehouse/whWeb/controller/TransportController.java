@@ -90,13 +90,13 @@ public class TransportController implements Serializable {
 			if (fromWarehouse == null) {
 				fromWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setFromWarehouse(fromWarehouse.getId());
+			transportVO.setFromWarehouse(fromWarehouse);
 			
 			toWarehouse = warehouseService.findWarehouseByName(selectedToWarehouseName);
 			if (toWarehouse == null) {
 				toWarehouse = warehouseService.findWarehouseByName("Default Warehouse");
 			}
-			transportVO.setToWarehouse(toWarehouse.getId());
+			transportVO.setToWarehouse(toWarehouse);
 			
 			transportVO.setTransportStatus("Szállítás alatt");
 			setTransportStatus(transportVO.getTransportStatus());
