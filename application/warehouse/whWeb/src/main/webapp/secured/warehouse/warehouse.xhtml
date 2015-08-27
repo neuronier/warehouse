@@ -38,7 +38,7 @@
 				<p:ajax event="rowSelect"
 					listener="#{warehouseController.onRowSelect}"
 					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton,
-					:dialogFormUpdate,:dialogForm" />
+					:dialogFormUpdate,:dialogForm,:warehouseCommandsForm:WarehouseDialogAddUser" />
 
 				<p:column headerText="#{out.wh_name}" sortBy="#{warehouse.name}"
 					filterBy="#{warehouse.name}">
@@ -98,7 +98,7 @@
 
 
 				<p:commandButton id="addUser"
-					actionListener="#{warehouseController.setList}" update="pickList"
+					 update="pickList"
 					value="#{out.wh_users}" title="Add" onclick="PF('addUser').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>

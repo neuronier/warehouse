@@ -1,17 +1,14 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.AdminServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.service.ManagerServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.vo.ManagerVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whWeb.model.LazyWarehouseModel;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -22,9 +19,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.event.SelectEvent;
-import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
-import org.springframework.ui.context.Theme;
 
 @ViewScoped
 @ManagedBean(name = "warehouseController")
@@ -59,8 +54,6 @@ public class WarehouseController implements Serializable {
 	@EJB(name = "WarehouseService")
 	private WarehouseServiceLocal warehouseService;
 
-	@EJB(name = "ManagerService")
-	private ManagerServiceLocal managerService;
 
 	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
 	private UserSelfCareServiceRemote userSelfCareService;
@@ -69,8 +62,6 @@ public class WarehouseController implements Serializable {
 	private AdminServiceRemote adminService;
 
 	private DualListModel<String> users;
-	
-	 
 	
 
 	@PostConstruct
@@ -87,61 +78,17 @@ public class WarehouseController implements Serializable {
 	}
 	
 
-
-	public void setList() {
-		
-		List<UserVO> selectusers = new ArrayList<UserVO>();
-		selectusers = managerService
-				.getUserByWarehouseId(selectedWarehouse.getWarehouseId());
-
-		List<String> selectedusersName = new ArrayList<String>();
-		
-		for (UserVO peoples : selectusers) {
-			selectedusersName.add(peoples.getUserName());
-		}
-
-		List<UserVO> allUsers = new ArrayList<UserVO>();
-		allUsers = adminService.getUsers();
-		
-		List<String> allUsersName = new ArrayList<String>();
-	
-		for (UserVO peoples : allUsers) {
-			allUsersName.add(peoples.getUserName());
-		}
-		
-		for (String name : selectedusersName) {
-			allUsersName.remove(name);
-		}
-		
-		users = new DualListModel<String>(allUsersName, selectedusersName);
-		
-	}
-
 	public void addUserToWarehouse(WarehouseVO warehouse) {
 		try {
-			ManagerVO manager = new ManagerVO();
-			manager.setWarehouse(warehouse.getWarehouseId());
+			List<String> tmp = users.getTarget();
+			List<UserVO> usersadd = new ArrayList<UserVO>();
+			
+			for (String name : tmp) {
+				usersadd.add(adminService.getUserByName(name));
+			}
 
-			List<String> addedUsers = users.getTarget();
-			for (String string : addedUsers) {
-				manager.setUser(string);
-				try {
-				managerService.addManager(manager);
-				} catch (Exception e) {
-					
-				}
-			}
-			
-			List<String> removeUsers = users.getSource();
-			for (String string : removeUsers) {
-				manager.setUser(string);
-				try {
-					managerService.deleteManager(manager);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			
-			}
+			warehouse.setUsers(usersadd);
+			warehouseService.update(warehouse);
 
 			FacesContext.getCurrentInstance().addMessage(
 					null,
@@ -226,7 +173,28 @@ public class WarehouseController implements Serializable {
 	}
 
 	public void onRowSelect(SelectEvent event) {
+
 		selectedWarehouse = (WarehouseVO) event.getObject();
+		
+		List<UserVO> selecteUserVos = selectedWarehouse.getUsers();
+		List<String> selectedusersName = new ArrayList<String>();
+		for (UserVO peoples : selecteUserVos) {
+			selectedusersName.add(peoples.getUserName());
+		}
+		
+		
+		List<UserVO> allUsers = adminService.getUsers();
+		List<String> allUsersName = new ArrayList<String>();
+		for (UserVO peoples : allUsers) {
+			allUsersName.add(peoples.getUserName());
+		}
+		
+		for (String name : selectedusersName) {
+			allUsersName.remove(name);
+		}
+		
+		users = new DualListModel<String>(allUsersName, selectedusersName);
+		
 		updateWarehouseName = selectedWarehouse.getName();
 		updateWarehouseAddress = selectedWarehouse.getAddress();
 		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
@@ -372,18 +340,6 @@ public class WarehouseController implements Serializable {
 	public void setUpdateWarehouseAddressZipCode(
 			String updateWarehouseAddressZipCode) {
 		this.updateWarehouseAddressZipCode = updateWarehouseAddressZipCode;
-	}
-
-
-
-	public ManagerServiceLocal getManagerService() {
-		return managerService;
-	}
-
-
-
-	public void setManagerService(ManagerServiceLocal managerService) {
-		this.managerService = managerService;
 	}
 
 

@@ -10,7 +10,6 @@
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
 		<jta-data-source>hu.neuron.warehouse.JpaDataSource</jta-data-source>
 		<class>hu.neuron.java.warehouse.whCore.entity.BaseEntity</class>
-		<class>hu.neuron.java.warehouse.whCore.entity.Manager</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Role</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.Stock</class>
 		<class>hu.neuron.java.warehouse.whCore.entity.StockHistory</class>
