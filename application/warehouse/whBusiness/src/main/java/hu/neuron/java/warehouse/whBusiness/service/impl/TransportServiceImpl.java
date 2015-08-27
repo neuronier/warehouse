@@ -59,12 +59,23 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	private StockVO ware;
 
 	@Override
-	public void fillTable(TransportVO transportVO) {
+	public void fillTransportTable(TransportVO transportVO) {
 		// táblák feltöltése
 		try {
 			transportDao.addToTransport(transportVO.getFromWarehouse().getId(),
 					transportVO.getToWarehouse().getId(),
 					transportVO.getTransportStatus());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	public void fillDetailsTable(TransportDetailsVO detailsVO) {
+		try {
+			transportDetailsDao.addToTransportDetails(detailsVO.getWare()
+					.getId(), detailsVO.getPiece(), detailsVO.getTransport()
+					.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

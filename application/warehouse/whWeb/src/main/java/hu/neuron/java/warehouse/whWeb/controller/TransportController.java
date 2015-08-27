@@ -35,8 +35,6 @@ public class TransportController implements Serializable {
 
 	private int max;
 
-	private boolean isDone;
-
 	private LinkedList<Integer> pieces;
 
 	private String transportStatus;
@@ -98,6 +96,7 @@ public class TransportController implements Serializable {
 			transportVO.setToWarehouse(toWarehouse);
 
 			transportVO.setTransportStatus("Átvéve");
+			
 			setTransportStatus(transportVO.getTransportStatus());
 
 			transportOrder.updateStatus(transportVO.getTransportStatus(),
@@ -159,9 +158,10 @@ public class TransportController implements Serializable {
 			transportVO.setToWarehouse(toWarehouse);
 
 			transportVO.setTransportStatus("Szállítás alatt");
+			
 			setTransportStatus(transportVO.getTransportStatus());
 			
-			transportOrder.fillTable(transportVO);
+			transportOrder.fillTransportTable(transportVO);
 			
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
@@ -169,7 +169,7 @@ public class TransportController implements Serializable {
 				detailsVO.setPiece(pieces.getLast());
 				detailsVO.setTransport(transportVO);
 				pieces.removeLast();
-				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
+				transportOrder.fillDetailsTable(detailsVO);
 			}
 
 		} catch (Exception e) {
@@ -266,14 +266,6 @@ public class TransportController implements Serializable {
 
 	public void setMax(int max) {
 		this.max = max;
-	}
-
-	public boolean isDone() {
-		return isDone;
-	}
-
-	public void setDone(boolean isDone) {
-		this.isDone = isDone;
 	}
 
 }
