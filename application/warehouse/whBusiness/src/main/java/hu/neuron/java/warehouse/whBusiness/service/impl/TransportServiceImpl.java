@@ -59,7 +59,7 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	private StockVO ware;
 
 	@Override
-	public void fillTables(TransportVO transportVO, TransportDetailsVO detailsVO) {
+	public void fillTable(TransportVO transportVO) {
 		// táblák feltöltése
 		try {
 			transportDao.addToTransport(transportVO.getFromWarehouse().getId(),
@@ -124,6 +124,16 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		}
 
 		return ids;
+	}
+
+	@Override
+	public void updateStatus(String status, Long fromWarehouse_id,
+			Long toWarehouse_id) {
+		try {
+			transportDao.updateStatus(status, fromWarehouse_id, toWarehouse_id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

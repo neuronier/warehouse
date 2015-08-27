@@ -1,0 +1,66 @@
+<ui:composition template="/templates/masterLayout.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:sec="http://www.springframework.org/security/tags">
+	<ui:define name="head-extra">
+		<!-- custom css -->
+	</ui:define>
+	<ui:define name="pageTitle">Szállítás átvétele</ui:define>
+	<ui:define name="content">
+
+		<div align="center">
+			<br />
+
+			<h:panelGroup
+				rendered="#{!(request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER'))}"
+				style="color: white;">
+				<br />
+				<br />
+				<h2 style="font-family: Broadway; color: white">!!!Access
+					Denied!!!</h2>
+			</h:panelGroup>
+
+			<p:panel
+				rendered="#{request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER')}">
+				<f:facet name="header">
+					<h:outputText value="Stock/Transfer reports" />
+				</f:facet>
+				<h:form id="form">
+
+					<p:tab title="Pending transfers">
+						<p:dataTable id="transfersTable" var="transfers"
+							value="#{stockReportController.lazyStockReportTransferModel}"
+							emptyMessage="#{out.empty_message}"
+							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+							rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+							rows="10">
+
+							<p:column headerText="Initial warehouse id">
+								<h:outputText value="#{transfers.fromWarehouse}" />
+							</p:column>
+
+							<p:column headerText="Target warehouse id">
+								<h:outputText value="#{transfers.toWarehouse}" />
+							</p:column>
+
+							<p:column headerText="Transport status">
+								<h:outputText value="#{transfers.transportStatus}" />
+							</p:column>
+
+						</p:dataTable>
+					</p:tab>
+
+				</h:form>
+				<p:commandButton value="Átvesz" id="Atvesz"
+					styleClass="ui-priority-primary"
+					actionListener="#{transportController.transport()}"
+					action="transportController.setDone(true)" />
+			</p:panel>
+
+		</div>
+	</ui:define>
+</ui:composition>

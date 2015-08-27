@@ -33,4 +33,9 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 			+ "VALUES (?1, ?2, ?3)", nativeQuery = true)
 	void addToTransport(Long fromWarehouseId, Long toWarehouseId,
 			String transportStatus) throws Exception;
+
+	@Modifying
+	@Query(value = "UPDATE transport SET transportStatus=?1 where fromWarehouse_id = ?2 and toWarehouse_id=?3", nativeQuery = true)
+	void updateStatus(String transportStatus, Long fromWarehouse_id,
+			Long toWarehouse_id) throws Exception;
 }

@@ -21,7 +21,6 @@ import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean(name = "transportController")
@@ -35,6 +34,8 @@ public class TransportController implements Serializable {
 	private int db;
 
 	private int max;
+
+	private boolean isDone;
 
 	private LinkedList<Integer> pieces;
 
@@ -65,6 +66,10 @@ public class TransportController implements Serializable {
 	@EJB(name = "WareService")
 	WareServiceLocal wareService;
 
+	private WarehouseVO fromWarehouse;
+	private WarehouseVO toWarehouse;
+	private WareVo ware;
+
 	@PostConstruct
 	void init() {
 		pieces = new LinkedList<Integer>();
@@ -77,32 +82,26 @@ public class TransportController implements Serializable {
 	}
 
 	public void transport() {
-		WarehouseVO fromWarehouse;
-		WarehouseVO toWarehouse;
-		WareVo ware;
 		TransportVO transportVO = new TransportVO();
 		TransportDetailsVO detailsVO = new TransportDetailsVO();
 		try {
-			fromWarehouse = warehouseService
-					.findWarehouseByName(selectedFromWarehouseName);
 			if (fromWarehouse == null) {
 				fromWarehouse = warehouseService
 						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setFromWarehouse(fromWarehouse);
 
-			toWarehouse = warehouseService
-					.findWarehouseByName(selectedToWarehouseName);
 			if (toWarehouse == null) {
 				toWarehouse = warehouseService
 						.findWarehouseByName("Default Warehouse");
 			}
 			transportVO.setToWarehouse(toWarehouse);
 
-			transportVO.setTransportStatus("Szállítás alatt");
+			transportVO.setTransportStatus("Átvéve");
 			setTransportStatus(transportVO.getTransportStatus());
 
-			transportOrder.fillTables(transportVO, detailsVO);
+			transportOrder.updateStatus(transportVO.getTransportStatus(),
+					fromWarehouse.getId(), toWarehouse.getId());
 
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
@@ -112,8 +111,6 @@ public class TransportController implements Serializable {
 				pieces.removeLast();
 				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
 			}
-			FacesContext.getCurrentInstance().addMessage(
-					"A szállítás megkezdődött", null);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -138,6 +135,47 @@ public class TransportController implements Serializable {
 		for (String string : kesy) {
 			wareNames.add(string);
 			setMax(tmp.get(string));
+		}
+	}
+
+	public void startTransport() {
+		TransportVO transportVO = new TransportVO();
+		TransportDetailsVO detailsVO = new TransportDetailsVO();
+		try {
+			fromWarehouse = warehouseService
+					.findWarehouseByName(selectedFromWarehouseName);
+			if (fromWarehouse == null) {
+				fromWarehouse = warehouseService
+						.findWarehouseByName("Default Warehouse");
+			}
+			transportVO.setFromWarehouse(fromWarehouse);
+
+			toWarehouse = warehouseService
+					.findWarehouseByName(selectedToWarehouseName);
+			if (toWarehouse == null) {
+				toWarehouse = warehouseService
+						.findWarehouseByName("Default Warehouse");
+			}
+			transportVO.setToWarehouse(toWarehouse);
+
+			transportVO.setTransportStatus("Szállítás alatt");
+			setTransportStatus(transportVO.getTransportStatus());
+			
+			transportOrder.fillTable(transportVO);
+			
+			for (String wareName : selectedwareNames) {
+				ware = wareService.findWareByName(wareName);
+				detailsVO.setWare(ware);
+				detailsVO.setPiece(pieces.getLast());
+				detailsVO.setTransport(transportVO);
+				pieces.removeLast();
+				transportOrder.transportItemToWarehouse(transportVO, detailsVO);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			pieces.clear();
 		}
 	}
 
@@ -228,6 +266,14 @@ public class TransportController implements Serializable {
 
 	public void setMax(int max) {
 		this.max = max;
+	}
+
+	public boolean isDone() {
+		return isDone;
+	}
+
+	public void setDone(boolean isDone) {
+		this.isDone = isDone;
 	}
 
 }
