@@ -67,6 +67,8 @@ public class TransportController implements Serializable {
 	private WarehouseVO fromWarehouse;
 	private WarehouseVO toWarehouse;
 	private WareVo ware;
+	
+	private TransportVO selectedTransport;
 
 	@PostConstruct
 	void init() {
@@ -98,9 +100,6 @@ public class TransportController implements Serializable {
 			transportVO.setTransportStatus("Átvéve");
 			
 			setTransportStatus(transportVO.getTransportStatus());
-
-			transportOrder.updateStatus(transportVO.getTransportStatus(),
-					fromWarehouse.getId(), toWarehouse.getId());
 
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
@@ -266,6 +265,14 @@ public class TransportController implements Serializable {
 
 	public void setMax(int max) {
 		this.max = max;
+	}
+
+	public TransportVO getSelectedTransport() {
+		return selectedTransport;
+	}
+
+	public void setSelectedTransport(TransportVO selectedTransport) {
+		this.selectedTransport = selectedTransport;
 	}
 
 }

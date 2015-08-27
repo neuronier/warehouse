@@ -24,5 +24,7 @@ public interface TransportDetailsDao extends JpaRepository<TransportDetails, Lon
 	@Modifying
 	@Query(value = "SELECT transportId from transportdetails", nativeQuery = true)
 	List<Long> findAllTransportid() throws Exception;
+	
+	public List<TransportDetails> findByTransportId(Long id);
 
 }
