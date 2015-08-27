@@ -1,6 +1,6 @@
 package hu.neuron.java.warehouse.whCore.dao;
 
-import hu.neuron.java.warehouse.whCore.entity.Transport;
+import hu.neuron.java.warehouse.whCore.entity.TransportDetails;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 @Transactional(propagation = Propagation.SUPPORTS)
-public interface TransportDetailsDao extends JpaRepository<Transport, Long> {
+public interface TransportDetailsDao extends JpaRepository<TransportDetails, Long> {
 
 	@Modifying
 	@Query(value = "INSERT INTO transport_details (ware_id, piece, transport_id)"
