@@ -37,7 +37,8 @@
 							emptyMessage="#{out.empty_message}"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 							rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
-							rows="10" selection="#{acceptController.selectedTransport}" selectionMode="single">
+							rows="10" selection="#{acceptController.selectedTransport}"
+							selectionMode="single">
 
 							<p:column headerText="Initial warehouse id">
 								<h:outputText value="#{transfers.fromWarehouse}" />
@@ -54,11 +55,12 @@
 						</p:dataTable>
 					</p:tab>
 
+					<p:commandButton value="Átvesz" id="Atvesz"
+						styleClass="ui-priority-primary"
+						actionListener="#{acceptController.updateTransport()}"
+						update="form" />
 				</h:form>
-				<p:commandButton value="Átvesz" id="Atvesz"
-					styleClass="ui-priority-primary"
-					actionListener="#{acceptController.updateTransport()}"
-					update="form" />
+
 			</p:panel>
 
 		</div>

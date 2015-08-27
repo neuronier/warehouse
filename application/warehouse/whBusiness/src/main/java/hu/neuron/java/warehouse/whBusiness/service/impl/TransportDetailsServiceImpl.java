@@ -27,8 +27,7 @@ import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 @Remote(TransportDetailsServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class TransportDetailsServiceImpl implements
-		TransportDetailsServiceRemote {
+public class TransportDetailsServiceImpl implements TransportDetailsServiceRemote {
 
 	@Autowired
 	TransportDetailsDao transportDetailsDao;
@@ -41,7 +40,7 @@ public class TransportDetailsServiceImpl implements
 
 	@EJB
 	StockConverter stockConverter;
-	
+
 	@Autowired
 	TransportDao transportDao;
 
@@ -51,42 +50,43 @@ public class TransportDetailsServiceImpl implements
 	@Override
 	public List<TransportDetailsVO> findByTransportId(Long id) {
 
-		return transportDetailsConverter.toVO(transportDetailsDao
-				.findByTransportId(id));
+		return transportDetailsConverter.toVO(transportDetailsDao.findByTransportId(id));
 
 	}
 
 	@Override
-	public void updateTransportDetails(TransportVO transportVO)
-			throws Exception {
+	public void updateTransportDetails(TransportVO transportVO) throws Exception {
 
-		List<TransportDetailsVO> detailsList = findByTransportId(transportVO
-				.getId());
-		for (TransportDetailsVO detailsVO : detailsList) {
-
-			StockVO stockVo = stockConverter.toVO(stockDao
-					.findStockByWarehouseIdandWareId(detailsVO.getTransport()
-							.getFromWarehouse().getId(), detailsVO.getWare()
-							.getId()));
-			stockVo.setPiece(stockVo.getPiece()-detailsVO.getPiece());
-			stockDao.save(stockConverter.toEntity(stockVo));
-			
-		}
+		List<TransportDetailsVO> detailsList = findByTransportId(transportVO.getId());
 		
 		for (TransportDetailsVO detailsVO : detailsList) {
 
-			StockVO stockVo = stockConverter.toVO(stockDao
-					.findStockByWarehouseIdandWareId(detailsVO.getTransport()
-							.getToWarehouse().getId(), detailsVO.getWare()
+			StockVO stockVo = stockConverter.toVO(stockDao.findStockByWarehouseIdandWareId(
+					detailsVO.getTransport().getFromWarehouse().getId(), detailsVO.getWare()
 							.getId()));
-			stockVo.setPiece(stockVo.getPiece()+detailsVO.getPiece());
+			stockVo.setPiece(stockVo.getPiece() - detailsVO.getPiece());
 			stockDao.save(stockConverter.toEntity(stockVo));
-			
+		}
+
+		for (TransportDetailsVO detailsVO : detailsList) {
+			StockVO stockVo = stockConverter
+					.toVO(stockDao.findStockByWarehouseIdandWareId(detailsVO.getTransport()
+							.getToWarehouse().getId(), detailsVO.getWare().getId()));
+			if (stockVo != null) {
+				stockVo.setPiece(stockVo.getPiece() + detailsVO.getPiece());
+				stockDao.save(stockConverter.toEntity(stockVo));
+			}else{
+				stockVo=new StockVO();
+				stockVo.setWarehouse(transportVO.getToWarehouse());
+				stockVo.setWare(detailsVO.getWare());
+				stockVo.setPiece(detailsVO.getPiece());
+				stockDao.save(stockConverter.toEntity(stockVo));
+			}
 		}
 
 		transportVO.setTransportStatus("Completed");
 		transportDao.save(transportConverter.toEntity(transportVO));
-		
+
 	}
 
 }
