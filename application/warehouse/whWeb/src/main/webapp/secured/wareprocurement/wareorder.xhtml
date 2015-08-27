@@ -37,21 +37,15 @@
 					<h:outputLabel for="num" value="Number of items:"
 						styleClass="paginated">
 
-						<p:dataTable id="num" scrollable="true" scrollHeight="250"
-						scrollWidth="650"
-
+					<h:outputLabel for="num" value="Number of items:	"
+						styleClass="paginated">
+						<p:dataList id="num"
 							value="#{wareOrderConttroller.selectedwareNames}" var="ware"
-							emptyMessage="No wares selected" 
-							style="width:55%; ">
-
-							<p:column width="20">
-										#{ware}
-										</p:column>
-							<p:column width="45">
-								<p:spinner style="margin-left:0px" id="darab"
-									value="#{wareOrderConttroller.db}" min="0" />
-							</p:column>
-						</p:dataTable>
+							emptyMessage="No wares selected">
+								#{ware}
+								<p:spinner id="darab" value="#{transportController.db}" min="0" />
+						</p:dataList>
+					</h:outputLabel>
 
 					</h:outputLabel>
 				</h:panelGrid>
