@@ -9,9 +9,11 @@ public interface TransportServiceRemote {
 
 	void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO);
-	
-	void fillTables(TransportVO transportVO, TransportDetailsVO detailsVO);
-	
+
+	void fillTable(TransportVO transportVO);
+
+	void updateStatus(String status, Long fromWarehouse_id, Long toWarehouse_id);
+
 	public List<Long> getids();
 
 }

@@ -29,13 +29,13 @@ public interface WareWebService {
 	 * darabszámot
 	 */
 	@WebMethod
-	public int getNumberOfWares(String warehouseId, Long wareId);
+	public int getNumberOfWares(String warehouseId, String wareName);
 
 	/**
 	 * Egy paraméterül kapott raktár, terméktípus és darabszám alapján
 	 * csökkenteni a darabszámot az adott raktárban az adott terméktípusból.
 	 */
 	@WebMethod
-	public void decreaseNumberOfWares(String warehouseId, Long wareId, int number);
+	public void decreaseNumberOfWares(String warehouseId, String wareName, int number);
 	
 }

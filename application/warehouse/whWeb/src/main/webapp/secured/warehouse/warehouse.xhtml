@@ -21,7 +21,7 @@
 					Denied!!!</h2>
 		</h:panelGroup>
 
-	<p:panel header="Warehouse Management" rendered="#{request.isUserInRole('STOREKEEPER')}">
+	<p:panel header="#{out.ml_whmanagement}" rendered="#{request.isUserInRole('STOREKEEPER')}">
 		<h:form id="form">
 
 			<!-- Ez itt a tabla -->
@@ -40,33 +40,33 @@
 					update=":warehouseCommandsForm:update,:warehouseCommandsForm:addUser,:warehouseCommandsForm:removeButton,
 					:dialogFormUpdate,:dialogForm" />
 
-				<p:column headerText="Name" sortBy="#{warehouse.name}"
+				<p:column headerText="#{out.wh_name}" sortBy="#{warehouse.name}"
 					filterBy="#{warehouse.name}">
 					<h:outputText value="#{warehouse.name}" />
 				</p:column>
 
 
-				<p:column headerText="Id" sortBy="#{warehouse.warehouseId}"
+				<p:column headerText="#{out.wh_id}" sortBy="#{warehouse.warehouseId}"
 					filterBy="#{warehouse.warehouseId}">
 					<h:outputText value="#{warehouse.warehouseId}" />
 				</p:column>
 
-				<p:column headerText="Zip Code" sortBy="#{warehouse.zipCode}"
+				<p:column headerText="#{out.wh_zipcode}" sortBy="#{warehouse.zipCode}"
 					filterBy="#{warehouse.zipCode}">
 					<h:outputText value="#{warehouse.zipCode}" />
 				</p:column>
 
-				<p:column headerText="City" sortBy="#{warehouse.city}"
+				<p:column headerText="#{out.wh_city}" sortBy="#{warehouse.city}"
 					filterBy="#{warehouse.city}">
 					<h:outputText value="#{warehouse.city}" />
 				</p:column>
 
-				<p:column headerText="Address" sortBy="#{warehouse.address}"
+				<p:column headerText="#{out.wh_address}" sortBy="#{warehouse.address}"
 					filterBy="#{warehouse.address}">
 					<h:outputText value="#{warehouse.address}" />
 				</p:column>
 
-				<p:column headerText="Address Number"
+				<p:column headerText="#{out.wh_addressnumber}"
 					sortBy="#{warehouse.addressNumber}"
 					filterBy="#{warehouse.addressNumber}">
 					<h:outputText value="#{warehouse.addressNumber}" />
@@ -81,17 +81,17 @@
 
 			<h:panelGrid columns="4" cellpadding="5">
 				<p:commandButton id="new"
-					value="Add New Warehouse" title="Save" type="button"
+					value="#{out.wh_new}" title="Save" type="button"
 					onclick="PF('new').show()">
 				</p:commandButton>
 
 				<p:commandButton  id="update"
-					value="Update Warehouse" title="Update" type="button"
+					value="#{out.wh_update}" title="Update" type="button"
 					onclick="PF('update').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 
-				<p:commandButton value="Delete Warehouse" id="removeButton"
+				<p:commandButton value="#{out.wh_delete}" id="removeButton"
 					actionListener="#{warehouseController.removeWarehouse}"
 					update=":form:warehouseTable,warehouseCommandsForm"
 					disabled="#{warehouseController.selectedWarehouse == null}" />
@@ -99,24 +99,24 @@
 
 				<p:commandButton id="addUser"
 					actionListener="#{warehouseController.setList}" update="pickList"
-					value="Select Users" title="Add" onclick="PF('addUser').show()"
+					value="#{out.wh_users}" title="Add" onclick="PF('addUser').show()"
 					disabled="#{warehouseController.selectedWarehouse == null}">
 				</p:commandButton>
 			</h:panelGrid>
 
 			<!-- userek hozzaadasa -->
 			<p:dialog id="WarehouseDialogAddUser" widgetVar="addUser"
-				header="User Select" modal="true" resizable="false">
+				header="#{out.wh_users}" modal="true" resizable="false">
 
 				<p:pickList id="pickList" value="#{warehouseController.users}"
 					showSourceFilter="true" showTargetFilter="true" var="user"
 					itemLabel="#{user}" itemValue="#{user}">
-					<f:facet name="sourceCaption">Available Users</f:facet>
-					<f:facet name="targetCaption">Added Users</f:facet>
+					<f:facet name="sourceCaption">#{out.wh_avuser}</f:facet>
+					<f:facet name="targetCaption">#{out.wh_addeduser}</f:facet>
 				</p:pickList>
 
 
-				<p:commandButton id="addUserToWarehouse" value="Submit"
+				<p:commandButton id="addUserToWarehouse" value="#{out.wh_submit}"
 					action="#{warehouseController.addUserToWarehouse(warehouseController.selectedWarehouse)}">
 				</p:commandButton>
 			</p:dialog>
@@ -129,35 +129,35 @@
 
 		<!--update warehouse dialog -->
 		<p:dialog id="WarehouseDialogUpdate" width="50%" widgetVar="update"
-			modal="true" resizable="false" header="Update Warehouse">
+			modal="true" resizable="false" header="#{out.wh_update}">
 			<h:form id="dialogFormUpdate">
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
-					<h:outputText style="color: white;" value="Name: " />
+					<h:outputText style="color: white;" value="#{out.wh_name}" />
 					<p:inputText id="nameInput" required="true"
 						value="#{warehouseController.updateWarehouseName}" />
 
 
-					<h:outputText style="color: white;" value="Zip Code " />
+					<h:outputText style="color: white;" value="#{out.wh_zipcode}"/>
 					<p:inputText id="zipCode" required="true"
 						value="#{warehouseController.updateWarehouseAddressZipCode}" />
 
 
-					<h:outputText style="color: white;" value="City " />
+					<h:outputText style="color: white;" value="#{out.wh_city}" />
 					<p:inputText id="addressCity" required="true"
 						value="#{warehouseController.updateWarehouseCity}" />
 
 
-					<h:outputText style="color: white;" value="Address " />
+					<h:outputText style="color: white;" value="#{out.wh_address}" />
 					<p:inputText id="address" required="true"
 						value="#{warehouseController.updateWarehouseAddress}" />
 
 
-					<h:outputText style="color: white;" value="Address number " />
+					<h:outputText style="color: white;" value="#{out.wh_addressnumber}"/>
 					<p:inputText id="addressNumber" required="true"
 						value="#{warehouseController.updateWarehouseAddressNumber}" />
 
-					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
+					<p:commandButton id="saveNewWarehouse" value="#{out.wh_update}"
 						action="#{warehouseController.updateWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('update').hide();"
 						update=":form:warehouseTable" />
@@ -171,46 +171,46 @@
 
 		<!-- uj raktar, dialog -->
 		<p:dialog id="WarehouseDialog" width="50%" widgetVar="new"
-			modal="true" resizable="false" header="New Warehouse">
+			modal="true" resizable="false" header="#{out.wh_new}">
 			<h:form id="dialogForm">
 				<h:panelGrid columns="2" style="width:100%" cellpadding="5">
 
-					<h:outputText style="color: white;" value="Name: " />
+					<h:outputText style="color: white;" value="#{out.wh_name}" />
 					<p:inputText id="nameInput" required="true"
 						value="#{warehouseController.newWarehouseName}"
 						requiredMessage="Please enter warehouse name!" />
 
-					<h:outputText style="color: white;" value="Id " />
+					<h:outputText style="color: white;" value="#{out.wh_id}"/>
 					<p:inputText id="idInput" required="true"
 						value="#{warehouseController.newWarehouseId}"
 						requiredMessage="Please enter warehouse id!" />
 
 
 
-					<h:outputText style="color: white;" value="Zip Code " />
+					<h:outputText style="color: white;" value="#{out.wh_zipcode}" />
 					<p:inputText id="zipCode" required="true"
 						value="#{warehouseController.newWarehouseAddressZipCode}"
 						requiredMessage="Please enter warehouse zip code!" />
 
 
-					<h:outputText style="color: white;" value="City " />
+					<h:outputText style="color: white;" value="#{out.wh_city}"/>
 					<p:inputText id="addressCity" required="true"
 						value="#{warehouseController.newWarehouseCity}"
 						requiredMessage="Please enter warehouse city!" />
 
 
-					<h:outputText style="color: white;" value="Address " />
+					<h:outputText style="color: white;" value="#{out.wh_address}" />
 					<p:inputText id="address" required="true"
 						value="#{warehouseController.newWarehouseAddress}"
 						requiredMessage="Please enter warehouse addres!" />
 
 
-					<h:outputText style="color: white;" value="Address number " />
+					<h:outputText style="color: white;" value="#{out.wh_addressnumber}" />
 					<p:inputText id="addressNumber" required="true"
 						value="#{warehouseController.newWarehouseAddressNumber}"
 						requiredMessage="Please enter warehouse address number!" />
 
-					<p:commandButton id="saveNewWarehouse" value="Save Warehouse"
+					<p:commandButton id="saveNewWarehouse" value="#{out.wh_save}"
 						action="#{warehouseController.saveNewWarehouse()}"
 						icon="ui-icon-check" oncomplete="PF('new').hide();"
 						update=":form:warehouseTable,:dialogForm,:growl" />

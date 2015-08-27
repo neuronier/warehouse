@@ -17,23 +17,29 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 
 	@Modifying
 	@Query(value = "UPDATE stock SET piece=piece+?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true)
-	int transportToWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
+	int transportToWarehouse(int piece, Long wareId, Long toWarehouseId)
+			throws Exception;
 
 	@Modifying
 	@Query(value = "UPDATE stock SET piece=piece-?1 WHERE ware_id = ?2 and warehouse_id=?3", nativeQuery = true)
-	int transportFromWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
+	int transportFromWarehouse(int piece, Long wareId, Long fromWarehouseId)
+			throws Exception;
 
 	@Modifying
 	@Query(value = "INSERT INTO stock( piece,ware_id, warehouse_id) VALUES (?1,?2,?3)", nativeQuery = true)
-	void addTransportToWarehouse(int piece, Long wareId, Long toWarehouseId) throws Exception;
+	void addTransportToWarehouse(int piece, Long wareId, Long toWarehouseId)
+			throws Exception;
 
 	@Modifying
 	@Query(value = "INSERT INTO transport(fromWarehouse_id, toWarehouse_id, transportStatus)"
 			+ "VALUES (?1, ?2, ?3)", nativeQuery = true)
-	void addToTransport(Long fromWarehouseId, Long toWarehouseId, String transportStatus)
-			throws Exception;
-
+	void addToTransport(Long fromWarehouseId, Long toWarehouseId,
+			String transportStatus) throws Exception;
 	Page<Transport> findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
 			String filter1, String filter2, String filter3, Pageable pageable);
 
+	@Modifying
+	@Query(value = "UPDATE transport SET transportStatus=?1 where fromWarehouse_id = ?2 and toWarehouse_id=?3", nativeQuery = true)
+	void updateStatus(String transportStatus, Long fromWarehouse_id,
+			Long toWarehouse_id) throws Exception;
 }

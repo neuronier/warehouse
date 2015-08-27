@@ -2,6 +2,7 @@ package hu.neuron.java.warehouse.whWeb.web.service.impl;
 
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whWeb.web.converter.WareWebConverter;
 import hu.neuron.java.warehouse.whWeb.web.converter.WarehouseWebConverter;
 import hu.neuron.java.warehouse.whWeb.web.service.WareWebService;
@@ -56,8 +57,9 @@ public class WareWebServiceImpl implements WareWebService {
 	 * darabszámot
 	 */
 	@Override
-	public int getNumberOfWares(String warehouseId, Long wareId) {
-		return wareService.getNumByWarehouseAndWareId(warehouseId, wareId);
+	public int getNumberOfWares(String warehouseId, String wareName) {
+		WareVo ware = wareService.findWareByName(wareName);
+		return wareService.getNumByWarehouseAndWareId(warehouseId, ware.getId());
 	}
 
 	/**
@@ -65,8 +67,9 @@ public class WareWebServiceImpl implements WareWebService {
 	 * csökkenteni a darabszámot az adott raktárban az adott terméktípusból.
 	 */
 	@Override
-	public void decreaseNumberOfWares(String warehouseId, Long wareId, int number) {
-		wareService.decreaseNumberByWhWareAndNum(warehouseId, wareId, number);
+	public void decreaseNumberOfWares(String warehouseId, String wareName, int number) {
+		WareVo ware = wareService.findWareByName(wareName);
+		wareService.decreaseNumberByWhWareAndNum(warehouseId, ware.getId(), number);
 	}
 
 }
