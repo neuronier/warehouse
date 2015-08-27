@@ -161,7 +161,7 @@ public class TransportController implements Serializable {
 			
 			setTransportStatus(transportVO.getTransportStatus());
 			
-			transportOrder.fillTransportTable(transportVO);
+			transportVO =transportOrder.fillTransportTable(transportVO);
 			
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);

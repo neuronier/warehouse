@@ -30,11 +30,7 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 	void addTransportToWarehouse(int piece, Long wareId, Long toWarehouseId)
 			throws Exception;
 
-	@Modifying
-	@Query(value = "INSERT INTO transport(fromWarehouse_id, toWarehouse_id, transportStatus)"
-			+ "VALUES (?1, ?2, ?3)", nativeQuery = true)
-	void addToTransport(Long fromWarehouseId, Long toWarehouseId,
-			String transportStatus) throws Exception;
+	
 	Page<Transport> findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
 			String filter1, String filter2, String filter3, Pageable pageable);
 

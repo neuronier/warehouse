@@ -10,7 +10,7 @@ public interface TransportServiceRemote {
 	void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO);
 
-	void fillTransportTable(TransportVO transportVO);
+	TransportVO fillTransportTable(TransportVO transportVO);
 	
 	void fillDetailsTable(TransportDetailsVO detailsVO);
 

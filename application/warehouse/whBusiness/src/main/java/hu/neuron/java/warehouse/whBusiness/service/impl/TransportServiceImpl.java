@@ -11,6 +11,7 @@ import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
+import hu.neuron.java.warehouse.whCore.entity.Transport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,15 +60,15 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	private StockVO ware;
 
 	@Override
-	public void fillTransportTable(TransportVO transportVO) {
+	public TransportVO fillTransportTable(TransportVO transportVO) {
 		// táblák feltöltése
 		try {
-			transportDao.addToTransport(transportVO.getFromWarehouse().getId(),
-					transportVO.getToWarehouse().getId(),
-					transportVO.getTransportStatus());
+		Transport transport = transportDao.save(transportConverter.toEntity(transportVO));
+		return transportConverter.toVO(transport);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
 	}
 	
 	@Override
