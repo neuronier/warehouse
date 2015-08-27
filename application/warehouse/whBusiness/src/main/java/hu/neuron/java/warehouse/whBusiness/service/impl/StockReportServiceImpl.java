@@ -187,13 +187,31 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 	@Override
 	public List<TransportVO> getTransports(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName) {
+			Map<String, Object> filters) {
 		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Transport> entities;
 
-		entities = transportDao.findAll(pageRequest);
+		String fromWarehouse = "", toWarehouse = "", transportStatus = "";
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			try {
+				String filterProperty = it.next();
+				if (filterProperty.equals("fromWarehouse")) {
+					fromWarehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("toWarehouse")) {
+					toWarehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("transportStatus")) {
+					transportStatus = (String) filters.get(filterProperty);
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		entities = transportDao.findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
+				fromWarehouse, toWarehouse, transportStatus, pageRequest);
 
 		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
 

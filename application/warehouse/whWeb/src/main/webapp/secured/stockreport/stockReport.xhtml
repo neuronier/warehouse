@@ -32,14 +32,15 @@
 					<p:tabView>
 						<p:tab title="#{out.str_stocklvlandchanges}">
 							<div align="left">
-								<p:outputLabel for="selectWarehouse" value="#{out.str_selectwarehouse}: " />
+								<p:outputLabel for="selectWarehouse"
+									value="#{out.str_selectwarehouse}: " />
 								<p:selectOneMenu id="selectWarehouse"
 									onchange="PF('stockTable').filter()"
 									value="#{stockReportController.selectedWarehouseName}">
 									<p:ajax listener="#{stockReportController.onWarehouseChange()}"
 										update="whStock:stockTable,whStock:stockHistoryTable" />
-									<f:selectItem itemLabel="#{out.str_selectwarehouse}" itemValue=" "
-										noSelectionOption="false" />
+									<f:selectItem itemLabel="#{out.str_selectwarehouse}"
+										itemValue=" " noSelectionOption="false" />
 									<f:selectItems value="#{stockReportController.warehouseNames}" />
 								</p:selectOneMenu>
 							</div>
@@ -52,8 +53,8 @@
 										rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 										rows="10">
 
-										<p:column headerText="#{out.ware}" sortBy="#{stock.ware.wareName}"
-											filterBy="ware">
+										<p:column headerText="#{out.ware}"
+											sortBy="#{stock.ware.wareName}" filterBy="ware">
 											<h:outputText value="#{stock.ware.wareName}" />
 										</p:column>
 
@@ -95,26 +96,31 @@
 							</p:tabView>
 						</p:tab>
 						<p:tab title="#{out.str_transfers}">
-							<!-- 							<p:dataTable id="transfersTable" var="transfers" -->
-							<!-- 								value="#{stockReportController.lazyStockReportTransferModel}" -->
-							<!-- 								emptyMessage="#{out.empty_message}" -->
-							<!-- 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}" -->
-							<!-- 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true" -->
-							<!-- 								rows="10"> -->
+							<p:dataTable id="transfersTable" var="transfers"
+								value="#{stockReportController.lazyStockReportTransferModel}"
+								emptyMessage="#{out.empty_message}"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+								rows="10">
 
-							<!-- 								<p:column headerText="Initial warehouse id"> -->
-							<!-- 									<h:outputText value="#{transfers.fromWarehouse}" /> -->
-							<!-- 								</p:column> -->
+								<p:column headerText="#{out.str_initialwh}"
+									filterBy="fromWarehouse"
+									sortBy="#{transfers.fromWarehouse.name}">
+									<h:outputText value="#{transfers.fromWarehouse.name}" />
+								</p:column>
 
-							<!-- 								<p:column headerText="Target warehouse id"> -->
-							<!-- 									<h:outputText value="#{transfers.toWarehouse}" /> -->
-							<!-- 								</p:column> -->
+								<p:column headerText="#{out.str_targetwh}"
+									filterBy="toWarehouse" sortBy="#{transfers.toWarehouse.name}">
+									<h:outputText value="#{transfers.toWarehouse.name}" />
+								</p:column>
 
-							<!-- 								<p:column headerText="Transport status"> -->
-							<!-- 									<h:outputText value="#{transfers.transportStatus}" /> -->
-							<!-- 								</p:column> -->
+								<p:column headerText="#{out.str_transportstatus}"
+									filterBy="transportStatus"
+									sortBy="#{transfers.transportStatus}">
+									<h:outputText value="#{transfers.transportStatus}" />
+								</p:column>
 
-							<!-- 							</p:dataTable> -->
+							</p:dataTable>
 						</p:tab>
 					</p:tabView>
 				</h:form>

@@ -42,7 +42,7 @@ public class StockReportController implements Serializable {
 
 		setLazyStockReportActualModel(new LazyStockReportActualModel(stockReportService));
 		setLazyStockReportHistoryModel(new LazyStockReportHistoryModel(stockReportService));
-//		setLazyStockReportTransferModel(new LazyStockReportTransferModel(stockReportService));
+		setLazyStockReportTransferModel(new LazyStockReportTransferModel(stockReportService));
 
 	}
 
