@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.io.Serializable;
@@ -9,10 +10,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
-import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.context.FacesContext;
 
 @ViewScoped
 @ManagedBean(name = "stockReportController")
@@ -24,6 +23,8 @@ public class StockReportController implements Serializable {
 	private LazyStockReportHistoryModel lazyStockReportHistoryModel;
 
 	private LazyStockReportTransferModel lazyStockReportTransferModel;
+	
+	private LazyStockReportTransferDetailsModel lazyStockReportTransferDetailsModel;
 
 	@EJB(beanName = "StockReportService")
 	private StockReportServiceRemote stockReportService;
@@ -31,6 +32,8 @@ public class StockReportController implements Serializable {
 	private List<WarehouseVO> warehouses;
 	private List<String> warehouseNames;
 	private String selectedWarehouseName=" ";
+	
+	private TransportVO selectedTransport;
 
 	@PostConstruct
 	public void init() {
@@ -43,12 +46,17 @@ public class StockReportController implements Serializable {
 		setLazyStockReportActualModel(new LazyStockReportActualModel(stockReportService));
 		setLazyStockReportHistoryModel(new LazyStockReportHistoryModel(stockReportService));
 		setLazyStockReportTransferModel(new LazyStockReportTransferModel(stockReportService));
+		setLazyStockReportTransferDetailsModel(new LazyStockReportTransferDetailsModel(stockReportService));
 
 	}
 
 	public void onWarehouseChange() {
 		lazyStockReportActualModel.setSelectedWarehouseName(selectedWarehouseName);
 		lazyStockReportHistoryModel.setSelectedWarehouseName(selectedWarehouseName);
+	}
+	
+	public void onTransportRowSelect(){
+		lazyStockReportTransferDetailsModel.setSelectedTransport(selectedTransport);
 	}
 
 	public LazyStockReportActualModel getLazyStockReportActualModel() {
@@ -106,6 +114,23 @@ public class StockReportController implements Serializable {
 
 	public void setSelectedWarehouseName(String selectedWarehouseName) {
 		this.selectedWarehouseName = selectedWarehouseName;
+	}
+
+	public TransportVO getSelectedTransport() {
+		return selectedTransport;
+	}
+
+	public void setSelectedTransport(TransportVO selectedTransport) {
+		this.selectedTransport = selectedTransport;
+	}
+
+	public LazyStockReportTransferDetailsModel getLazyStockReportTransferDetailsModel() {
+		return lazyStockReportTransferDetailsModel;
+	}
+
+	public void setLazyStockReportTransferDetailsModel(
+			LazyStockReportTransferDetailsModel lazyStockReportTransferDetailsModel) {
+		this.lazyStockReportTransferDetailsModel = lazyStockReportTransferDetailsModel;
 	}
 
 }

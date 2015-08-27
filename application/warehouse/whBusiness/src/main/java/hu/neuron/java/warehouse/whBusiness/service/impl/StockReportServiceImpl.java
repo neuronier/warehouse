@@ -8,15 +8,18 @@ import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockHistoryVO;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
+import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.StockHistoryDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
+import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
 import hu.neuron.java.warehouse.whCore.dao.WarehouseDao;
 import hu.neuron.java.warehouse.whCore.entity.Stock;
 import hu.neuron.java.warehouse.whCore.entity.StockHistory;
 import hu.neuron.java.warehouse.whCore.entity.Transport;
+import hu.neuron.java.warehouse.whCore.entity.TransportDetails;
 
 import java.io.Serializable;
 import java.util.Iterator;
@@ -60,6 +63,9 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 	@Autowired
 	TransportDao transportDao;
+	
+	@Autowired
+	TransportDetailsDao transportDetailsDao;
 
 	@Autowired
 	WarehouseDao warehouseDao;
@@ -104,6 +110,11 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public int getTransportRowNumber() {
 		return (int) transportDao.count();
 	}
+	
+	@Override
+	public int getTransportDetailsRowNumber() {
+		return (int) transportDetailsDao.count();
+	}	
 
 	@Override
 	public List<StockVO> getStock() {
@@ -118,6 +129,11 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	@Override
 	public List<TransportVO> getTransports() {
 		return transportConverter.toVO(transportDao.findAll());
+	}
+	
+	@Override
+	public List<TransportDetailsVO> getTransportDetails() {
+		return transportDetailsConverter.toVO(transportDetailsDao.findAll());
 	}
 
 	@Override
@@ -217,6 +233,37 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 		return ret;
 	}
+	
+	@Override
+	public List<TransportDetailsVO> getTransportDetails(int i, int pageSize, String sortField, int sortOrder,
+			Map<String, Object> filters) {
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
+		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
+				new org.springframework.data.domain.Sort.Order(dir, sortField)));
+		Page<TransportDetails> entities;
+
+		Long transport = new Long(-1);
+		String ware = "";
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			try {
+				String filterProperty = it.next();
+				if (filterProperty.equals("transport")) {
+					transport = (Long) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("ware")) {
+					ware = (String) filters.get(filterProperty);
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		entities = transportDetailsDao.findByTransportIdAndWareWareNameStartsWith(
+				transport, ware, pageRequest);
+
+		List<TransportDetailsVO> ret = transportDetailsConverter.toVO(entities.getContent());
+
+		return ret;
+	}
 
 	@Override
 	public int getStockCount() {
@@ -231,5 +278,10 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	@Override
 	public int getTransportCount() {
 		return (int) transportDao.count();
+	}
+	
+	@Override
+	public int getTransportDetailsCount() {
+		return (int) transportDetailsDao.count();
 	}
 }

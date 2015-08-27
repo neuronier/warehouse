@@ -28,8 +28,8 @@
 				<f:facet name="header">
 					<h:outputText value="#{out.ml_report}" />
 				</f:facet>
-				<h:form id="form">
-					<p:tabView>
+				<h:form id="reportForm">
+					<p:tabView id="mainTab">
 						<p:tab title="#{out.str_stocklvlandchanges}">
 							<div align="left">
 								<p:outputLabel for="selectWarehouse"
@@ -89,8 +89,7 @@
 										<p:column headerText="#{out.str_oldamount}">
 											<h:outputText value="#{stockHistory.new_piece}" />
 										</p:column>
-
-
+										
 									</p:dataTable>
 								</p:tab>
 							</p:tabView>
@@ -101,7 +100,13 @@
 								emptyMessage="#{out.empty_message}"
 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
-								rows="10">
+								rows="10" selection="#{stockReportController.selectedTransport}"
+								selectionMode="single">
+
+								<p:ajax event="rowSelect"
+									listener="#{stockReportController.onTransportRowSelect}"
+									update=":reportForm:transportDetail"
+									oncomplete="PF('transportDialog').show()" />
 
 								<p:column headerText="#{out.str_initialwh}"
 									filterBy="fromWarehouse"
@@ -123,6 +128,32 @@
 							</p:dataTable>
 						</p:tab>
 					</p:tabView>
+
+					<p:dialog header="#{out.str_transportdetails}"
+						widgetVar="transportDialog" modal="true" showEffect="fade"
+						hideEffect="fade" resizable="false" >
+						<p:outputPanel id="transportDetail" style="text-align:center;">
+
+							<p:dataTable id="transportDetailTable" var="transportDetails"
+								value="#{stockReportController.lazyStockReportTransferDetailsModel}"
+								emptyMessage="#{out.empty_message}"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+								rows="10">
+
+								<p:column headerText="#{out.ware}"
+									sortBy="#{transportDetails.ware.wareName}" filterBy="ware">
+									<h:outputText value="#{transportDetails.ware.wareName}" />
+								</p:column>
+
+								<p:column headerText="#{out.str_piece}">
+									<h:outputText value="#{transportDetails.piece}" />
+								</p:column>
+
+							</p:dataTable>
+						</p:outputPanel>
+					</p:dialog>
+
 				</h:form>
 
 			</p:panel>
