@@ -23,42 +23,35 @@ public class LazyStockReportTransferModel extends LazyDataModel<TransportVO> {
 
 	@Override
 	public TransportVO getRowData(String rowkey) {
-//		if (visibleList != null || rowkey != null) {
-//			for (TransportVO transportVO : visibleList) {
-//				if (transportVO.getId().toString().equals(rowkey)) {
-//					return transportVO;
-//				}
-//			}
-//		}
+		if (visibleList != null || rowkey != null) {
+			for (TransportVO transportVO : visibleList) {
+				if (transportVO.getId().toString().equals(rowkey)) {
+					return transportVO;
+				}
+			}
+		}
 		return null;
 	}
 
 	@Override
 	public Object getRowKey(TransportVO transportVO) {
-//		if (transportVO == null) {
-//			return null;
-//		}
-//		return transportVO.getId();
-		return null;
+		if (transportVO == null) {
+			return null;
+		}
+		return transportVO.getId();
 	}
 
 	@Override
 	public List<TransportVO> load(int first, int pageSize, String sortField, SortOrder sortOrder,
 			Map<String, Object> filters) {
 
-		String filter = "";
-		String filterColumnName = "";
-		if (filters.keySet().size() > 0) {
-			filter = (String) filters.values().toArray()[0];
-			filterColumnName = filters.keySet().iterator().next();
-		}
 		if (sortField == null) {
 			sortField = "fromWarehouse";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleList = stockReportService.getTransports(first / pageSize, pageSize, sortField, dir, filter,
-				filterColumnName);
+		visibleList = stockReportService.getTransports(first / pageSize, pageSize, sortField, dir,
+				filters);
 
 		int dataSize = stockReportService.getTransportCount();
 
@@ -67,7 +60,5 @@ public class LazyStockReportTransferModel extends LazyDataModel<TransportVO> {
 		return visibleList;
 
 	}
-
-
 
 }

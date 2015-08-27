@@ -33,7 +33,7 @@ public interface StockReportServiceRemote {
 			int sortOrder, Map<String, Object> filters);
 
 	public List<TransportVO> getTransports(int i, int pageSize, String sortField, int sortOrder,
-			String filter, String filterColumnName);
+			Map<String, Object> filters);
 
 	public int getStockCount();
 

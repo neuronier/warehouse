@@ -2,6 +2,8 @@ package hu.neuron.java.warehouse.whCore.dao;
 
 import hu.neuron.java.warehouse.whCore.entity.Transport;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -33,6 +35,8 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 			+ "VALUES (?1, ?2, ?3)", nativeQuery = true)
 	void addToTransport(Long fromWarehouseId, Long toWarehouseId,
 			String transportStatus) throws Exception;
+	Page<Transport> findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
+			String filter1, String filter2, String filter3, Pageable pageable);
 
 	@Modifying
 	@Query(value = "UPDATE transport SET transportStatus=?1 where fromWarehouse_id = ?2 and toWarehouse_id=?3", nativeQuery = true)
