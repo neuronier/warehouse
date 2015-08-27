@@ -16,13 +16,13 @@ import org.springframework.transaction.annotation.Transactional;
 public interface TransportDetailsDao extends JpaRepository<TransportDetails, Long> {
 
 	@Modifying
-	@Query(value = "INSERT INTO transport_details (ware_id, piece, transport_id)"
+	@Query(value = "INSERT INTO transportdetails (ware_id, piece, transport_id)"
 			+ "VALUES (?1, ?2, ?3)", nativeQuery = true)
 	void addToTransportDetails(Long wareId, int piece, Long transportId)
 			throws Exception;
 
 	@Modifying
-	@Query(value = "SELECT transportId from transport_details", nativeQuery = true)
+	@Query(value = "SELECT transportId from transportdetails", nativeQuery = true)
 	List<Long> findAllTransportid() throws Exception;
 
 }

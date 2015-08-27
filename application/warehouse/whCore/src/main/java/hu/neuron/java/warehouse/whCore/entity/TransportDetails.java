@@ -5,7 +5,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Transport_Details")
+@Table(name = "TransportDetails")
 public class TransportDetails extends BaseEntity {
 
 	/**
