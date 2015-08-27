@@ -10,7 +10,9 @@ public interface TransportServiceLocal {
 	void transportItemToWarehouse(TransportVO transportVO,
 			TransportDetailsVO detailsVO);
 
-	void fillTable(TransportVO transportVO);
+	void fillTransportTable(TransportVO transportVO);
+	
+	void fillDetailsTable(TransportDetailsVO detailsVO);
 
 	void updateStatus(String status, Long fromWarehouse_id, Long toWarehouse_id);
 
