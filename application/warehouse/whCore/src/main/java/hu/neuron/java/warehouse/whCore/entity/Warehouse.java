@@ -1,6 +1,8 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +35,13 @@ public class Warehouse extends BaseEntity {
 
 	@Column(nullable = false)
 	private String addressNumber;
-
+	
+	@ManyToMany
+	  @JoinTable(
+	      name="Manager",
+	      joinColumns={@JoinColumn(name="warehouseId", referencedColumnName="warehouseId")},
+	      inverseJoinColumns={@JoinColumn(name="userName", referencedColumnName="userName")})
+	private List<User> users;
 
 	public String getName() {
 		return name;
@@ -51,8 +59,6 @@ public class Warehouse extends BaseEntity {
 		this.warehouseId = warehouseId;
 	}
 
-
-
 	public String getCity() {
 		return city;
 	}
@@ -68,8 +74,6 @@ public class Warehouse extends BaseEntity {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-
-	
 
 	public String getZipCode() {
 		return zipCode;
@@ -87,11 +91,19 @@ public class Warehouse extends BaseEntity {
 		this.addressNumber = addressNumber;
 	}
 
+	public List<User> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<User> users) {
+		this.users = users;
+	}
+
 	@Override
 	public String toString() {
 		return "Warehouse [name=" + name + ", warehouseId=" + warehouseId
 				+ ", zipCode=" + zipCode + ", city=" + city + ", address="
-				+ address + ", addressNumber=" + addressNumber ;
+				+ address + ", addressNumber=" + addressNumber;
 	}
 
 }
