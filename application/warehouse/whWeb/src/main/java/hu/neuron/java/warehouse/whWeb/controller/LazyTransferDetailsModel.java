@@ -10,7 +10,7 @@ import java.util.Map;
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
 
-public class LazyAcceptTransferModel extends LazyDataModel<TransportDetailsVO> {
+public class LazyTransferDetailsModel extends LazyDataModel<TransportDetailsVO> {
 	private static final long serialVersionUID = 1L;
 
 	private List<TransportDetailsVO> visibleList;
@@ -19,7 +19,7 @@ public class LazyAcceptTransferModel extends LazyDataModel<TransportDetailsVO> {
 
 	private TransportVO selectedTransport = new TransportVO();
 
-	public LazyAcceptTransferModel(StockReportServiceRemote stockReportService) {
+	public LazyTransferDetailsModel(StockReportServiceRemote stockReportService) {
 		super();
 		this.stockReportService = stockReportService;
 	}

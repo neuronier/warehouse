@@ -14,7 +14,9 @@ import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
 import hu.neuron.java.warehouse.whCore.entity.Transport;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.ejb.EJB;
 import javax.ejb.Local;
@@ -26,6 +28,10 @@ import javax.interceptor.Interceptors;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 @Stateless(mappedName = "TransportService", name = "TransportService")
@@ -63,14 +69,15 @@ public class TransportServiceImpl implements TransportServiceLocal,
 	public TransportVO fillTransportTable(TransportVO transportVO) {
 		// táblák feltöltése
 		try {
-		Transport transport = transportDao.save(transportConverter.toEntity(transportVO));
-		return transportConverter.toVO(transport);
+			Transport transport = transportDao.save(transportConverter
+					.toEntity(transportVO));
+			return transportConverter.toVO(transport);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void fillDetailsTable(TransportDetailsVO detailsVO) {
 		try {
@@ -146,6 +153,34 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+
+
+	@Override
+	public List<TransportVO> getByUsers(int i, int pageSize, String sortField,
+			int sortOrder, Map<String, Object> filters) {
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
+		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
+				new org.springframework.data.domain.Sort.Order(dir, sortField)));
+		Page<Transport> entities;
+		
+		String userName = "";
+		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
+			try {
+				String filterProperty = it.next();
+				if (filterProperty.equals("userName")) {
+					userName = (String) filters.get(filterProperty);
+				}
+			} catch (Exception e) {
+			}
+		}
+
+		entities = transportDao.findByToWarehouseUsersUserName(userName, pageRequest);
+
+		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
+
+		return ret;
 	}
 
 }

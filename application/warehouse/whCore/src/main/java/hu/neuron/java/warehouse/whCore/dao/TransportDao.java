@@ -38,4 +38,6 @@ public interface TransportDao extends JpaRepository<Transport, Long> {
 	@Query(value = "UPDATE transport SET transportStatus=?1 where fromWarehouse_id = ?2 and toWarehouse_id=?3", nativeQuery = true)
 	void updateStatus(String transportStatus, Long fromWarehouse_id,
 			Long toWarehouse_id) throws Exception;
+	
+	Page<Transport> findByToWarehouseUsersUserName(String filter, Pageable page);
 }

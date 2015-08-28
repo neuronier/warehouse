@@ -35,7 +35,9 @@ public class AcceptController {
 
 	private LazyStockReportTransferDetailsModel lazyStockReportTransferDetailsModel;
 
-	private LazyAcceptTransferModel lazyAcceptTransferModel;
+	private LazyTransferDetailsModel lazyTransferDetailsModel;
+	
+	private LazyTransferModel lazyTransferModel;
 
 	@EJB(beanName = "StockReportService")
 	private StockReportServiceRemote stockReportService;
@@ -68,13 +70,15 @@ public class AcceptController {
 				stockReportService));
 		setLazyStockReportTransferDetailsModel(new LazyStockReportTransferDetailsModel(
 				stockReportService));
-		setLazyAcceptTransferModel(new LazyAcceptTransferModel(
+		setLazyTransferDetailsModel(new LazyTransferDetailsModel(
+				stockReportService));
+		setLazyTransferModel(new LazyTransferModel(
 				stockReportService));
 
 	}
 
 	public void onTransportRowSelect() {
-		lazyAcceptTransferModel.setSelectedTransport(selectedTransport);
+		lazyTransferDetailsModel.setSelectedTransport(selectedTransport);
 		setStatus(selectedTransport.getTransportStatus());
 
 		setSelectedUser(serviceRemote.getUserByName(SecurityContextHolder
@@ -217,13 +221,21 @@ public class AcceptController {
 		this.enabled = enabled;
 	}
 
-	public LazyAcceptTransferModel getLazyAcceptTransferModel() {
-		return lazyAcceptTransferModel;
+	public LazyTransferDetailsModel getLazyTransferDetailsModel() {
+		return lazyTransferDetailsModel;
 	}
 
-	public void setLazyAcceptTransferModel(
-			LazyAcceptTransferModel lazyAcceptTransferModel) {
-		this.lazyAcceptTransferModel = lazyAcceptTransferModel;
+	public void setLazyTransferDetailsModel(
+			LazyTransferDetailsModel lazyAcceptTransferModel) {
+		this.lazyTransferDetailsModel = lazyAcceptTransferModel;
+	}
+
+	public LazyTransferModel getLazyTransferModel() {
+		return lazyTransferModel;
+	}
+
+	public void setLazyTransferModel(LazyTransferModel lazyTransferModel) {
+		this.lazyTransferModel = lazyTransferModel;
 	}
 
 }
