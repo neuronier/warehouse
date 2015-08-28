@@ -11,7 +11,7 @@
 	</ui:define>
 	<ui:define name="pageTitle">Warehouse Managment</ui:define>
 	<ui:define name="content">
-	
+
 		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
 			style="color: white;">
 			<br />
@@ -21,33 +21,30 @@
 				Denied!!!</h2>
 		</h:panelGroup>
 
-		<p:panel header="Ware Order" rendered="#{request.isUserInRole('STOREKEEPER')}">
+		<p:panel header="#{out.ml_addwaretowh}"
+			rendered="#{request.isUserInRole('STOREKEEPER')}">
 			<h:form id="select">
-				<h:panelGrid  style="margin-bottom:10px" cellpadding="5">
-					<h:outputLabel for="items" value="Áru: " />
+				<h:panelGrid style="margin-bottom:10px" cellpadding="5">
 					<p:selectCheckboxMenu id="items"
-						value="#{wareOrderConttroller.selectedwareNames}" label="Wares"
-						filter="true" filterMatchMode="startsWith">
+						value="#{wareOrderConttroller.selectedwareNames}"
+						label="#{out.wo_wares}" filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{wareOrderConttroller.wareNames}" />
 						<p:ajax event="toggleSelect" update="num" />
 						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
 
 
-					<h:outputLabel for="num" value="Number of items:"
+					<h:outputLabel for="num" value="#{out.wo_numberofitems}"
 						styleClass="paginated">
 
-						<p:dataTable id="num" scrollable="true" scrollHeight="250"
-						scrollWidth="650"
-
+						<p:dataTable id="num"
 							value="#{wareOrderConttroller.selectedwareNames}" var="ware"
-							emptyMessage="No wares selected" 
-							style="width:55%; ">
+							emptyMessage="#{out.wo_noselect}">
 
-							<p:column width="20">
+							<p:column>
 										#{ware}
 										</p:column>
-							<p:column width="45">
+							<p:column>
 								<p:spinner style="margin-left:0px" id="darab"
 									value="#{wareOrderConttroller.db}" min="0" />
 							</p:column>
@@ -57,7 +54,7 @@
 				</h:panelGrid>
 
 
-				<p:commandButton value="Order" id="ajax"
+				<p:commandButton value="#{out.wo_order}" id="ajax"
 					actionListener="#{wareOrderConttroller.order}"
 					disabled="#{wareOrderConttroller.selectedwareNames} == null}"
 					styleClass="ui-priority-primary" />
