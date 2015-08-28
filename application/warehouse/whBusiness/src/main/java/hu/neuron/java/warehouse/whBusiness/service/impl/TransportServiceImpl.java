@@ -164,19 +164,27 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Transport> entities;
-		
-		String userName = "";
+
+		String fromWarehouse = "", toWarehouse = "", transportStatus = "";
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 			try {
 				String filterProperty = it.next();
-				if (filterProperty.equals("userName")) {
-					userName = (String) filters.get(filterProperty);
+				if (filterProperty.equals("fromWarehouse")) {
+					fromWarehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("toWarehouse")) {
+					toWarehouse = (String) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("transportStatus")) {
+					transportStatus = (String) filters.get(filterProperty);
 				}
 			} catch (Exception e) {
 			}
 		}
 
-		entities = transportDao.findByToWarehouseUsersUserName(userName, pageRequest);
+		String userName = "";
+		
+		entities = transportDao.findByToWarehouseUsersUserName(userName , pageRequest);
 
 		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
 
