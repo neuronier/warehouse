@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Item transport</ui:define>
+	<ui:define name="pageTitle">#{out.tp_header}</ui:define>
 	<ui:define name="content">
 
 		<h:panelGroup rendered="#{!request.isUserInRole('STOREKEEPER')}"
@@ -22,42 +22,42 @@
 		</h:panelGroup>
 
 		<h:form>
-			<p:panel id="basic" header="Transport" style="margin-bottom:20px"
+			<p:panel id="basic" header="#{out.tp_header}" style="margin-bottom:20px"
 				rendered="#{request.isUserInRole('STOREKEEPER')}">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-					<p:outputLabel for="fromWarehouse" value="Kiindulási raktár: " />
+					<p:outputLabel for="fromWarehouse" value="#{out.tp_fromwh}" />
 					<p:selectOneMenu id="fromWarehouse"
 						value="#{transportController.selectedFromWarehouseName}">
-						<f:selectItem itemLabel="Select One" itemValue="" />
+						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
 						<p:ajax event="change" update="items"
 							listener="#{transportController.getWaresNames()}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="toWarehouse" value="Cél raktár: " />
+					<p:outputLabel for="toWarehouse" value="#{out.tp_towh}" />
 					<p:selectOneMenu id="toWarehouse"
 						value="#{transportController.selectedToWarehouseName}">
-						<f:selectItem itemLabel="Select One" itemValue="" />
+						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 
 				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
-					<h:outputLabel for="items" value="Áru: " />
+					<h:outputLabel for="items" value="#{out.tp_ware}" />
 					<p:selectCheckboxMenu id="items"
-						value="#{transportController.selectedwareNames}" label="Wares"
+						value="#{transportController.selectedwareNames}" label="#{out.tp_ware}"
 						filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{transportController.wareNames}" />
 						<p:ajax event="toggleSelect" update="num" />
 						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
 
-					<h:outputLabel for="num" value="Number of items:	"
+					<h:outputLabel for="num" value="#{out.tp_nositems}"
 						styleClass="paginated">
 						<p:dataList id="num"
 							value="#{transportController.selectedwareNames}" var="ware"
-							emptyMessage="No wares selected">
+							emptyMessage="#{out.tp_noneselected}">
 								#{ware}
 								<p:spinner id="darab" value="#{transportController.db}" min="0" />
 						</p:dataList>
@@ -66,12 +66,12 @@
 
 				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 
-					<h:outputLabel for="status" value="Státusz: ">
+					<h:outputLabel for="status" value="#{out.tp_status}">
 						<p:outputLabel id="status"
 							value="#{transportController.transportStatus}" />
 					</h:outputLabel>
 
-					<p:commandButton value="Szállítás" id="ajax"
+					<p:commandButton value="#{out.tp_tpbutton}" id="ajax"
 						actionListener="#{transportController.startTransport()}"
 						disabled="#{transportController.wares} == null}"
 						styleClass="ui-priority-primary" update="status" />
