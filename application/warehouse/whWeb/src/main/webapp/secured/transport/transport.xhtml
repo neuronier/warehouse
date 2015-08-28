@@ -26,7 +26,7 @@
 				rendered="#{request.isUserInRole('STOREKEEPER')}">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-					<p:outputLabel for="fromWarehouse" value="#{out.tp_fromwh}" />
+					<p:outputLabel for="fromWarehouse" value="#{out.tp_fromwh}:	" />
 					<p:selectOneMenu id="fromWarehouse"
 						value="#{transportController.selectedFromWarehouseName}">
 						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
@@ -35,7 +35,7 @@
 							listener="#{transportController.getWaresNames()}" />
 					</p:selectOneMenu>
 
-					<p:outputLabel for="toWarehouse" value="#{out.tp_towh}" />
+					<p:outputLabel for="toWarehouse" value="#{out.tp_towh}:	" />
 					<p:selectOneMenu id="toWarehouse"
 						value="#{transportController.selectedToWarehouseName}">
 						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
@@ -44,9 +44,9 @@
 				</h:panelGrid>
 
 				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
-					<h:outputLabel for="items" value="#{out.tp_ware}" />
+					<h:outputLabel for="items" value="#{out.tp_ware}:	" />
 					<p:selectCheckboxMenu id="items"
-						value="#{transportController.selectedwareNames}" label="#{out.tp_ware}"
+						value="#{transportController.selectedwareNames}" label="#{out.tp_choose}"
 						filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{transportController.wareNames}" />
 						<p:ajax event="toggleSelect" update="num" />
@@ -66,7 +66,7 @@
 
 				<h:panelGrid columns="1" style="margin-bottom:10px" cellpadding="5">
 
-					<h:outputLabel for="status" value="#{out.tp_status}">
+					<h:outputLabel for="status" value="#{out.tp_status}:	">
 						<p:outputLabel id="status"
 							value="#{transportController.transportStatus}" />
 					</h:outputLabel>

@@ -9,7 +9,7 @@
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
-	<ui:define name="pageTitle">Szállítás átvétele</ui:define>
+	<ui:define name="pageTitle">#{out.at_header}</ui:define>
 	<ui:define name="content">
 
 		<div align="center">
@@ -27,38 +27,71 @@
 			<p:panel
 				rendered="#{request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER')}">
 				<f:facet name="header">
-					<h:outputText value="Stock/Transfer reports" />
+					<h:outputText value="#{out.at_header}" />
 				</f:facet>
 				<h:form id="form">
 
-					<p:tab title="Pending transfers">
+					<p:tab title="#{out.at_pending}">
 						<p:dataTable id="transfersTable" var="transfers"
-							value="#{stockReportController.lazyStockReportTransferModel}"
+							value="#{acceptController.lazyStockReportTransferModel}"
 							emptyMessage="#{out.empty_message}"
 							paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 							rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 							rows="10" selection="#{acceptController.selectedTransport}"
 							selectionMode="single">
 
-							<p:column headerText="Initial warehouse id">
-								<h:outputText value="#{transfers.fromWarehouse}" />
+							<f:facet name="header">
+								<h:outputText value="#{out.str_transfersheader}" />
+							</f:facet>
+
+							<p:ajax event="rowSelect"
+								listener="#{acceptController.onTransportRowSelect}"
+								update=":form:transportDetail"
+								oncomplete="PF('transportDialog').show()" />
+
+							<p:column headerText="#{out.at_fromwh}">
+								<h:outputText value="#{transfers.fromWarehouse.name}" />
 							</p:column>
 
-							<p:column headerText="Target warehouse id">
-								<h:outputText value="#{transfers.toWarehouse}" />
+							<p:column headerText="#{out.at_towh}">
+								<h:outputText value="#{transfers.toWarehouse.name}" />
 							</p:column>
 
-							<p:column headerText="Transport status">
+							<p:column headerText="#{out.at_status}">
 								<h:outputText value="#{transfers.transportStatus}" />
 							</p:column>
 
 						</p:dataTable>
 					</p:tab>
 
-					<p:commandButton value="Átvesz" id="Atvesz"
-						styleClass="ui-priority-primary"
-						actionListener="#{acceptController.updateTransport()}"
-						update="form" />
+					<p:dialog header="#{out.at_details}" widgetVar="transportDialog"
+						modal="true" showEffect="fade" hideEffect="fade" resizable="false">
+						<p:outputPanel id="transportDetail" style="text-align:center;">
+
+							<p:dataTable id="transportDetailTable" var="transportDetails"
+								value="#{acceptController.lazyStockReportTransferDetailsModel}"
+								emptyMessage="#{out.empty_message}"
+								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+								rows="10">
+
+								<p:column headerText="#{out.ware}"
+									sortBy="#{transportDetails.ware.wareName}" filterBy="ware">
+									<h:outputText value="#{transportDetails.ware.wareName}" />
+								</p:column>
+
+								<p:column headerText="#{out.at_nositems}">
+									<h:outputText value="#{transportDetails.piece}" />
+								</p:column>
+
+							</p:dataTable>
+							<p:commandButton value="#{out.at_accbutton}" id="Atvesz"
+								styleClass="ui-priority-primary"
+								actionListener="#{acceptController.updateTransport()}"
+								update=":form"
+								disabled="#{acceptController.status == 'Completed'}" />
+						</p:outputPanel>
+					</p:dialog>
 				</h:form>
 
 			</p:panel>
