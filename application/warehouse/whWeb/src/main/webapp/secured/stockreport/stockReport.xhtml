@@ -89,7 +89,7 @@
 										<p:column headerText="#{out.str_oldamount}">
 											<h:outputText value="#{stockHistory.new_piece}" />
 										</p:column>
-										
+
 									</p:dataTable>
 								</p:tab>
 							</p:tabView>
@@ -102,6 +102,10 @@
 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 								rows="10" selection="#{stockReportController.selectedTransport}"
 								selectionMode="single">
+
+								<f:facet name="header">
+									<h:outputText value="#{out.str_transfersheader}" />
+								</f:facet>
 
 								<p:ajax event="rowSelect"
 									listener="#{stockReportController.onTransportRowSelect}"
@@ -131,7 +135,7 @@
 
 					<p:dialog header="#{out.str_transportdetails}"
 						widgetVar="transportDialog" modal="true" showEffect="fade"
-						hideEffect="fade" resizable="false" >
+						hideEffect="fade" resizable="false">
 						<p:outputPanel id="transportDetail" style="text-align:center;">
 
 							<p:dataTable id="transportDetailTable" var="transportDetails"
