@@ -3,13 +3,16 @@ package hu.neuron.java.warehouse.whBusiness.service.impl;
 import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportDetailsConverter;
+import hu.neuron.java.warehouse.whBusiness.converter.UserConverter;
 import hu.neuron.java.warehouse.whBusiness.service.TransportDetailsServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
+import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
+import hu.neuron.java.warehouse.whCore.dao.UserDao;
 
 import java.util.List;
 
@@ -46,6 +49,12 @@ public class TransportDetailsServiceImpl implements TransportDetailsServiceRemot
 
 	@EJB
 	TransportConverter transportConverter;
+	
+	@Autowired
+	UserDao userDao;
+
+	@EJB
+	UserConverter userConverter;
 
 	@Override
 	public List<TransportDetailsVO> findByTransportId(Long id) {
@@ -87,6 +96,17 @@ public class TransportDetailsServiceImpl implements TransportDetailsServiceRemot
 		transportVO.setTransportStatus("Completed");
 		transportDao.save(transportConverter.toEntity(transportVO));
 
+	}
+
+	@Override
+	public UserVO getUserByName(String user) {
+		UserVO userVO = null;
+		try {
+			userVO = userConverter.toVO(userDao.findUserByName(user));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userVO;
 	}
 
 }

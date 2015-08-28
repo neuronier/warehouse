@@ -69,7 +69,7 @@
 						<p:outputPanel id="transportDetail" style="text-align:center;">
 
 							<p:dataTable id="transportDetailTable" var="transportDetails"
-								value="#{acceptController.lazyStockReportTransferDetailsModel}"
+								value="#{acceptController.lazyAcceptTransferModel}"
 								emptyMessage="#{out.empty_message}"
 								paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"

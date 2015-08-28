@@ -30,4 +30,7 @@ public interface TransportDetailsDao extends JpaRepository<TransportDetails, Lon
 	public List<TransportDetails> findByTransportId(Long id);
 
 	Page<TransportDetails> findByTransportIdAndWareWareNameStartsWith(Long filter1, String filter2, Pageable pageable);
+	
+//	Page<TransportDetails> findByWarehouseUsersUserName(Long filter, Pageable page);
+	
 }
