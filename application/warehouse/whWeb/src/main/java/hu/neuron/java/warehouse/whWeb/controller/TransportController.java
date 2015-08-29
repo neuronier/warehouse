@@ -2,7 +2,7 @@ package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
@@ -52,7 +52,7 @@ public class TransportController implements Serializable {
 	private String selectedToWarehouseName;
 
 	@EJB(name = "WarehouseService")
-	WarehouseServiceLocal warehouseService;
+	WarehouseServiceRemote warehouseService;
 
 	// itemek
 	private List<WareVo> wares;

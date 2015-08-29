@@ -1,8 +1,7 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.AdminServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whWeb.model.LazyWarehouseModel;
@@ -48,41 +47,33 @@ public class WarehouseController implements Serializable {
 	private String newWarehouseAddressZipCode;
 	private String updateWarehouseAddressZipCode;
 
-
 	private LazyWarehouseModel lazyWarehouseModel;
 
 	@EJB(name = "WarehouseService")
-	private WarehouseServiceLocal warehouseService;
-
-
-	@EJB(name = "UserSelfCareService", mappedName = "UserSelfCareService")
-	private UserSelfCareServiceRemote userSelfCareService;
+	private WarehouseServiceRemote warehouseService;
 
 	@EJB(name = "AdminService")
 	private AdminServiceRemote adminService;
 
 	private DualListModel<String> users;
-	
 
 	@PostConstruct
 	public void init() {
 
-		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService,
-				userSelfCareService));
-		
+		setLazyWarehouseModel(new LazyWarehouseModel(warehouseService));
 
-    	List<String> citiesSource = new ArrayList<String>();
+		List<String> citiesSource = new ArrayList<String>();
 		List<String> citiesTarget = new ArrayList<String>();
 
-		users = new DualListModel<String>(citiesSource, citiesTarget);;
+		users = new DualListModel<String>(citiesSource, citiesTarget);
+		;
 	}
-	
 
 	public void addUserToWarehouse(WarehouseVO warehouse) {
 		try {
 			List<String> tmp = users.getTarget();
 			List<UserVO> usersadd = new ArrayList<UserVO>();
-			
+
 			for (String name : tmp) {
 				usersadd.add(adminService.getUserByName(name));
 			}
@@ -175,26 +166,25 @@ public class WarehouseController implements Serializable {
 	public void onRowSelect(SelectEvent event) {
 
 		selectedWarehouse = (WarehouseVO) event.getObject();
-		
+
 		List<UserVO> selecteUserVos = selectedWarehouse.getUsers();
 		List<String> selectedusersName = new ArrayList<String>();
 		for (UserVO peoples : selecteUserVos) {
 			selectedusersName.add(peoples.getUserName());
 		}
-		
-		
+
 		List<UserVO> allUsers = adminService.getUsers();
 		List<String> allUsersName = new ArrayList<String>();
 		for (UserVO peoples : allUsers) {
 			allUsersName.add(peoples.getUserName());
 		}
-		
+
 		for (String name : selectedusersName) {
 			allUsersName.remove(name);
 		}
-		
+
 		users = new DualListModel<String>(allUsersName, selectedusersName);
-		
+
 		updateWarehouseName = selectedWarehouse.getName();
 		updateWarehouseAddress = selectedWarehouse.getAddress();
 		updateWarehouseAddressNumber = selectedWarehouse.getAddressNumber();
@@ -203,12 +193,6 @@ public class WarehouseController implements Serializable {
 
 	}
 
-	
-	
-	
-	
-	
-	
 	public DualListModel<String> getUsers() {
 		return users;
 	}
@@ -249,11 +233,11 @@ public class WarehouseController implements Serializable {
 		this.lazyWarehouseModel = lazyWarehouseModel;
 	}
 
-	public WarehouseServiceLocal getWarehouseService() {
+	public WarehouseServiceRemote getWarehouseService() {
 		return warehouseService;
 	}
 
-	public void setWarehouseService(WarehouseServiceLocal warehouseService) {
+	public void setWarehouseService(WarehouseServiceRemote warehouseService) {
 		this.warehouseService = warehouseService;
 	}
 
@@ -273,8 +257,6 @@ public class WarehouseController implements Serializable {
 		this.updateWarehouseAddress = updateWarehouseAddress;
 	}
 
-
-
 	public String getNewWarehouseCity() {
 		return newWarehouseCity;
 	}
@@ -291,82 +273,47 @@ public class WarehouseController implements Serializable {
 		this.updateWarehouseCity = updateWarehouseCity;
 	}
 
-
-
-
-
 	public String getNewWarehouseAddressNumber() {
 		return newWarehouseAddressNumber;
 	}
-
-
 
 	public void setNewWarehouseAddressNumber(String newWarehouseAddressNumber) {
 		this.newWarehouseAddressNumber = newWarehouseAddressNumber;
 	}
 
-
-
 	public String getUpdateWarehouseAddressNumber() {
 		return updateWarehouseAddressNumber;
 	}
 
-
-
-	public void setUpdateWarehouseAddressNumber(String updateWarehouseAddressNumber) {
+	public void setUpdateWarehouseAddressNumber(
+			String updateWarehouseAddressNumber) {
 		this.updateWarehouseAddressNumber = updateWarehouseAddressNumber;
 	}
-
-
 
 	public String getNewWarehouseAddressZipCode() {
 		return newWarehouseAddressZipCode;
 	}
 
-
-
 	public void setNewWarehouseAddressZipCode(String newWarehouseAddressZipCode) {
 		this.newWarehouseAddressZipCode = newWarehouseAddressZipCode;
 	}
 
-
-
 	public String getUpdateWarehouseAddressZipCode() {
 		return updateWarehouseAddressZipCode;
 	}
-
-
 
 	public void setUpdateWarehouseAddressZipCode(
 			String updateWarehouseAddressZipCode) {
 		this.updateWarehouseAddressZipCode = updateWarehouseAddressZipCode;
 	}
 
-
-
-	public UserSelfCareServiceRemote getUserSelfCareService() {
-		return userSelfCareService;
-	}
-
-
-
-	public void setUserSelfCareService(UserSelfCareServiceRemote userSelfCareService) {
-		this.userSelfCareService = userSelfCareService;
-	}
-
-
-
 	public AdminServiceRemote getAdminService() {
 		return adminService;
 	}
 
-
-
 	public void setAdminService(AdminServiceRemote adminService) {
 		this.adminService = adminService;
 	}
-
-
 
 	public String getNewWarehouseId() {
 		return newWarehouseId;

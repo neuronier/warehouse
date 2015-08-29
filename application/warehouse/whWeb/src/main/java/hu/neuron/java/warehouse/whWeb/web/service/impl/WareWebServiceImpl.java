@@ -1,7 +1,7 @@
 package hu.neuron.java.warehouse.whWeb.web.service.impl;
 
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whWeb.web.converter.WareWebConverter;
 import hu.neuron.java.warehouse.whWeb.web.converter.WarehouseWebConverter;
@@ -26,7 +26,7 @@ public class WareWebServiceImpl implements WareWebService {
 	WareWebConverter wareWebConverter;
 	
 	@EJB(name = "WarehouseService")
-	WarehouseServiceLocal warehouseService;
+	WarehouseServiceRemote warehouseService;
 	
 	@EJB
 	WarehouseWebConverter warehouseWebConverter;

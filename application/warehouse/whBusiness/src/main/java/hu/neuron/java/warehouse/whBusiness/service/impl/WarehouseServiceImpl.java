@@ -1,7 +1,6 @@
 package hu.neuron.java.warehouse.whBusiness.service.impl;
 
 import hu.neuron.java.warehouse.whBusiness.converter.WarehouseConverter;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
@@ -11,7 +10,6 @@ import hu.neuron.java.warehouse.whCore.entity.Warehouse;
 import java.util.List;
 
 import javax.ejb.EJB;
-import javax.ejb.Local;
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
@@ -26,11 +24,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 @Stateless(mappedName = "WarehouseService", name = "WarehouseService")
-@Local(WarehouseServiceLocal.class)
 @Remote(WarehouseServiceRemote.class)
 @TransactionAttribute(TransactionAttributeType.REQUIRED)
 @Interceptors(SpringBeanAutowiringInterceptor.class)
-public class WarehouseServiceImpl implements WarehouseServiceLocal,
+public class WarehouseServiceImpl implements
 		WarehouseServiceRemote {
 
 	@Autowired
@@ -63,12 +60,6 @@ public class WarehouseServiceImpl implements WarehouseServiceLocal,
 
 	}
 
-	@Override
-	public void addUserToWarehouse(String userName, String warehouseId)
-			throws Exception {
-		warehouseDao.addUserToWarehouse(userName, warehouseId);
-
-	}
 
 	@Override
 	public WarehouseVO findWarehouseByName(String name) throws Exception {

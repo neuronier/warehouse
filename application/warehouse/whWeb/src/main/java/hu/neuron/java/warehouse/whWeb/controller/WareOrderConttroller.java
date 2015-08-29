@@ -1,8 +1,8 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
-import hu.neuron.java.warehouse.whBusiness.service.WareOrderLOcal;
+import hu.neuron.java.warehouse.whBusiness.service.WareOrderRemote;
 import hu.neuron.java.warehouse.whBusiness.service.WareServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
+import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
@@ -27,10 +27,10 @@ public class WareOrderConttroller implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB(name = "WareOrderService")
-	private WareOrderLOcal wareOrder;
+	private WareOrderRemote wareOrder;
 
 	@EJB(name = "WarehouseService")
-	private WarehouseServiceLocal warehouseService;
+	private WarehouseServiceRemote warehouseService;
 
 	@EJB(name = "WareService")
 	private WareServiceLocal wareService;
@@ -167,11 +167,11 @@ public class WareOrderConttroller implements Serializable {
 		this.wareNames = wareNames;
 	}
 
-	public WareOrderLOcal getWareOrder() {
+	public WareOrderRemote getWareOrder() {
 		return wareOrder;
 	}
 
-	public void setWareOrder(WareOrderLOcal wareOrder) {
+	public void setWareOrder(WareOrderRemote wareOrder) {
 		this.wareOrder = wareOrder;
 	}
 
@@ -183,11 +183,11 @@ public class WareOrderConttroller implements Serializable {
 		this.selectedWhNames = selectedWhNames;
 	}
 
-	public WarehouseServiceLocal getWarehouseService() {
+	public WarehouseServiceRemote getWarehouseService() {
 		return warehouseService;
 	}
 
-	public void setWarehouseService(WarehouseServiceLocal warehouseService) {
+	public void setWarehouseService(WarehouseServiceRemote warehouseService) {
 		this.warehouseService = warehouseService;
 	}
 

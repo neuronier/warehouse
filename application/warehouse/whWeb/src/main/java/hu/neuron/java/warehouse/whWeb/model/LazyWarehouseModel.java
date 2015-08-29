@@ -1,21 +1,14 @@
 package hu.neuron.java.warehouse.whWeb.model;
 
 import hu.neuron.java.warehouse.whBusiness.service.UserSelfCareServiceRemote;
-import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceLocal;
-import hu.neuron.java.warehouse.whBusiness.vo.RoleVO;
-import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
+import hu.neuron.java.warehouse.whBusiness.service.WarehouseServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ViewScoped;
-
 import org.primefaces.model.LazyDataModel;
 import org.primefaces.model.SortOrder;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 
@@ -23,14 +16,12 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 
 	private List<WarehouseVO> visibleWarehouseList;
 
-	private WarehouseServiceLocal warehouseService;
+	private WarehouseServiceRemote warehouseService;
 	private UserSelfCareServiceRemote userSelfCareService;
 
-	public LazyWarehouseModel(WarehouseServiceLocal warehouseService,
-			UserSelfCareServiceRemote userSelfCareService) {
+	public LazyWarehouseModel(WarehouseServiceRemote warehouseService) {
 		super();
 		this.warehouseService = warehouseService;
-		this.userSelfCareService = userSelfCareService;
 	}
 
 	@Override
@@ -81,11 +72,11 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 		
 	}
 
-	public WarehouseServiceLocal getWarehouseService() {
+	public WarehouseServiceRemote getWarehouseService() {
 		return warehouseService;
 	}
 
-	public void setUserService(WarehouseServiceLocal warehouseService) {
+	public void setUserService(WarehouseServiceRemote warehouseService) {
 		this.warehouseService = warehouseService;
 	}
 
@@ -106,7 +97,7 @@ public class LazyWarehouseModel extends LazyDataModel<WarehouseVO> {
 		this.userSelfCareService = userSelfCareService;
 	}
 
-	public void setWarehouseService(WarehouseServiceLocal warehouseService) {
+	public void setWarehouseService(WarehouseServiceRemote warehouseService) {
 		this.warehouseService = warehouseService;
 	}
 
