@@ -44,7 +44,8 @@
 							value="#{out.usc_new_pw1}: " />
 						<p:password rendered="#{userSelfCareController.newPasswordCheck}"
 							id="password1" value="#{userSelfCareController.password1}"
-							match="password2" validatorMessage="#{out.invalid_password}" />
+							match="password2" requiredMessage="#{out.enter_password}"
+							validatorMessage="#{out.invalid_password}" />
 
 						<h:outputText
 							rendered="#{userSelfCareController.newPasswordCheck}"
