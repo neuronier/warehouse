@@ -5,7 +5,10 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:sec="http://www.springframework.org/security/tags">
+	xmlns:sec="http://www.springframework.org/security/tags"
+	xmlns:jl="http://jsflive.at/taglib"
+	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
+	
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
@@ -29,8 +32,8 @@
 						value="#{wareOrderConttroller.selectedwareNames}"
 						label="#{out.wo_wares}" filter="true" filterMatchMode="startsWith">
 						<f:selectItems value="#{wareOrderConttroller.wareNames}" />
-						<p:ajax event="toggleSelect" update="num" />
-						<p:ajax event="change" update="num" />
+						<p:ajax event="toggleSelect" update="num,order" />
+						<p:ajax event="change" update="num,order" />
 					</p:selectCheckboxMenu>
 
 
@@ -53,10 +56,9 @@
 					</h:outputLabel>
 				</h:panelGrid>
 
-
-				<p:commandButton value="#{out.wo_order}" id="ajax"
+				<p:commandButton value="#{out.wo_order}" id="order"
 					actionListener="#{wareOrderConttroller.order}"
-					disabled="#{wareOrderConttroller.selectedwareNames} == null}"
+					disabled="#{ fn:length(wareOrderConttroller.selectedwareNames) eq 0	}"
 					styleClass="ui-priority-primary" />
 			</h:form>
 

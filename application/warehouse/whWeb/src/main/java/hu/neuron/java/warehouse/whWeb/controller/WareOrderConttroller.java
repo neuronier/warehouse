@@ -8,6 +8,7 @@ import hu.neuron.java.warehouse.whBusiness.vo.WareVo;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.io.Serializable;
+import java.nio.channels.SeekableByteChannel;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedList;
@@ -39,12 +40,6 @@ public class WareOrderConttroller implements Serializable {
 
 	private LinkedList<Integer> pieces;
 
-	private Collection<WarehouseVO> warehouses;
-
-	private Collection<String> whNames;
-
-	private String selectedWhNames;
-
 	private List<WareVo> wares;
 
 	private Collection<WareVo> selectedware;
@@ -56,13 +51,7 @@ public class WareOrderConttroller implements Serializable {
 	@PostConstruct
 	void init() {
 		pieces = new LinkedList<Integer>();
-		whNames = new ArrayList<String>();
-		warehouses = new ArrayList<WarehouseVO>();
-		warehouses = warehouseService.findAll();
-		for (WarehouseVO warehouseVO : warehouses) {
-			whNames.add(warehouseVO.getName());
-		}
-
+		selectedwareNames = new ArrayList<String>();
 		wareNames = new ArrayList<String>();
 		wares = new ArrayList<WareVo>();
 		wares = wareService.getWares();
@@ -116,13 +105,6 @@ public class WareOrderConttroller implements Serializable {
 		context.addMessage(null, new FacesMessage("Siker", summary));
 	}
 
-	public Collection<WarehouseVO> getWarehouses() {
-		return warehouses;
-	}
-
-	public void setWarehouses(Collection<WarehouseVO> warehouses) {
-		this.warehouses = warehouses;
-	}
 
 	public int getDb() {
 		return db;
@@ -133,8 +115,6 @@ public class WareOrderConttroller implements Serializable {
 		this.db = db;
 	}
 	
-	
-
 	public LinkedList<Integer> getPieces() {
 		return pieces;
 	}
@@ -143,13 +123,6 @@ public class WareOrderConttroller implements Serializable {
 		this.pieces = pieces;
 	}
 
-	public Collection<String> getWhNames() {
-		return whNames;
-	}
-
-	public void setWhNames(Collection<String> whNames) {
-		this.whNames = whNames;
-	}
 
 	public List<WareVo> getWares() {
 		return wares;
@@ -173,14 +146,6 @@ public class WareOrderConttroller implements Serializable {
 
 	public void setWareOrder(WareOrderRemote wareOrder) {
 		this.wareOrder = wareOrder;
-	}
-
-	public String getSelectedWhNames() {
-		return selectedWhNames;
-	}
-
-	public void setSelectedWhNames(String selectedWhNames) {
-		this.selectedWhNames = selectedWhNames;
 	}
 
 	public WarehouseServiceRemote getWarehouseService() {
