@@ -3,18 +3,20 @@ package hu.neuron.java.warehouse.whBusiness.service.impl;
 import hu.neuron.java.warehouse.whBusiness.converter.StockConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportConverter;
 import hu.neuron.java.warehouse.whBusiness.converter.TransportDetailsConverter;
+import hu.neuron.java.warehouse.whBusiness.converter.UserConverter;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceLocal;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
+import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whCore.dao.StockDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDao;
 import hu.neuron.java.warehouse.whCore.dao.TransportDetailsDao;
+import hu.neuron.java.warehouse.whCore.dao.UserDao;
 import hu.neuron.java.warehouse.whCore.entity.Transport;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 @Stateless(mappedName = "TransportService", name = "TransportService")
 @Local(TransportServiceLocal.class)
@@ -62,6 +65,12 @@ public class TransportServiceImpl implements TransportServiceLocal,
 
 	@EJB
 	StockConverter stockConverter;
+
+	@Autowired
+	UserDao userDao;
+
+	@EJB
+	UserConverter userConverter;
 
 	private StockVO ware;
 
@@ -155,40 +164,34 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		}
 	}
 
-
-
 	@Override
 	public List<TransportVO> getByUsers(int i, int pageSize, String sortField,
 			int sortOrder, Map<String, Object> filters) {
-		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
+		Direction dir = sortOrder == 1 ? Sort.Direction.ASC
+				: Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Transport> entities;
-
-		String fromWarehouse = "", toWarehouse = "", transportStatus = "";
-		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
-			try {
-				String filterProperty = it.next();
-				if (filterProperty.equals("fromWarehouse")) {
-					fromWarehouse = (String) filters.get(filterProperty);
-				}
-				if (filterProperty.equals("toWarehouse")) {
-					toWarehouse = (String) filters.get(filterProperty);
-				}
-				if (filterProperty.equals("transportStatus")) {
-					transportStatus = (String) filters.get(filterProperty);
-				}
-			} catch (Exception e) {
-			}
-		}
-
-		String userName = "";
 		
-		entities = transportDao.findByToWarehouseUsersUserName(userName , pageRequest);
+		UserVO userName = getUserByName(SecurityContextHolder.getContext()
+						.getAuthentication().getName());
+
+		entities = transportDao.findByToWarehouseUsersUserName(userName.getUserName(), pageRequest);
 
 		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
 
 		return ret;
+	}
+
+	@Override
+	public UserVO getUserByName(String user) {
+		UserVO userVO = null;
+		try {
+			userVO = userConverter.toVO(userDao.findUserByName(user));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userVO;
 	}
 
 }

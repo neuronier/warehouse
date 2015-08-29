@@ -1,6 +1,7 @@
 package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.service.TransportDetailsServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.TransportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 
@@ -19,9 +20,13 @@ public class LazyTransferModel extends LazyDataModel<TransportVO> {
 
 	private TransportServiceRemote serviceRemote;
 
-	public LazyTransferModel(StockReportServiceRemote stockReportService) {
+	private TransportDetailsServiceRemote detailsServiceRemote;
+
+	public LazyTransferModel(StockReportServiceRemote stockReportService,
+			TransportServiceRemote serviceRemote) {
 		super();
 		this.stockReportService = stockReportService;
+		this.serviceRemote = serviceRemote;
 	}
 
 	@Override
@@ -45,17 +50,16 @@ public class LazyTransferModel extends LazyDataModel<TransportVO> {
 	}
 
 	@Override
-	public List<TransportVO> load(int first, int pageSize, String sortField, SortOrder sortOrder,
-			Map<String, Object> filters) {
+	public List<TransportVO> load(int first, int pageSize, String sortField,
+			SortOrder sortOrder, Map<String, Object> filters) {
 
 		if (sortField == null) {
 			sortField = "fromWarehouse";
 		}
 
 		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
-		visibleList = stockReportService.getTransports(first / pageSize, pageSize, sortField, dir,
-				filters);
-//		visibleList = serviceRemote.getByUsers(first / pageSize, pageSize, sortField, dir, filters);
+		visibleList = serviceRemote.getByUsers(first / pageSize, pageSize,
+				sortField, dir, filters);
 
 		int dataSize = stockReportService.getTransportCount();
 
@@ -63,6 +67,40 @@ public class LazyTransferModel extends LazyDataModel<TransportVO> {
 
 		return visibleList;
 
+	}
+
+	public List<TransportVO> getVisibleList() {
+		return visibleList;
+	}
+
+	public void setVisibleList(List<TransportVO> visibleList) {
+		this.visibleList = visibleList;
+	}
+
+	public StockReportServiceRemote getStockReportService() {
+		return stockReportService;
+	}
+
+	public void setStockReportService(
+			StockReportServiceRemote stockReportService) {
+		this.stockReportService = stockReportService;
+	}
+
+	public TransportServiceRemote getServiceRemote() {
+		return serviceRemote;
+	}
+
+	public void setServiceRemote(TransportServiceRemote serviceRemote) {
+		this.serviceRemote = serviceRemote;
+	}
+
+	public TransportDetailsServiceRemote getDetailsServiceRemote() {
+		return detailsServiceRemote;
+	}
+
+	public void setDetailsServiceRemote(
+			TransportDetailsServiceRemote detailsServiceRemote) {
+		this.detailsServiceRemote = detailsServiceRemote;
 	}
 
 }

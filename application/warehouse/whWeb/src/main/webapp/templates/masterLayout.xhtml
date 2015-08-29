@@ -32,8 +32,8 @@
 			<p:menubar>
 
 				<sec:authorize ifAllGranted="ROLE_ADMIN">
-					<p:menuitem value="#{out.ml_adminarea}" url="/secured/admin/admin.xhtml"
-						icon="ui-icon-person" />
+					<p:menuitem value="#{out.ml_adminarea}"
+						url="/secured/admin/admin.xhtml" icon="ui-icon-person" />
 				</sec:authorize>
 
 				<sec:authorize ifAnyGranted="ROLE_STOREKEEPER,ROLE_MANAGER">
@@ -61,8 +61,7 @@
 					<p:submenu styleClass="wareManagementBubble"
 						label="#{out.ml_waremanagement}" icon="ui-icon-pencil">
 						<p:menuitem style="width: 330px !important;"
-							value="#{out.ml_crware}"
-							url="/secured/ware/wareManagement.xhtml"
+							value="#{out.ml_crware}" url="/secured/ware/wareManagement.xhtml"
 							icon="ui-icon-transferthick-e-w" />
 						<p:separator />
 						<p:menuitem style="width: 330px !important;"
@@ -70,10 +69,13 @@
 							url="/secured/wareprocurement/wareorder.xhtml"
 							icon="ui-icon-transferthick-e-w" />
 						<p:separator />
-						<p:menuitem style="width: 330px !important;" value="#{out.ml_moveware}"
+						<p:menuitem style="width: 330px !important;"
+							value="#{out.ml_moveware}"
 							url="/secured/transport/transport.xhtml"
 							icon="ui-icon-triangle-2-e-w" />
-						<p:menuitem style="width: 330px !important;" value="#{out.ml_acceptware}"
+						<p:separator />
+						<p:menuitem style="width: 330px !important;"
+							value="#{out.ml_acceptware}"
 							url="/secured/transport/accept_transport.xhtml"
 							icon="ui-icon-triangle-2-e-w" />
 					</p:submenu>
@@ -81,8 +83,8 @@
 
 				<!-- 				hogy ide milyen jog kell nem sikerult eldontenem -->
 				<sec:authorize ifAllGranted="ROLE_USER">
-					<p:submenu styleClass="orderedWaresBubble" label="#{out.ml_ordered}"
-						icon="ui-icon-calendar">
+					<p:submenu styleClass="orderedWaresBubble"
+						label="#{out.ml_ordered}" icon="ui-icon-calendar">
 						<p:menuitem style="width: 210px !important;"
 							value="#{out.ml_wsorder}" url="#" icon="ui-icon-cart" />
 						<p:separator />
@@ -100,7 +102,8 @@
 						value="#{out.reg_title}" href="/public/registration.xhtml" />
 					<p:button
 						rendered="#{empty request.remoteUser and !request.requestURL.toString().contains('login.xhtml')}"
-						href="/public/login.xhtml" value="#{out.login_title}" icon="ui-icon-key" />
+						href="/public/login.xhtml" value="#{out.login_title}"
+						icon="ui-icon-key" />
 					<p:button rendered="#{not empty request.remoteUser}" href="/logout"
 						value="#{out.logout_title}" icon="ui-icon-circle-close" />
 					<h:form>

@@ -5,6 +5,7 @@ import java.util.Map;
 
 import hu.neuron.java.warehouse.whBusiness.vo.TransportDetailsVO;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
+import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 
 public interface TransportServiceRemote {
 
@@ -21,5 +22,7 @@ public interface TransportServiceRemote {
 
 	List<TransportVO> getByUsers(int i, int pageSize, String sortField, int dir,
 			Map<String, Object> filters);
+	
+	public UserVO getUserByName(String user);
 
 }

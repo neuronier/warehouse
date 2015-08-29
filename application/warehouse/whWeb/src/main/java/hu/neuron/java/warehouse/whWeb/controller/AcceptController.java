@@ -2,6 +2,7 @@ package hu.neuron.java.warehouse.whWeb.controller;
 
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.service.TransportDetailsServiceRemote;
+import hu.neuron.java.warehouse.whBusiness.service.TransportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.TransportVO;
 import hu.neuron.java.warehouse.whBusiness.vo.UserVO;
 import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
@@ -41,6 +42,9 @@ public class AcceptController {
 
 	@EJB(beanName = "StockReportService")
 	private StockReportServiceRemote stockReportService;
+	
+	@EJB(beanName = "TransportService")
+	private TransportServiceRemote transportServiceRemote;
 
 	private List<WarehouseVO> warehouses;
 	private List<String> warehouseNames;
@@ -73,7 +77,7 @@ public class AcceptController {
 		setLazyTransferDetailsModel(new LazyTransferDetailsModel(
 				stockReportService));
 		setLazyTransferModel(new LazyTransferModel(
-				stockReportService));
+				stockReportService, transportServiceRemote));
 
 	}
 
