@@ -49,11 +49,14 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 			SortOrder sortOrder, Map<String, Object> filters) {
 		filters.put("warehouse", selectedWarehouseName);
 
-		if (sortField == null) {
-			sortField = "ware";
-		}
+		int dir;
 
-		int dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
+		if (sortField == null) {
+			sortField = "changeTime";
+			dir = 2;
+		} else {
+			dir = sortOrder.equals(SortOrder.ASCENDING) ? 1 : 2;
+		}
 		visibleList = stockReportService.getStockHistory(first / pageSize, pageSize, sortField,
 				dir, filters);
 
