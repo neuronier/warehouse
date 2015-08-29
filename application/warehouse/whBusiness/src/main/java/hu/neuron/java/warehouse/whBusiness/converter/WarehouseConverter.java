@@ -6,7 +6,6 @@ import hu.neuron.java.warehouse.whCore.entity.Warehouse;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.interceptor.Interceptors;
 
@@ -23,13 +22,6 @@ public class WarehouseConverter {
 	@Autowired
 	@Qualifier("mapper")
 	Mapper mapper;
-	
-	
-	@PostConstruct
-	void init() {
-
-
-	}
 
 	public WarehouseVO toVO(Warehouse dto) {
 		if (dto == null) {
@@ -66,7 +58,4 @@ public class WarehouseConverter {
 		}
 		return dtos;
 	}
-
-	
-
 }

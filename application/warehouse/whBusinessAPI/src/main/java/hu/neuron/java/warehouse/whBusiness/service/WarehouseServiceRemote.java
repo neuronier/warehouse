@@ -12,9 +12,7 @@ public interface WarehouseServiceRemote {
 	
 	public void update(WarehouseVO warehouseVo);
 	
-	
 	public WarehouseVO findWarehouseWarehouseId(String warehouseId) throws Exception;
-	
 	
 	public WarehouseVO findWarehouseByName(String name) throws Exception;
 

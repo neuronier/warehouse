@@ -7,9 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.Singleton;
-import javax.interceptor.Interceptors;
-
-import org.springframework.ejb.interceptor.SpringBeanAutowiringInterceptor;
 
 @Singleton
 public class WarehouseWebConverter {

@@ -1,12 +1,9 @@
 package hu.neuron.java.warehouse.whCore.entity;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
