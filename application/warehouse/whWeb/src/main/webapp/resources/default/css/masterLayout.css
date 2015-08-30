@@ -19,11 +19,6 @@ body {
 	width: 225px !important;
 }
 
-.ui-datalist .ui-datalist-header, .ui-datalist .ui-datalist-footer, .ui-datalist-data {
-	text-align: center;
-	padding: 4px 10px;
-	margin-right: 10px;
-    margin-left: 10px;
-	height: 180px;
-	overflow: auto;
+.ui-datatable table {
+    text-align: center;
 }
