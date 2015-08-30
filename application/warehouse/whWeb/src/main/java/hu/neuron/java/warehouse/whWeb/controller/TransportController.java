@@ -47,6 +47,8 @@ public class TransportController implements Serializable {
 
 	private Collection<String> whNames;
 
+	private Collection<String> toWhNames;
+
 	private String selectedFromWarehouseName;
 
 	private String selectedToWarehouseName;
@@ -67,13 +69,14 @@ public class TransportController implements Serializable {
 	private WarehouseVO fromWarehouse;
 	private WarehouseVO toWarehouse;
 	private WareVo ware;
-	
+
 	private TransportVO selectedTransport;
 
 	@PostConstruct
 	void init() {
 		pieces = new LinkedList<Integer>();
 		whNames = new ArrayList<String>();
+		toWhNames = new ArrayList<String>();
 		warehouses = new ArrayList<WarehouseVO>();
 		warehouses = warehouseService.findAll();
 		for (WarehouseVO warehouseVO : warehouses) {
@@ -98,7 +101,7 @@ public class TransportController implements Serializable {
 			transportVO.setToWarehouse(toWarehouse);
 
 			transportVO.setTransportStatus("Átvéve");
-			
+
 			setTransportStatus(transportVO.getTransportStatus());
 
 			for (String wareName : selectedwareNames) {
@@ -119,6 +122,11 @@ public class TransportController implements Serializable {
 	}
 
 	public void getWaresNames() {
+		toWhNames.clear();
+		for (WarehouseVO warehouseVO : warehouses) {
+			toWhNames.add(warehouseVO.getName());
+		}
+		toWhNames.remove(selectedFromWarehouseName);
 
 		Map<String, Integer> tmp = new HashMap<String, Integer>();
 		try {
@@ -157,11 +165,11 @@ public class TransportController implements Serializable {
 			transportVO.setToWarehouse(toWarehouse);
 
 			transportVO.setTransportStatus("Szállítás alatt");
-			
+
 			setTransportStatus(transportVO.getTransportStatus());
-			
-			transportVO =transportOrder.fillTransportTable(transportVO);
-			
+
+			transportVO = transportOrder.fillTransportTable(transportVO);
+
 			for (String wareName : selectedwareNames) {
 				ware = wareService.findWareByName(wareName);
 				detailsVO.setWare(ware);
@@ -273,6 +281,14 @@ public class TransportController implements Serializable {
 
 	public void setSelectedTransport(TransportVO selectedTransport) {
 		this.selectedTransport = selectedTransport;
+	}
+
+	public Collection<String> getToWhNames() {
+		return toWhNames;
+	}
+
+	public void setToWhNames(Collection<String> toWhNames) {
+		this.toWhNames = toWhNames;
 	}
 
 }

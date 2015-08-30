@@ -22,7 +22,8 @@
 		</h:panelGroup>
 
 		<h:form>
-			<p:panel id="basic" header="#{out.tp_header}" style="margin-bottom:20px"
+			<p:panel id="basic" header="#{out.tp_header}"
+				style="margin-bottom:20px"
 				rendered="#{request.isUserInRole('STOREKEEPER')}">
 				<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
@@ -31,7 +32,7 @@
 						value="#{transportController.selectedFromWarehouseName}">
 						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
 						<f:selectItems value="#{transportController.whNames}" />
-						<p:ajax event="change" update="items"
+						<p:ajax event="change" update="items, toWarehouse"
 							listener="#{transportController.getWaresNames()}" />
 					</p:selectOneMenu>
 
@@ -39,27 +40,35 @@
 					<p:selectOneMenu id="toWarehouse"
 						value="#{transportController.selectedToWarehouseName}">
 						<f:selectItem itemLabel="#{out.tp_selectlabel}" itemValue="" />
-						<f:selectItems value="#{transportController.whNames}" />
+						<f:selectItems value="#{transportController.toWhNames}" />
 					</p:selectOneMenu>
 				</h:panelGrid>
 
 				<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
 					<h:outputLabel for="items" value="#{out.tp_ware}:	" />
 					<p:selectCheckboxMenu id="items"
-						value="#{transportController.selectedwareNames}" label="#{out.tp_choose}"
-						filter="true" filterMatchMode="startsWith">
+						value="#{transportController.selectedwareNames}"
+						label="#{out.tp_choose}" filter="true"
+						filterMatchMode="startsWith">
 						<f:selectItems value="#{transportController.wareNames}" />
 						<p:ajax event="toggleSelect" update="num" />
 						<p:ajax event="change" update="num" />
 					</p:selectCheckboxMenu>
 
+
 					<h:outputLabel for="num" value="#{out.tp_nositems}"
 						styleClass="paginated">
 						<p:dataList id="num"
 							value="#{transportController.selectedwareNames}" var="ware"
-							emptyMessage="#{out.tp_noneselected}">
+							emptyMessage="#{out.tp_noneselected}" paginator="true"
+							paginatorAlwaysVisible="false" rows="5"
+							paginatorPosition="bottom">
 								#{ware}
 								<p:spinner id="darab" value="#{transportController.db}" min="0" />
+								<!-- max="#{transportController.max}"-->
+<!-- 							<h:outputText id="ajaxSpinnerValue" -->
+<!-- 								value="(Max: #{transportController.max})" -->
+<!-- 								style="padding-left: 10px" /> -->
 						</p:dataList>
 					</h:outputLabel>
 				</h:panelGrid>
