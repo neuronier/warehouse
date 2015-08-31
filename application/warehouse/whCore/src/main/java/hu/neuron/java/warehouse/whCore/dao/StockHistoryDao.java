@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.SUPPORTS)
 public interface StockHistoryDao extends JpaRepository<StockHistory, Long> {
 
-	Page<StockHistory> findByWarehouseNameStartsWithAndWareWareNameStartsWithAndChangeTimeAfterAndChangeTimeBefore(
+	Page<StockHistory> findByWarehouseNameAndWareWareNameStartsWithAndChangeTimeAfterAndChangeTimeBefore(
 			String filter1, String filter2, Date filter3, Date filter4, Pageable pageable);
 
 }

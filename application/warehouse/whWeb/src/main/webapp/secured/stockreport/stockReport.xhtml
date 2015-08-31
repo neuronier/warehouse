@@ -65,16 +65,19 @@
 									</p:dataTable>
 								</p:tab>
 								<p:tab title="#{out.str_stockchanges}">
-									<p:outputLabel for="startdate" value="#{out.str_startdate}: " />
-									<p:calendar id="startdate"
+
+									<p:outputLabel for="startDate" value="#{out.str_startdate}: " />
+									<p:calendar id="startDate"
 										value="#{stockReportController.lazyStockReportHistoryModel.startDate}" />
 
-									<p:outputLabel for="enddate" value="#{out.str_enddate}: " />
-									<p:calendar id="enddate" value="#{stockReportController.lazyStockReportHistoryModel.endDate}" />
+									<p:outputLabel for="endDate" value="#{out.str_enddate}: " />
+									<p:calendar id="endDate"
+										value="#{stockReportController.lazyStockReportHistoryModel.endDate}" />
 
 									<p:commandButton style="margin-left:10px;"
 										value="#{out.str_ok}" id="update"
 										update="whStock:stockHistoryTable" />
+
 									<p:dataTable id="stockHistoryTable" var="stockHistory"
 										value="#{stockReportController.lazyStockReportHistoryModel}"
 										emptyMessage="#{out.empty_message}"

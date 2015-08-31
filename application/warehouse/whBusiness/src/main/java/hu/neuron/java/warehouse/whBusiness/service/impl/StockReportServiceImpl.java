@@ -180,7 +180,7 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<StockHistory> entities;
 
-		Date startDate=null, endDate=null;
+		Date startDate = null, endDate = null;
 		String warehouse = "", ware = "";
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 			try {
@@ -201,8 +201,12 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 			}
 		}
 
+		startDate.setDate(startDate.getDate());
+		endDate.setHours(23);
+		endDate.setMinutes(59);
+		endDate.setDate(endDate.getDate());
 		entities = stockHistoryDao
-				.findByWarehouseNameStartsWithAndWareWareNameStartsWithAndChangeTimeAfterAndChangeTimeBefore(
+				.findByWarehouseNameAndWareWareNameStartsWithAndChangeTimeAfterAndChangeTimeBefore(
 						warehouse, ware, startDate, endDate, pageRequest);
 
 		List<StockHistoryVO> ret = stockHistoryConverter.toVO(entities.getContent());
