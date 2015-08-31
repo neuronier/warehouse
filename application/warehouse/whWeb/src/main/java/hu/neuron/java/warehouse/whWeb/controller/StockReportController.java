@@ -6,6 +6,8 @@ import hu.neuron.java.warehouse.whBusiness.vo.WarehouseVO;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -23,7 +25,7 @@ public class StockReportController implements Serializable {
 	private LazyStockReportHistoryModel lazyStockReportHistoryModel;
 
 	private LazyStockReportTransferModel lazyStockReportTransferModel;
-	
+
 	private LazyStockReportTransferDetailsModel lazyStockReportTransferDetailsModel;
 
 	@EJB(beanName = "StockReportService")
@@ -31,8 +33,11 @@ public class StockReportController implements Serializable {
 
 	private List<WarehouseVO> warehouses;
 	private List<String> warehouseNames;
-	private String selectedWarehouseName=" ";
-	
+	private String selectedWarehouseName = " ";
+
+	private Date startDate;
+	private Date endDate;
+
 	private TransportVO selectedTransport;
 
 	@PostConstruct
@@ -46,7 +51,17 @@ public class StockReportController implements Serializable {
 		setLazyStockReportActualModel(new LazyStockReportActualModel(stockReportService));
 		setLazyStockReportHistoryModel(new LazyStockReportHistoryModel(stockReportService));
 		setLazyStockReportTransferModel(new LazyStockReportTransferModel(stockReportService));
-		setLazyStockReportTransferDetailsModel(new LazyStockReportTransferDetailsModel(stockReportService));
+		setLazyStockReportTransferDetailsModel(new LazyStockReportTransferDetailsModel(
+				stockReportService));
+
+		Calendar cal = Calendar.getInstance();
+
+		cal.set(2015, 1, 1);
+		startDate = cal.getTime();
+		lazyStockReportHistoryModel.setStartDate(startDate);
+		cal.set(2115, 1, 1);
+		endDate = cal.getTime();
+		lazyStockReportHistoryModel.setEndDate(endDate);
 
 	}
 
@@ -54,8 +69,8 @@ public class StockReportController implements Serializable {
 		lazyStockReportActualModel.setSelectedWarehouseName(selectedWarehouseName);
 		lazyStockReportHistoryModel.setSelectedWarehouseName(selectedWarehouseName);
 	}
-	
-	public void onTransportRowSelect(){
+
+	public void onTransportRowSelect() {
 		lazyStockReportTransferDetailsModel.setSelectedTransport(selectedTransport);
 	}
 
@@ -71,7 +86,8 @@ public class StockReportController implements Serializable {
 		return lazyStockReportHistoryModel;
 	}
 
-	public void setLazyStockReportHistoryModel(LazyStockReportHistoryModel lazyStockReportHistoryModel) {
+	public void setLazyStockReportHistoryModel(
+			LazyStockReportHistoryModel lazyStockReportHistoryModel) {
 		this.lazyStockReportHistoryModel = lazyStockReportHistoryModel;
 	}
 
@@ -131,6 +147,22 @@ public class StockReportController implements Serializable {
 	public void setLazyStockReportTransferDetailsModel(
 			LazyStockReportTransferDetailsModel lazyStockReportTransferDetailsModel) {
 		this.lazyStockReportTransferDetailsModel = lazyStockReportTransferDetailsModel;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 }

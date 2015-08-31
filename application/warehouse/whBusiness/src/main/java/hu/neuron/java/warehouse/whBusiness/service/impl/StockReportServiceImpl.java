@@ -22,6 +22,7 @@ import hu.neuron.java.warehouse.whCore.entity.Transport;
 import hu.neuron.java.warehouse.whCore.entity.TransportDetails;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +64,7 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 
 	@Autowired
 	TransportDao transportDao;
-	
+
 	@Autowired
 	TransportDetailsDao transportDetailsDao;
 
@@ -110,11 +111,11 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public int getTransportRowNumber() {
 		return (int) transportDao.count();
 	}
-	
+
 	@Override
 	public int getTransportDetailsRowNumber() {
 		return (int) transportDetailsDao.count();
-	}	
+	}
 
 	@Override
 	public List<StockVO> getStock() {
@@ -130,7 +131,7 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public List<TransportVO> getTransports() {
 		return transportConverter.toVO(transportDao.findAll());
 	}
-	
+
 	@Override
 	public List<TransportDetailsVO> getTransportDetails() {
 		return transportDetailsConverter.toVO(transportDetailsDao.findAll());
@@ -179,6 +180,7 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<StockHistory> entities;
 
+		Date startDate=null, endDate=null;
 		String warehouse = "", ware = "";
 		for (Iterator<String> it = filters.keySet().iterator(); it.hasNext();) {
 			try {
@@ -189,12 +191,19 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 				if (filterProperty.equals("ware")) {
 					ware = (String) filters.get(filterProperty);
 				}
+				if (filterProperty.equals("startDate")) {
+					startDate = (Date) filters.get(filterProperty);
+				}
+				if (filterProperty.equals("endDate")) {
+					endDate = (Date) filters.get(filterProperty);
+				}
 			} catch (Exception e) {
 			}
 		}
 
-		entities = stockHistoryDao.findByWarehouseNameStartsWithAndWareWareNameStartsWith(
-				warehouse, ware, pageRequest);
+		entities = stockHistoryDao
+				.findByWarehouseNameStartsWithAndWareWareNameStartsWithAndChangeTimeAfterAndChangeTimeBefore(
+						warehouse, ware, startDate, endDate, pageRequest);
 
 		List<StockHistoryVO> ret = stockHistoryConverter.toVO(entities.getContent());
 
@@ -226,17 +235,18 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 			}
 		}
 
-		entities = transportDao.findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
-				fromWarehouse, toWarehouse, transportStatus, pageRequest);
+		entities = transportDao
+				.findByFromWarehouseNameStartsWithAndToWarehouseNameStartsWithAndTransportStatusStartsWith(
+						fromWarehouse, toWarehouse, transportStatus, pageRequest);
 
 		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
 
 		return ret;
 	}
-	
+
 	@Override
-	public List<TransportDetailsVO> getTransportDetails(int i, int pageSize, String sortField, int sortOrder,
-			Map<String, Object> filters) {
+	public List<TransportDetailsVO> getTransportDetails(int i, int pageSize, String sortField,
+			int sortOrder, Map<String, Object> filters) {
 		Direction dir = sortOrder == 1 ? Sort.Direction.ASC : Sort.Direction.DESC;
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
@@ -257,8 +267,8 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 			}
 		}
 
-		entities = transportDetailsDao.findByTransportIdAndWareWareNameStartsWith(
-				transport, ware, pageRequest);
+		entities = transportDetailsDao.findByTransportIdAndWareWareNameStartsWith(transport, ware,
+				pageRequest);
 
 		List<TransportDetailsVO> ret = transportDetailsConverter.toVO(entities.getContent());
 
@@ -279,7 +289,7 @@ public class StockReportServiceImpl implements StockReportServiceRemote, Seriali
 	public int getTransportCount() {
 		return (int) transportDao.count();
 	}
-	
+
 	@Override
 	public int getTransportDetailsCount() {
 		return (int) transportDetailsDao.count();

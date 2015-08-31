@@ -3,7 +3,7 @@ package hu.neuron.java.warehouse.whWeb.controller;
 import hu.neuron.java.warehouse.whBusiness.service.StockReportServiceRemote;
 import hu.neuron.java.warehouse.whBusiness.vo.StockHistoryVO;
 
-import java.util.Iterator;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -18,6 +18,9 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 	private StockReportServiceRemote stockReportService;
 
 	private String selectedWarehouseName = " ";
+	
+	private Date startDate;
+	private Date endDate;
 
 	public LazyStockReportHistoryModel(StockReportServiceRemote stockReportService) {
 		super();
@@ -48,7 +51,9 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 	public List<StockHistoryVO> load(int first, int pageSize, String sortField,
 			SortOrder sortOrder, Map<String, Object> filters) {
 		filters.put("warehouse", selectedWarehouseName);
-
+		filters.put("startDate", startDate);
+		filters.put("endDate", endDate);
+		
 		int dir;
 
 		if (sortField == null) {
@@ -90,6 +95,22 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 
 	public void setSelectedWarehouseName(String selectedWarehouseName) {
 		this.selectedWarehouseName = selectedWarehouseName;
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+
+	public Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 
 }
