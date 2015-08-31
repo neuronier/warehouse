@@ -59,7 +59,7 @@ public class StockReportController implements Serializable {
 		cal.set(2015, 1, 1);
 		startDate = cal.getTime();
 		lazyStockReportHistoryModel.setStartDate(startDate);
-		cal.set(2115, 1, 1);
+		cal.set(2016, 1, 1);
 		endDate = cal.getTime();
 		lazyStockReportHistoryModel.setEndDate(endDate);
 
