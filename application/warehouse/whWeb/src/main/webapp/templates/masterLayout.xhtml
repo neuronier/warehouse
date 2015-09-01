@@ -81,8 +81,7 @@
 					</p:submenu>
 				</sec:authorize>
 
-				<!-- 				hogy ide milyen jog kell nem sikerult eldontenem -->
-				<sec:authorize ifAllGranted="ROLE_USER">
+				<sec:authorize ifAllGranted="ROLE_STOREKEEPER">
 					<p:submenu styleClass="orderedWaresBubble"
 						label="#{out.ml_ordered}" icon="ui-icon-calendar">
 						<p:menuitem style="width: 210px !important;"
