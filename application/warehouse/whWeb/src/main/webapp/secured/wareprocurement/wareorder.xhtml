@@ -8,7 +8,7 @@
 	xmlns:sec="http://www.springframework.org/security/tags"
 	xmlns:jl="http://jsflive.at/taglib"
 	xmlns:fn="http://java.sun.com/jsp/jstl/functions">
-	
+
 	<ui:define name="head-extra">
 		<!-- custom css -->
 	</ui:define>
@@ -28,13 +28,16 @@
 			rendered="#{request.isUserInRole('STOREKEEPER')}">
 			<h:form id="select">
 				<h:panelGrid style="margin-bottom:10px" cellpadding="5">
-					<p:selectCheckboxMenu id="items"
-						value="#{wareOrderConttroller.selectedwareNames}"
-						label="#{out.wo_wares}" filter="true" filterMatchMode="startsWith">
-						<f:selectItems value="#{wareOrderConttroller.wareNames}" />
-						<p:ajax event="toggleSelect" update="num,order" />
-						<p:ajax event="change" update="num,order" />
-					</p:selectCheckboxMenu>
+					<h:outputLabel for="items" value="#{out.tp_ware}: ">
+						<p:selectCheckboxMenu id="items"
+							value="#{wareOrderConttroller.selectedwareNames}"
+							label="#{out.wo_wares}" filter="true"
+							filterMatchMode="startsWith">
+							<f:selectItems value="#{wareOrderConttroller.wareNames}" />
+							<p:ajax event="toggleSelect" update="num,order" />
+							<p:ajax event="change" update="num,order" />
+						</p:selectCheckboxMenu>
+					</h:outputLabel>
 
 
 					<h:outputLabel for="num" value="#{out.wo_numberofitems}"
