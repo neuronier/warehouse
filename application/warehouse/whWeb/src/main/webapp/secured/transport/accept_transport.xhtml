@@ -76,7 +76,7 @@
 								rows="10">
 
 								<p:column headerText="#{out.ware}"
-									sortBy="#{transportDetails.ware.wareName}" filterBy="ware">
+									sortBy="#{transportDetails.ware.wareName}">
 									<h:outputText value="#{transportDetails.ware.wareName}" />
 								</p:column>
 
@@ -89,7 +89,7 @@
 								styleClass="ui-priority-primary"
 								actionListener="#{acceptController.updateTransport()}"
 								update=":form"
-								disabled="#{acceptController.status == 'Completed'}" />
+								disabled="#{acceptController.status == 'Kész'}" />
 						</p:outputPanel>
 					</p:dialog>
 				</h:form>

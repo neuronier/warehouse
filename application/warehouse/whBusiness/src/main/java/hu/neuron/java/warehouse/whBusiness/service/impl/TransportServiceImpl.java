@@ -172,15 +172,14 @@ public class TransportServiceImpl implements TransportServiceLocal,
 		PageRequest pageRequest = new PageRequest(i, pageSize, new Sort(
 				new org.springframework.data.domain.Sort.Order(dir, sortField)));
 		Page<Transport> entities;
-		
-		UserVO userName = getUserByName(SecurityContextHolder.getContext()
-						.getAuthentication().getName());
+
+		UserVO userName = getUserByName(SecurityContextHolder.getContext().getAuthentication().getName());
 
 		entities = transportDao.findByToWarehouseUsersUserName(userName.getUserName(), pageRequest);
 
-		List<TransportVO> ret = transportConverter.toVO(entities.getContent());
+		List<TransportVO> visibleList = transportConverter.toVO(entities.getContent());
 
-		return ret;
+		return visibleList;
 	}
 
 	@Override
