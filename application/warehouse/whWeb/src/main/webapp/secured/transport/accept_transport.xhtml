@@ -66,7 +66,7 @@
 
 					<p:dialog header="#{out.at_details}" widgetVar="transportDialog"
 						modal="true" showEffect="fade" hideEffect="fade" resizable="false">
-						<p:outputPanel id="transportDetail" style="text-align:center;">
+						<p:outputPanel id="transportDetail">
 
 							<p:dataTable id="transportDetailTable" var="transportDetails"
 								value="#{acceptController.lazyTransferDetailsModel}"
@@ -75,7 +75,7 @@
 								rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
 								rows="10">
 
-								<p:column headerText="#{out.ware}"
+								<p:column headerText="#{out.at_wares}"
 									sortBy="#{transportDetails.ware.wareName}">
 									<h:outputText value="#{transportDetails.ware.wareName}" />
 								</p:column>
