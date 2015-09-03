@@ -140,7 +140,6 @@ public class TransportController implements Serializable {
 		wareNames = new ArrayList<String>();
 		for (String string : kesy) {
 			wareNames.add(string);
-			setMax(tmp.get(string));
 		}
 	}
 

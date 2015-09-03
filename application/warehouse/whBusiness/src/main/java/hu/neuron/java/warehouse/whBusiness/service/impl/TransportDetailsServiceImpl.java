@@ -93,7 +93,7 @@ public class TransportDetailsServiceImpl implements TransportDetailsServiceRemot
 			}
 		}
 
-		transportVO.setTransportStatus("Completed");
+		transportVO.setTransportStatus("Kész");
 		transportDao.save(transportConverter.toEntity(transportVO));
 
 	}
