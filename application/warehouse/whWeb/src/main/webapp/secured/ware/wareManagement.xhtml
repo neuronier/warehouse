@@ -21,18 +21,13 @@
 				Denied!!!</h2>
 		</h:panelGroup>
 
-		<p:panel header="Warehouse Management"
+		<p:panel header="#{out.w_ware_management}"
 			rendered="#{request.isUserInRole('STOREKEEPER')}">
 
 
 
 			<h:form id="wareForm">
 
-
-				<!-- emptyMessage="#{out.empty_message}" -->
-
-				<!-- 				selectionMode="single" -->
-				<!-- 			<p:growl id="msgs" showDetail="true" /> -->
 				<p:dataTable id="wareTable" var="ware"
 					value="#{wareController.lazyWareModel}" selectionMode="single"
 					selection="#{wareController.selectedWare}"
@@ -44,19 +39,19 @@
 						update=":WareDialogDel,:buttonForm:update,:buttonForm:delete,:WareDialogUpdate" />
 
 
-					<p:column headerText="Item Name" sortBy="#{ware.wareName}"
+					<p:column headerText="#{out.w_item_name}" sortBy="#{ware.wareName}"
 						filterBy="#{ware.wareName}">
 
 						<h:outputText value="#{ware.wareName}" />
 					</p:column>
-					<p:column headerText="Item Number" sortBy="#{ware.itemNumber}"
-						filterBy="#{ware.itemNumber}">
+					<p:column headerText="#{out.w_item_number}"
+						sortBy="#{ware.itemNumber}" filterBy="#{ware.itemNumber}">
 
 						<h:outputText value="#{ware.itemNumber}" />
 
 					</p:column>
-					<p:column headerText="Desciption" sortBy="#{ware.description}"
-						filterBy="#{ware.description}">
+					<p:column headerText="#{out.w_description}"
+						sortBy="#{ware.description}" filterBy="#{ware.description}">
 
 						<h:outputText value="#{ware.description}" />
 
@@ -66,66 +61,63 @@
 
 			<h:form id="buttonForm">
 				<h:panelGrid columns="4" cellpadding="5">
-					
-						<h:panelGrid columns="4" cellpadding="5">
-							<p:commandButton icon="ui-icon-arrowrefresh-1-n" value="Add New" id="add"
-								title="Save" type="button" onclick="PF('dlg_edit').show()">
-							</p:commandButton>
-						</h:panelGrid>
-					
-					
-						<h:panelGrid columns="4" cellpadding="5">
-							<p:commandButton icon="ui-icon-arrowrefresh-1-n" value="Delete" id="delete"
-								title="Save" type="button"
-								disabled="#{wareController.selectedWare == null}"
-								onclick="PF('dlg_del').show()">
-							</p:commandButton>
-						</h:panelGrid>
-					
 
-					
-						<h:panelGrid columns="4" cellpadding="5">
-							<p:commandButton icon="ui-icon-arrowrefresh-1-n" value="Update" id="update"
-								title="Update" type="button"
-								disabled="#{wareController.selectedWare == null}"
-								onclick="PF('updateWare').show()">
-							</p:commandButton>
-						</h:panelGrid>
-					
+					<h:panelGrid columns="4" cellpadding="5">
+						<p:commandButton icon="ui-icon-arrowrefresh-1-n"
+							value="#{out.w_add_new}" id="add" title="Save" type="button"
+							onclick="PF('dlg_edit').show()">
+						</p:commandButton>
+					</h:panelGrid>
+
+
+					<h:panelGrid columns="4" cellpadding="5">
+						<p:commandButton icon="ui-icon-arrowrefresh-1-n"
+							value="#{out.w_delete}" id="delete" title="Save" type="button"
+							disabled="#{wareController.selectedWare == null}"
+							onclick="PF('dlg_del').show()">
+						</p:commandButton>
+					</h:panelGrid>
+
+
+
+					<h:panelGrid columns="4" cellpadding="5">
+						<p:commandButton icon="ui-icon-arrowrefresh-1-n"
+							value="#{out.w_update}" id="update" title="Update" type="button"
+							disabled="#{wareController.selectedWare == null}"
+							onclick="PF('updateWare').show()">
+						</p:commandButton>
+					</h:panelGrid>
+
 				</h:panelGrid>
 			</h:form>
-
-			<p:dialog id="WareDialog" width="50%" widgetVar="dlg_edit"
-				modal="true" resizable="false">
+			<p:dialog widgetVar="dlg_edit" id="WareDialog" mheight="100"
+				modal="true">
 				<h:form>
 					<h:panelGrid columns="2" style="width:100%" cellpadding="5">
-						<h:outputText value="New Item" style="font-weight:bold" />
+						<h:outputText value="#{out.w_item}" style="font-weight:bold" />
 						<h:outputText id="name" value=" " />
 
-						<p:outputLabel value="Item Name" />
+						<p:outputLabel value="#{out.w_item_name}" />
 						<p:inputText id="addName" required="true"
 							value="#{wareController.newWareName}">
 						</p:inputText>
 
-						<p:outputLabel value="Item Number" />
+						<p:outputLabel value="#{out.w_item_number}" />
 						<p:inputText id="addNum" required="true"
 							value="#{wareController.newItemNumber}">
 						</p:inputText>
 
-						<p:outputLabel value="Item Descreption" />
+						<p:outputLabel value="#{out.w_description}" />
 						<p:inputText id="addDesc" required="true"
 							value="#{wareController.newDescription}"></p:inputText>
 
+						<p:separator />
+						<p:separator />
+						<p:commandButton value="#{out.w_cancel}" id="AddC"
+							icon="ui-icon-disk" oncomplete="PF('dlg_edit').hide();" />
 
-
-
-						<!-- 						<p:growl id="growl" showDetail="true" sticky="true" /> -->
-
-						<p:commandButton value="Cancel" id="AddC" icon="ui-icon-disk"
-							oncomplete="PF('dlg_edit').hide();" />
-
-						<p:commandButton value="Add" onclick="PF('dlg_edit').hide()"
-							update=":wareForm:wareTable"
+						<p:commandButton value="#{out.w_add}"
+							onclick="PF('dlg_edit').hide()" update=":wareForm:wareTable"
 							actionListener="#{wareController.saveNewWare}" />
 
 
@@ -137,20 +129,20 @@
 				modal="true" resizable="false">
 				<h:form>
 					<h:panelGrid columns="2" style="width:100%" cellpadding="5">
-						<h:outputText value="New Item" style="font-weight:bold" />
+						<h:outputText value=" " style="font-weight:bold" />
 						<h:outputText id="name" value=" " />
 
-						<p:outputLabel
-							value="Are you sure you want to delete this item : " />
+						<p:outputLabel value="#{out.w_delete_alert}" />
 						<p:outputLabel id="uwareNmae"
 							value="#{wareController.updateWareName}" />
 
 						<!-- 						<p:growl id="growl" showDetail="true" sticky="true" /> -->
-
-						<p:commandButton value="Cancel" id="deleteC" icon="ui-icon-disk"
-							oncomplete="PF('dlg_del').hide();" />
-						<p:commandButton value="delete" onclick="PF('dlg_del').hide()"
-							update=":wareForm:wareTable"
+						<p:separator />
+						<p:separator />
+						<p:commandButton value="#{out.w_cancel}" id="deleteC"
+							icon="ui-icon-disk" oncomplete="PF('dlg_del').hide();" />
+						<p:commandButton value="#{out.w_delete}"
+							onclick="PF('dlg_del').hide()" update=":wareForm:wareTable"
 							actionListener="#{wareController.deleteWare}" />
 					</h:panelGrid>
 
@@ -161,25 +153,26 @@
 				modal="true">
 				<h:form>
 					<h:panelGrid columns="2" style="width:100%" cellpadding="5">
-						<h:outputLabel for="wareName" value="Name:"
+						<h:outputLabel for="wareName" value="#{out.w_item_name}"
 							style="font-weight:bold" />
 						<p:inputText id="uwareNmae" required="true"
 							value="#{wareController.updateWareName}" />
 
-						<h:outputLabel for="wareName" value="ItemNumber:"
+						<h:outputLabel for="wareName" value="#{out.w_item_number}"
 							style="font-weight:bold" />
 						<p:inputText id="uwareNumber" required="true"
 							value="#{wareController.updateItemNumber}" />
 
-						<h:outputLabel for="wareName" value="Description:"
+						<h:outputLabel for="wareName" value="#{out.w_description}"
 							style="font-weight:bold" />
 						<p:inputText id="uwareDescription" required="true"
 							value="#{wareController.updateDescription}" />
+						<p:separator />
+						<p:separator />
+						<p:commandButton value="#{out.w_cancel}" id="updateC"
+							icon="ui-icon-disk" oncomplete="PF('updateWare').hide();" />
 
-						<p:commandButton value="Cancel" id="updateC" icon="ui-icon-disk"
-							oncomplete="PF('updateWare').hide();" />
-
-						<p:commandButton value="Update" id="update"
+						<p:commandButton value="#{out.w_update}" id="update"
 							actionListener="#{wareController.updateWare}"
 							update=":wareForm:wareTable" icon="ui-icon-disk"
 							oncomplete="PF('updateWare').hide();" />
