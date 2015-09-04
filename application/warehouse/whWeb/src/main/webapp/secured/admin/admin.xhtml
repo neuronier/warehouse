@@ -12,113 +12,112 @@
 	<ui:define name="pageTitle">#{out.adm_title}</ui:define>
 	<ui:define name="content">
 
-		<div align="center">			
+		<h:panelGroup rendered="#{!request.isUserInRole('ADMIN')}"
+			style="color: white;">
+			<br />
+			<br />
+			<br />
+			<h2 style="font-family: Broadway; color: white">!!!#{out.accessdenied}!!!</h2>
+		</h:panelGroup>
 
-			<h:panelGroup rendered="#{!request.isUserInRole('ADMIN')}"
-				style="color: white;">
-				<br />
-				<br />
-				<br />
-				<h2 style="font-family: Broadway; color: white">!!!#{out.accessdenied}!!!</h2>
-			</h:panelGroup>
+		<p:panel rendered="#{request.isUserInRole('ADMIN')}">
+			<f:facet name="header">
+				<h:outputText value="#{out.adm_title}" />
+			</f:facet>
 
-			<p:panel rendered="#{request.isUserInRole('ADMIN')}">
-				<f:facet name="header">
-					<h:outputText
-						value="#{out.adm_area}" />
-				</f:facet>
+			<h:form id="adminForm">
+				<p:dataTable id="adminTable" var="admin"
+					value="#{adminController.lazyAdminModel}"
+					emptyMessage="#{out.empty_message}"
+					paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+					rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
+					rows="10" selectionMode="single"
+					selection="#{adminController.selectedUser}">
 
-				<h:form id="adminForm">
-					<p:dataTable id="adminTable" var="admin"
-						value="#{adminController.lazyAdminModel}"
-						emptyMessage="#{out.empty_message}"
-						paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
-						rowsPerPageTemplate="5,10,15" lazy="true" paginator="true"
-						rows="10" selectionMode="single"
-						selection="#{adminController.selectedUser}">
+					<f:facet name="header">
+						<h:outputText value="#{out.adm_area}" />
+					</f:facet>
 
-						<p:ajax event="rowSelect"
-							listener="#{adminController.onRowSelect}"
-							update=":adminForm:userDetail"
-							oncomplete="PF('userDialog').show()" />
+					<p:ajax event="rowSelect" listener="#{adminController.onRowSelect}"
+						update=":adminForm:userDetail"
+						oncomplete="PF('userDialog').show()" />
 
-						<p:column headerText="#{out.username}" sortBy="#{admin.userName}"
-							filterBy="#{admin.userName}">
-							<h:outputText value="#{admin.userName}" />
-						</p:column>
+					<p:column headerText="#{out.username}" sortBy="#{admin.userName}"
+						filterBy="#{admin.userName}">
+						<h:outputText value="#{admin.userName}" />
+					</p:column>
 
-						<p:column headerText="#{out.fullname}" sortBy="#{admin.fullName}"
-							filterBy="#{admin.fullName}">
-							<h:outputText value="#{admin.fullName}" />
-						</p:column>
+					<p:column headerText="#{out.fullname}" sortBy="#{admin.fullName}"
+						filterBy="#{admin.fullName}">
+						<h:outputText value="#{admin.fullName}" />
+					</p:column>
 
-						<p:column headerText="#{out.email}" sortBy="#{admin.email}"
-							filterBy="#{admin.email}">
-							<h:outputText value="#{admin.email}" />
-						</p:column>
+					<p:column headerText="#{out.email}" sortBy="#{admin.email}"
+						filterBy="#{admin.email}">
+						<h:outputText value="#{admin.email}" />
+					</p:column>
 
-						<p:column headerText="#{out.phonenumber}" sortBy="#{admin.phoneNumber}"
-							filterBy="#{admin.phoneNumber}">
-							<h:outputText value="#{admin.phoneNumber}" />
-						</p:column>
+					<p:column headerText="#{out.phonenumber}"
+						sortBy="#{admin.phoneNumber}" filterBy="#{admin.phoneNumber}">
+						<h:outputText value="#{admin.phoneNumber}" />
+					</p:column>
 
-						<p:column headerText="#{out.roles}">
-							<h:outputText value="#{admin.roles}" />
-						</p:column>
+					<p:column headerText="#{out.roles}">
+						<h:outputText value="#{admin.roles}" />
+					</p:column>
 
-						<p:column headerText="#{out.adm_enable}" sortBy="#{admin.enabled}">
-							<h:outputText value="#{admin.enabled == 1 ? out.yes : out.no }" />
-						</p:column>
-					</p:dataTable>
+					<p:column headerText="#{out.adm_enable}" sortBy="#{admin.enabled}">
+						<h:outputText value="#{admin.enabled == 1 ? out.yes : out.no }" />
+					</p:column>
+				</p:dataTable>
 
 
-					<p:dialog header="#{out.adm_userdetails}" widgetVar="userDialog" modal="true"
-						showEffect="fade" hideEffect="fade" resizable="false"
-						closable="false">
-						<p:outputPanel id="userDetail" style="text-align:center;">
-							<p:panelGrid columns="2" columnClasses="label,value"
-								rendered="#{not empty adminController.selectedUser}">
+				<p:dialog header="#{out.adm_userdetails}" widgetVar="userDialog"
+					modal="true" showEffect="fade" hideEffect="fade" resizable="false"
+					closable="false">
+					<p:outputPanel id="userDetail" style="text-align:center;">
+						<p:panelGrid columns="2" columnClasses="label,value"
+							rendered="#{not empty adminController.selectedUser}">
 
-								<h:outputText value="#{out.username}" />
-								<h:outputText value="#{adminController.selectedUser.userName}" />
+							<h:outputText value="#{out.username}" />
+							<h:outputText value="#{adminController.selectedUser.userName}" />
 
-								<h:outputText value="#{out.fullname}" />
-								<h:outputText value="#{adminController.selectedUser.fullName}" />
+							<h:outputText value="#{out.fullname}" />
+							<h:outputText value="#{adminController.selectedUser.fullName}" />
 
-								<h:outputText value="#{out.email}" />
-								<h:outputText value="#{adminController.selectedUser.email}" />
+							<h:outputText value="#{out.email}" />
+							<h:outputText value="#{adminController.selectedUser.email}" />
 
-								<h:outputText value="#{out.phonenumber}" />
-								<h:outputText
-									value="#{adminController.selectedUser.phoneNumber}" />
+							<h:outputText value="#{out.phonenumber}" />
+							<h:outputText value="#{adminController.selectedUser.phoneNumber}" />
 
-								<h:outputText value="#{out.roles}" />
-								<p:pickList id="pickList" value="#{adminController.roles}"
-									showSourceFilter="true" showTargetFilter="true" var="role"
-									itemLabel="#{role}" itemValue="#{role}">
-									<f:facet name="sourceCaption">#{out.adm_availableroles}</f:facet>
-									<f:facet name="targetCaption">#{out.adm_addedroles}</f:facet>
-								</p:pickList>
+							<h:outputText value="#{out.roles}" />
+							<p:pickList id="pickList" value="#{adminController.roles}"
+								showSourceFilter="true" showTargetFilter="true" var="role"
+								itemLabel="#{role}" itemValue="#{role}">
+								<f:facet name="sourceCaption">#{out.adm_availableroles}</f:facet>
+								<f:facet name="targetCaption">#{out.adm_addedroles}</f:facet>
+							</p:pickList>
 
-								<h:outputText value="#{out.adm_enable}" />
-								<p:selectBooleanButton value="#{adminController.enabled}"
-									onLabel="#{out.yes}" offLabel="#{out.no}" style="width:80px" />
-							</p:panelGrid>
-							<div align="left" style="margin-top: 20px;">
-								<p:commandButton value="#{out.adm_update}" id="update"
-									actionListener="#{adminController.updateUser}"
-									update=":adminForm:adminTable"
-									oncomplete="PF('userDialog').hide();" />
+							<h:outputText value="#{out.adm_enable}" />
+							<p:selectBooleanButton value="#{adminController.enabled}"
+								onLabel="#{out.yes}" offLabel="#{out.no}" style="width:80px" />
+						</p:panelGrid>
+						<div align="left" style="margin-top: 20px;">
+							<p:commandButton value="#{out.adm_update}" id="update"
+								actionListener="#{adminController.updateUser}"
+								update=":adminForm:adminTable"
+								oncomplete="PF('userDialog').hide();" />
 
-								<p:commandButton style="margin-left: 20px;" value="#{out.adm_cancel}"
-									id="cancel" actionListener="#{adminController.cancelSelect}"
-									update=":adminForm:adminTable"
-									oncomplete="PF('userDialog').hide();" />
-							</div>
-						</p:outputPanel>
-					</p:dialog>
-				</h:form>
-			</p:panel>
-		</div>
+							<p:commandButton style="margin-left: 20px;"
+								value="#{out.adm_cancel}" id="cancel"
+								actionListener="#{adminController.cancelSelect}"
+								update=":adminForm:adminTable"
+								oncomplete="PF('userDialog').hide();" />
+						</div>
+					</p:outputPanel>
+				</p:dialog>
+			</h:form>
+		</p:panel>
 	</ui:define>
 </ui:composition>

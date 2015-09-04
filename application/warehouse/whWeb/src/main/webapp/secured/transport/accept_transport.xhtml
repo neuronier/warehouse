@@ -12,12 +12,10 @@
 	<ui:define name="pageTitle">#{out.at_header}</ui:define>
 	<ui:define name="content">
 
-		<div align="center">
-			<br />
-
 			<h:panelGroup
 				rendered="#{!(request.isUserInRole('STOREKEEPER') || request.isUserInRole('MANAGER'))}"
 				style="color: white;">
+				<br />
 				<br />
 				<br />
 				<h2 style="font-family: Broadway; color: white">!!!Access
@@ -95,7 +93,5 @@
 				</h:form>
 
 			</p:panel>
-
-		</div>
 	</ui:define>
 </ui:composition>

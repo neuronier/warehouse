@@ -50,10 +50,10 @@ public class AdminController implements Serializable {
 		List<String> selectedRoleNames = new ArrayList<String>();
 
 		for (RoleVO roleVO : roleVOs) {
-			roleNames.add(roleVO.getRoleName());
+			roleNames.add(roleVO.getRoleName().substring(5));
 		}
 		for (RoleVO roleVO : selectedRoleVOs) {
-			selectedRoleNames.add(roleVO.getRoleName());
+			selectedRoleNames.add(roleVO.getRoleName().substring(5));
 		}
 		for (String name : selectedRoleNames) {
 			roleNames.remove(name);
@@ -67,7 +67,7 @@ public class AdminController implements Serializable {
 			List<RoleVO> selectedRoleVOs = new ArrayList<RoleVO>();
 
 			for (String roleName : roles.getTarget()) {
-				selectedRoleVOs.add(adminService.getRoleByName(roleName));
+				selectedRoleVOs.add(adminService.getRoleByName("ROLE_"+roleName));
 			}
 
 			selectedUser.setEnabled(enabled == true ? 1 : 0);
