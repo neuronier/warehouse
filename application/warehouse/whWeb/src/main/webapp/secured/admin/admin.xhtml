@@ -67,7 +67,7 @@
 						</p:column>
 
 						<p:column headerText="#{out.adm_enable}" sortBy="#{admin.enabled}">
-							<h:outputText value="#{admin.enabled == 1 ? 'Yes' : 'No' }" />
+							<h:outputText value="#{admin.enabled == 1 ? out.yes : out.no }" />
 						</p:column>
 					</p:dataTable>
 

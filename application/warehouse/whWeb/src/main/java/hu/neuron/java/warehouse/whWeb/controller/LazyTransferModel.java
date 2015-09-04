@@ -61,7 +61,7 @@ public class LazyTransferModel extends LazyDataModel<TransportVO> {
 		visibleList = serviceRemote.getByUsers(first / pageSize, pageSize,
 				sortField, dir, filters);
 
-		int dataSize = visibleList.size();
+		int dataSize = stockReportService.getTransportCount();
 
 		this.setRowCount(dataSize);
 

@@ -11,7 +11,7 @@ public class RoleVO implements Serializable {
 
 	@Override
 	public String toString() {
-		return roleName;
+		return roleName.substring(5);
 	}
 
 	public Long getId() {

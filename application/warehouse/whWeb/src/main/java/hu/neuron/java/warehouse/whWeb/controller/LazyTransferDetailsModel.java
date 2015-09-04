@@ -58,7 +58,7 @@ public class LazyTransferDetailsModel extends LazyDataModel<TransportDetailsVO> 
 		visibleList = stockReportService.getTransportDetails(first / pageSize, pageSize, sortField,
 				dir, filters);
 
-		int dataSize = visibleList.size();
+		int dataSize = stockReportService.getTransportDetailsCount();
 
 		this.setRowCount(dataSize);
 
