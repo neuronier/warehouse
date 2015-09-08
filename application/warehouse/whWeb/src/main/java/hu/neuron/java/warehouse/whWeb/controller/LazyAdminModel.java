@@ -53,7 +53,7 @@ public class LazyAdminModel extends LazyDataModel<UserVO> {
 		visibleUserList = adminService
 				.getUsers(first / pageSize, pageSize, sortField, dir, filters);
 
-		int dataSize = adminService.getUserCount();
+		int dataSize = visibleUserList.size();
 
 		this.setRowCount(dataSize);
 
