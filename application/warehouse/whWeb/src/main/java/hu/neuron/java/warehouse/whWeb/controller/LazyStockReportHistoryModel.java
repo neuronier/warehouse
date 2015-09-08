@@ -65,7 +65,7 @@ public class LazyStockReportHistoryModel extends LazyDataModel<StockHistoryVO> {
 		visibleList = stockReportService.getStockHistory(first / pageSize, pageSize, sortField,
 				dir, filters);
 
-		int dataSize = stockReportService.getStockHistoryCount();
+		int dataSize = visibleList.size();
 
 		this.setRowCount(dataSize);
 
