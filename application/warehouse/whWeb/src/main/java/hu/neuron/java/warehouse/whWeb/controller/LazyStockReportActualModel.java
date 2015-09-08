@@ -56,7 +56,7 @@ public class LazyStockReportActualModel extends LazyDataModel<StockVO> {
 		visibleList = stockReportService.getStock(first / pageSize, pageSize, sortField, dir,
 				filters);
 
-		int dataSize = stockReportService.getStockCount();
+		int dataSize = visibleList.size();
 
 		this.setRowCount(dataSize);
 
