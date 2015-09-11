@@ -63,38 +63,27 @@ public class AdminController implements Serializable {
 	}
 
 	public String updateUser() {
-		if (!selectedUser.getUserName().equals("admin")) {
-			List<RoleVO> selectedRoleVOs = new ArrayList<RoleVO>();
+		List<RoleVO> selectedRoleVOs = new ArrayList<RoleVO>();
 
-			for (String roleName : roles.getTarget()) {
-				selectedRoleVOs.add(adminService.getRoleByName("ROLE_"+roleName));
-			}
-
-			selectedUser.setEnabled(enabled == true ? 1 : 0);
-			selectedUser.setRoles(selectedRoleVOs);
-			try {
-				if (adminService.updateUser(selectedUser)) {
-					FacesContext.getCurrentInstance().addMessage(null,
-							new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Update Success"));
-					selectedUser = null;
-					roles = null;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-				FacesContext.getCurrentInstance().addMessage(null,
-						new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", e.getMessage()));
-			}
-			return null;
-		} else {
-			FacesContext.getCurrentInstance().addMessage(
-					null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!",
-							"Admin can't be changed"));
-			selectedUser = null;
-			roles = null;
-			return null;
+		for (String roleName : roles.getTarget()) {
+			selectedRoleVOs.add(adminService.getRoleByName("ROLE_"+roleName));
 		}
 
+		selectedUser.setEnabled(enabled == true ? 1 : 0);
+		selectedUser.setRoles(selectedRoleVOs);
+		try {
+			if (adminService.updateUser(selectedUser)) {
+				FacesContext.getCurrentInstance().addMessage(null,
+						new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Update Success"));
+				selectedUser = null;
+				roles = null;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error!", e.getMessage()));
+		}
+		return null;
 	}
 
 	public void cancelSelect() {
