@@ -126,7 +126,7 @@ public class WarehouseController implements Serializable {
 
 	public void removeWarehouse() {
 		try {
-			warehouseService.dalete(selectedWarehouse);
+			warehouseService.delete(selectedWarehouse);
 
 			FacesContext.getCurrentInstance().addMessage(
 					null,

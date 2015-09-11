@@ -46,7 +46,7 @@ public class WarehouseServiceImpl implements
 	}
 
 	@Override
-	public void dalete(WarehouseVO warehouseVo) {
+	public void delete(WarehouseVO warehouseVo) {
 		try {
 		warehouseDao.delete(warehouseVo.getId());
 		} catch (Exception e) {

@@ -160,14 +160,14 @@
 								value="#{warehouseController.updateWarehouseAddressNumber}"
 								requiredMessage="#{out.wh_error_adddressN}" />
 
+						</p:panelGrid>
+						<div align="center" style="margin-top: 10px;">
 							<p:commandButton id="saveNewWarehouse" value="#{out.wh_update}"
 								action="#{warehouseController.updateWarehouse()}"
 								icon="ui-icon-check" oncomplete="PF('update').hide();"
 								update=":form:warehouseTable" />
-
-						</p:panelGrid>
+						</div>
 					</p:outputPanel>
-
 				</h:form>
 			</p:dialog>
 

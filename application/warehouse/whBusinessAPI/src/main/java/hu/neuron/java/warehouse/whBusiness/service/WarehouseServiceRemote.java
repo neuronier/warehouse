@@ -8,7 +8,7 @@ public interface WarehouseServiceRemote {
 	
 	public void save(WarehouseVO warehouseVo);
 	
-	public void dalete(WarehouseVO warehouseVo);
+	public void delete(WarehouseVO warehouseVo);
 	
 	public void update(WarehouseVO warehouseVo);
 	
